@@ -1,0 +1,984 @@
+\clearpage
+
+The rest of this chapter is dedicated to the detail of some results and formulations presented in this thesis
+
+\section{Resolvability Capacity of the random field X }
+\label{APP_RC}
+
+It is interesting to analyze an indicator of the complexity of the field in terms of the capacity to resolve its uncertainty with $K$ preferential measurements from rule $f$. Let define the resolvability capacity of $X$ with $K$-measurements as: 
+%%.........................
+\begin{equation}\label{eq:Meth_Theo_Ck}
+	\mathcal{C}_{K} \equiv \frac{I(f^{*}_{K})}{H(X)} \in [0,1],  
+\end{equation}
+for all $K \in [N]$. This is the ratio between the information gain of the best sensor-placement rule and the whole entropy of the random field. The two extreme cases are $\mathcal{C}_{K}=0$, which implies that the $K$-measurements produces no reduction in uncertainty, and $\mathcal{C}_{K}=1$, which implies that there is no remaining uncertainty after taking the $K$-measurements, i.e., $H(X^{f^{*}_{K}}|X_{f^{*}_{K}}) = 0$. In general, $\mathcal{C}_{K}$ has the following properties:
+
+%------------------------------------------------------------------------------
+%Proposition: Basic properties of the Resolvability Capacity
+\begin{proposition}\label{pro_resol_C} For any arbitrary random field $X$:
+	\begin{enumerate}
+		\item  $\mathcal{C}_{K+1} \geq  \mathcal{C}_{K}$, $\forall K \in \left\{  1, \ldots ,N -1\right\}$. 
+		\item  $\mathcal{C}_{N}=1$, and it can be defined that $\mathcal{C}_{0}=0$. 
+	\end{enumerate}
+\end{proposition}
+%(The proof is presented in Appendix \ref{proof_pro_resol_C})
+
+Hence, $\left\{ \mathcal{C}_{K}: K \in [N] \right\}$ is a monotonically increasing sequence and its profile gives an insight of how simple (or complex) is to resolve the information of $X$ in the process of taking $K$-optimal measurements. 
+
+\subsection{Resolvability Capacity of the Iterated Principle}
+
+
+It is simple to show that the optimal solution $f_{K}$ is better than the iterative solution $\tilde{f}^{*}_{K}$ in the sense of information to resolve $X$. More precisely,  for all  $K \in   \left\{1,\ldots,N \right\}$
+%..........................................................................
+\begin{align}\label{eq:Meth_Iter_OWP_Prop_If}
+	I(\tilde{f}^{*}_{K}) \leq I({f}^{*}_{K}). 
+\end{align}
+
+Consequently, a concrete way to evaluate how much is lossed in the reduction of the uncertainty between 
+the combinatorial optimal scheme $\left\{{f}_{K}: K\geq 1 \right\}$ and the iterative scheme $\left\{\tilde{f}^{*}_{K}: K \geq 1 \right\}$ , %(see details in Appendix \ref{proof_sub-optinality}),
+ is given by the difference between $\mathcal{C}_{K}$ in Eq. \eqref{eq:Meth_Theo_Ck} and the resolvability capacity for the iterated solution $\tilde{f}^{*}_{K}$, given by: 
+
+%..........................................................................
+\begin{align}\label{eq:Meth_Iter_OWP_Ck}
+	\mathcal{\tilde{C}}_{K} \equiv \frac{I(\tilde{f}^{*}_{K})}{H(X)} \in [0,1]. 
+\end{align}
+
+In this thesis, it has been conjectured that the information loss $(\mathcal{C}_{K}- \mathcal{\tilde{C}}_{K})_{K=1,\ldots,N} $ is proportional to how much spatial dependency is presented in the joint distribution of field $X$. In one extreme, it is simple to prove that for a field with no inter-pixel (spatial) dependency, i.e., $P_{X}(X)=\Pi_{i \in [N]} P_{X_{ i }}(X_{ i })$, obtaining: 
+%..........................................................................
+\begin{align}\label{eq:Meth_Iter_OWP_Prop_Ck_Independent}
+	\mathcal{C}_{K}= \mathcal{\tilde{C}}_{K}, 
+\end{align}
+and furthermore, the iterative solution is optimal: $\tilde{f}^{*}_{K}= {f}^{*}_{K}$ for all $K$. %(See details in Appendix \ref{optinality_no_iterpixel})
+
+
+\subsection{RAMIS and Resolvability Capacity Properties}
+
+In order to quantify the level of \emph{knowledge} on the media given an optimal sampling $f^{*}_{K} = \lbrace (i_1),\ldots,(i_K)\rbrace $ the next properties for $C_{K} = \displaystyle \frac{H(X_{f^{*}_{K}})}{H(X)}$ are posted:
+	
+	\begin{itemize}
+	\item $\text{Deterministic Variable} \Rightarrow C_{K} \triangleq 1, \forall K \in \lbrace 1,\ldots, N \rbrace$
+	\item $C_{K+1} \geq C_{K},  \forall K \in \lbrace 1,\ldots, N \rbrace$
+	\item $C_0 \triangleq 0$
+	\item $C_{N} = 1$
+	\end{itemize}
+
+In the case of a media with known statistics the estimation of conditional entropy and the consequent \emph{RAMIS} rule can be reduced. The simplest cases correspond to fields with \emph{ID} or \emph{IID} joint probabilities where:
+	
+	\begin{equation}
+	\label{eq_OWP_ID_IID}
+		H(X_f)  =  \displaystyle \sum_{i \in f}{H(X_{ i })} \stackrel{\text{\tiny (Only IID)}}{=}  \mid f \mid \cdot H( X_{ i^* }) 
+	\end{equation}
+
+and the resolvability capacity is reduced to:
+	\begin{eqnarray}
+	C_{K} & = & \displaystyle \frac{\displaystyle \max_{f_{K} \in \mathbf{F}_{K}} \displaystyle H(X_{f_{K}})}{\displaystyle H(X)} \nonumber\\
+		& \stackrel{\text{\tiny (Only for IID)}}{=} & \displaystyle \frac{\displaystyle K \cdot  H(X_{ i^*})}{\displaystyle N \cdot H(X_{ i^* })}\nonumber\\
+		& = & \displaystyle \frac{{K}}{N}\nonumber
+	\end{eqnarray}		
+
+In real scenarios the field under analysis incorporates some level of spatial interdependence. A case of interest for the presented work is associated with Markov random fields \emph{MRFs} where the spatial dependence can be characterized by Markov chains, while the spatial scope of interaction can be defined by the incorporation of \emph{Cliqués}. In simulation of fields with spatial dependence \emph{MRFs} provide an useful tool \citep{MRFTM} as illustrated in figure \ref{fig:MRF} but here the focus is in the use of \emph{MRFs} to empirically estimate the spatial dependence in the field.
+
+	\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.3\columnwidth]{Figs_QE/MRF}
+	\caption[Synthetic image by \emph{MRF} modeling ]{\label{fig:MRF} Synthetic image by \emph{MRF} modeling  \citep{MRFTM}. }
+ 	\end{figure}
+	
+By the use of approximations of \emph{Cliqués}, the joint probability models can be described by considering a markovian property. For example, defining $b_{u,v} = x_{i}$ with $i \in [N]$ and $ (u,v) \in [M] x [M]$ as a mapping transform (from the original stochastic field space without specific spatial order to a sorted \emph{2-D} space) and assuming a \emph{Cliqué} with only vertical and horizontal dependence of unitary distance $\scriptstyle{(\mathcal{N}(b_{u,v}) = \lbrace b_{u-1,v}, b_{u,v-1}, b_{u+1,v}, b_{u,v+1} \rbrace )}$, it is possible to reduce the joint probability of a specific spatial variable by only considering the interaction with the members of it \emph{Cliqué} (only four variables in the neighborhood of this example). A realistic characterization of the \emph{Cliqué} will provides better estimation for the joint entropy while a simplified version of the \emph{Cliqué} will offer more computationally affordable implementations. Thus,
+
+\begin{align}\label{eq:StopRule_P1_PEQ}
+\mathds{P}_{X}(X) = = \prod_{(j,k) \in [N x N]}{\Psi(b_{j,k},\mathcal{N}(b_{j,k}))},
+\end{align}
+where $\Psi(b_{j,k},\mathcal{N}(b_{j,k}))$, and considering the Joint Entropy as:
+
+\begin{align}\label{eq:StopRule_P2_PEQ}
+\scriptstyle{\tilde{H}(\Psi_{j,k}) = \sum_{b_{j,k} \in \mathcal{A}}{\Psi_{j,k} \log( \Psi_{j,k} )} } on N
+\end{align}
+implies that: 
+$H(X)  =  \displaystyle \sum_{l = 1}^{k}{\tilde{H}(\Psi_{i_lj_l})}$
+
+In the case of resolvability capacity for \emph{MRFs} the target is to study definitions based on \emph{Cliqués}:
+	$
+	C_k  =  \displaystyle \frac{\displaystyle \max_{f_k \in \mathbf{F}_k} \displaystyle \sum_{l = 1}^{k}{\tilde{H}(\Psi_{i_lj_l})} }{\displaystyle \sum_{l = 1}^{M^2}{\tilde{H}(\Psi_{i_lj_l})}}
+	$
+
+\subsection{Stopping Rule via \texorpdfstring{$\mathcal{C}_{K}$ Evolution }{C\_K Evolution }  }
+\label{sec_Meth_StopRules}
+
+A key topic related with adaptive sampling strategies is to determine a robust method for stopping the sampling process. The objective is to set a limit on the number of samples. For this a stopping criteria has been proposed based on the resolvability capacity of the field. 
+
+In particular, the use of the monotonically increasing sequence $\mathcal{\tilde{C}}_{K}$ has been proposed in the iterative sampling scheme. Using the Eq. \eqref{eq:Meth_Iter_OWP_Ck}, the change in the resolvability capacity factor, after taking an additional measure, is given by:
+
+\begin{align}\label{eq:StopRule_Iter_DeltaCk}
+	\Delta \mathcal{\tilde{C}}_{K} & = \mathcal{\tilde{C}}_{K} - \mathcal{\tilde{C}}_{K-1} \\
+																 & = \frac{I(\tilde{f}^{*}_{K})- I(\tilde{f}^{*}_{K-1})}{H(X)} \nonumber \\																 & \propto H(X_{ i^{*}_{K} }|X_{ i^{*}_{1} },\ldots,X_{ i^{*}_{k-1} }) \nonumber
+\end{align}
+
+
+The use of this proportional version is supported by the fact that the joint entropy for the field $X$ is the same throughout the sensing process, but inaccessible in practical applications. Therefore, $H(X)$ can be considered as a scale factor and, consequently, it could be omitted as shown in Eq. \eqref{eq:StopRule_Iter_DeltaCk}. For the iterative approach, $\mathcal{\tilde{C}}_{K}$ is a monotonically decreasing sequence as $K \rightarrow N$. In particular, when  $\mathcal{\tilde{C}}_{k_{limit}} = 0$ for a $k_{limit} \in {1, \ldots, K}$ the remaining non measured $N - k_{limit}$ random variables are deterministically determined by the variables indexed by the rule $\tilde{f}^{*}_{k_{limit}}$. Then, no more information will be obtained for the random field by additional measures and the sensing process must be truncated.
+
+From monotonically increasing nature of $\mathcal{\tilde{C}}_{K}$,  $\Delta \mathcal{\tilde{C}}_{K}$ is a monotonically decreasing sequence as $K \rightarrow N$. Finally, when $\Delta \mathcal{\tilde{C}}_{k} = 0$ after $k$ sequential measures, no more information will be obtained from the field by additional measures and the sensing process must be truncated. 
+
+
+
+
+
+%==========================================================
+%==========================================================
+\newpage
+\section{On Regionalized variables with spatial dependence}
+\label{sec_MI}
+
+Here, it has been worked either without any kind of spatial dependence for random variables or only with very simple assumptions over it dependence for regionalized random variables. The target is to develop and complement a formalization and practical reduction for this kind of dependence.
+
+\subsection{\emph{MRF} models and \emph{Cliqué} structure estimation}
+
+When the spatial dependence is headed by a markovian property it is possible to reduce the conditional probabilities by only considering conditionals on the \emph{Cliqué} of the variable of interest:
+
+\begin{equation}\label{eq:eq_markov_PROPERTY}
+	P(X_{ i } | X^{ i }) \equiv P(X_{ i } | X_{CL(i)})
+\end{equation}
+ 
+Where $CL(i)$ correspond to the \emph{Cliqué} associated to the random variable $X_{ i }$ at the position $i$.
+
+\subsection{\emph{Cliqué} estimation and Mutual Information}
+
+\label{sec_MI_Clique}
+
+%.........................
+Given again a random field $X = \{X_{ i } : i \in [N]$, the current goal is to define the multi-point conditional probability in terms of two-point conditional probability:
+
+\begin{equation}\label{eq_def_prob_mps}
+P(X_{ i }| X^{ i }) = f(\{P(X_{ i }|X_{ k }); \; \forall k \in [N] \setminus{i}\} ) 
+\end{equation}
+
+Using Bayes rule provides the following conditional probabilities:
+
+\begin{align}\label{eq_bayes_prob_mps}
+	P(X_{ i } |X^{ i }) &= \frac{P(X_{ i }, X^{ i })}{P(X^{ i })} \nonumber\\
+				&=\frac{P(X)}{P(X^{ i })} \nonumber\\
+				&=\frac{P(X^{ \{i,k\} }|X_{ \{i,k\} })P(X_{ \{i,k\} })}{P(X^{ \{i,k\} }|X_{ k })P(X_{ k })}\nonumber\\
+				&=\frac{P(X^{ \{i,k\} }|X_{ \{i,k\} })}{P(X^{ \{i,k\} }|X_{ k })}P(X_{ i }|X_{ k })
+\end{align}
+
+
+Eq. \eqref{eq_bayes_prob_mps} shows that $P(X_{ i }|X^{ i })$ can be rewritten in terms of $P(X_{ i }|X_{ k })$ for any $k$ in the complement subset. By using this property it is possible to derive a combination of $P(X_{ i }|X_{ k })$ that is equal to multi-point conditional probability.
+
+\begin{equation}\label{eq_prob_mps_rewritten}
+	P(X_{ i } |X^{ i })^{|I_{X^{ i }}|} = \prod_{k \in I_{X^{ i }}}{\frac{P(X^{ \{i,k\} }|X_{ \{i,k\} })}{P(X^{ \{i,k\} }|X_{ k })}P(X_{ i }|X_{ k })}
+\end{equation}
+
+Where $I_{X^{ i }}$ represent the set of indexes of $X^{ i }$. Using the $|I_{X^{ i }}|$th-root in both sides of Eq. \eqref{eq_prob_mps_rewritten}, obtaining:
+
+\begin{equation}\label{eq_prob_mps_rewritten_root}
+	\underbrace{P(X_{ i } |X^{ i })}_{\text{multi-point prob.}} = \prod_{k \in I_{X^{ i }}}{\underbrace{\left(\frac{P(X^{ \{i,k\} }|X_{ \{i,k\} })}{P(X^{ \{i,k\} }|X_{ k })} \right)^{\frac{1}{\vert I_{X^{ i }} \vert}}}_{\alpha_{ \{i,k\} }} \underbrace{{P(X_{ i }|X_{ k })}^{\frac{1}{|I_{X^{ i }}|}}}_{\text{two-point prob.}}}
+\end{equation} 
+%
+%
+That is close to the target of a two point version of the required conditional probabilities, as it was stated in Eq. \eqref{eq_def_prob_mps}.
+
+\subsection{Multi-point and Two-Point Mutual Information relation}
+
+Applying the definition for mutual information and Eq. \eqref{eq_prob_mps_rewritten_root} the following relations can be obtained,
+
+\begin{align}
+ I(X_{ i };X^{ i }) &= H(X_{ i }) - H(X_{ i }|X^{ i }) \nonumber\\
+   \qquad &= H(X_{ i }) + \sum_{\{X_{ i },X^{ i }\} \in A^{|X|}} P(X_{ i },X^{ i }) \log P(X_{ i }|X^{ i }) \nonumber\\
+   \qquad &= H(X_{ i }) \nonumber\\
+   \qquad & \quad + \frac{1}{\vert I_{X^{ i }} \vert} \sum_{k \in I_{X^{ i }}}  \sum_{ \{ X_{ i },X^{ i } \} \in A^{|X|} } P(X_{ i },X^{ i }) \left( \log P(X^{ \{i,k\} }|X_{ \{i,k\} })  \right.  \nonumber\\
+	 & \qquad  \qquad  \qquad  \qquad  \qquad  \qquad  \qquad  \qquad  \qquad  \qquad + \log P(X_{ i }|X_{ k })      \nonumber\\
+    & \qquad  \qquad  \qquad  \qquad \qquad  \qquad  \qquad  \qquad  \qquad  \qquad \left.	- \log P(X^{ \{i,k\} }|X_{ k })  \right) \nonumber\\				
+   \qquad &= H(X_{ i }) + \frac{1}{\vert I_{X^{ i }} \vert} \sum_{k \in I_{X^{ i }}} \left\{ \sum_{ \{ X_{ i },X^{ i } \} \in A^{|X|} }{P(X_{ i },X^{ i })  \log P(X^{ \{i,k\} }|X_{ \{i,k\} })} \right. \nonumber\\ 
+   \qquad &\qquad \qquad  \qquad \qquad \qquad \qquad \quad + \sum_{ \{ X_{ i },X^{ i } \} \in A^{|X|} }{P(X_{ i },X^{ i }) \log P(X_{ i }|X_{ k })} \nonumber\\
+   \qquad & \left.  \qquad \qquad \qquad \qquad \qquad \qquad \quad - \sum_{ \{ X_{ i },X^{ i } \} \in A^{|X|} }{P(X_{ i },X^{ i }) \log P(X^{ \{i,k\} }|X_{ k })} \right\}  \nonumber\\
+   \qquad &= H(X_{ i }) - \frac{1}{|X^{ i }|} \sum_{k \in I_{X^{ i }}}{\left(H(X_{ i }| X_{ k }) + H(X^{ \{i,k\} }|X_{ \{i,k\} }) - H(X^{ \{i,k\} }|X_{ k })  \right)} 
+\label{eq_mutual_info_develop}
+\end{align}
+
+Note that $H(X_{ i }| X_{ k }) + H(X_{ \{i,k\} }|X^{ \{i,k\} }) - H(X_{ k }|X^{ \{i,k\} })$ can be rewritten using mutual information property, $H(X|Y) = H(X) - I(X;Y)$.
+%%.........................
+\begin{multline}\label{eq_mutual_info_subs}
+\, H(X_{ i }| X_{ k } + H(X^{ \{i,k\} }|X_{ \{i,k\} }) - H(X^{ \{i,k\} }|X_{ k }) \\
+= H(X_{ i }) - I(X_{ i };X_{ k }) + H(X^{ \{i,k\} }) - I(X_{ \{i,k\} };X^{ \{i,k\} }) - H(X^{ \{i,k\} }) + I(X_{ k };X^{ \{i,k\} }) \\%\nonumber\\
+= H(X_{ i }) - I(X_{ i };X_{ k }) - I(X_{ \{i,k\} };X^{ \{i,k\} }) + I(X_{ k };X^{ \{i,k\} })
+\end{multline}
+
+Then, the expression of Eq. \eqref{eq_mutual_info_develop} can be sorted in three kinds of components:
+
+\begin{align}
+I(X_{ i };X^{ i }) =& H(X_{ i }) \nonumber\\
+	  & - \frac{1}{|X^{ i }|} \sum_{k \in I_{X^{ i }}}{H(X_{ i }) - I(X_{ i };X_{ k }) - I(X_{ \{i,k\} };X^{ \{i,k\} }) + I(X_{ k };X^{ \{i,k\} })} \nonumber\\
+=&  \underbrace{\left[ \frac{1}{|X^{ i }|} \sum_{k \in I_{X^{ i }}}{I(X_{ i };X_{ k })} \right]}_{\text{one and two-point statistics}}  \nonumber\\
+  & + 
+	\underbrace{\left[				\frac{1}{|X^{ i }|} \sum_{k \in I_{X^{ i }}}{I(X_{ \{i,k\} };X^{ \{i,k\} })}  \right]}_{\text{higher order statistics}}- 
+	\underbrace{\left[				\frac{1}{|X^{ i }|} \sum_{k \in I_{X^{ i }}}{I(X_{ k };X^{ \{i,k\} })}\right]}_{\text{redistributable term}}
+\label{eq_mutual_info_reduc}
+\end{align}
+
+
+
+Multi-point conditional probability can be extended for a lower order subset $X^{k,J}$ where $J\subset [N]^2 $ and $ k \notin J$.
+
+\begin{equation}\label{eq_cm_mps_lower_order}
+P(X_k|X^{k,J}) = \left( \prod_{l \in I_{X^{k,J}}}{\frac{P(X^{k,l,J}|X_{k,l})}{P(X^{k,l,J}|C_l)} {P(C_k|C_l)}}  \right) ^{\frac{1}{|I_{X^{k,J}}|}}
+\end{equation}
+
+This also extends the multi-point mutual information for lower order subset $X^{k,J}$.
+
+\begin{align}\label{eq_mutual_info_lower_order}
+I(X_k;X^{k,J}) =& \left[ \frac{1}{|X^{k,J}|} \sum_{l \in I_{X^{k,J}}}{I(X_k;X_l)} \right]  +  \nonumber\\
+			    & \left[	\frac{1}{|X^{k,J}|} \sum_{l \in I_{X^{k,J}}}{I(X_{l,k};X^{l,k,J})}  \right] - 
+				 \left[	\frac{1}{|X^{k,J}|} \sum_{l \in I_{X^{k,J}}}{I(X_l;X^{l,k,J})}\right] 
+\end{align}
+
+Using Eq. (\ref{eq_mutual_info_lower_order}), in Eq. (\ref{eq_mutual_info_reduc}), recursively, it is obtained that:
+
+\begin{align}\label{eq_mutual_info_final}
+I_{|X|}(X_i;X^i) &= \underbrace{ \left[ 2H(X_i) + \mathcal{H}_{|X|-1} \sum_{\substack{k \in I_{X}\\k \neq i}} {H(X_k)} \right] }_{\text{marginal entropies}} \nonumber\\
+				  &- \underbrace{  \left[	\frac{1}{|X|-1} \sum_{k \in I_{X^{i}}}{I(X_i;X_k)} + \left(\frac{N}{N-1} - \frac{1}{(N-1)!} \right) \left( \sum_{k \in I_{X^i}}{\sum_{j \in I_{X^{i,k}}}{I(X_k;X_j)}}\right)  \right]}_{\text{ two-point statistics}} \nonumber\\
+				  & \underbrace{   \left[ \sum_{m=1}^{|X|-1}{\frac{1}{(m-1)!} \sum_{\substack{s_1\in I_{X}\\s_1 \neq s_0}}{... \sum_{\substack{s_m \in I_{X} \\ s_m \neq s_0,...,s_{m-1}}}{I(X_{s_m,s_{m-1}};X^{s_0,...,s_m})}}} \right] }_{\text{remaining higher order statistics}}
+\end{align}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Markovian 1D Scenario}
+\label{sec_Meth_Markov1D_APP}
+
+A \emph{1D} markov chain provides a simple sequence of random variables with spatial dependence. In literature, Markov chains are applied in geology and geostatistics to represent discrete regionalized variables such as lithologies or facies. It is required to note that markovian model do not use variograms or auto-covariance functions in order to measure the spatial structures as most of the available models do. Instead, a markovian model provides a natural way to impose conditional probabilities. It is important, because conditional probabilities could be interpreted geologically much easier than variogram or other mathematical tools.
+
+\subsection{\texorpdfstring{\emph{1-D}}{1D} Markovian Spatial model}
+
+The proposed model is the one dimensional array described in Fig. \ref{fig:1DmodelArray}. In this setting, the regionalized variable is composed by N random variables. The array represents N locations with statistical dependence. The final goal is to characterize the conditional statistics of a specific unsampled random variable given a set of sampled locations. In the proposed empirical version of Optimal well placement (the implemented version of \emph{AdSEMES} or \emph{RAMIS}), the conditional statistics are estimated from the number of pattern occurrences in training image. 
+
+\begin{figure}[H]
+		\centering
+\begin{tikzpicture}[>=latex]
+\matrix[mymat,anchor=west,row 1/.style={nodes=draw}]
+at (0,0) 
+(mat1)
+{
+X_{1} & X_{2} &  & \ldots &  & X_{i-1} & X_{i} & X_{i+1} & & \ldots &  & X_{N-1} & X_{N} \\
+};
+\end{tikzpicture}
+\caption{\emph{1-D} regionalized variable.}
+\label{fig:1DmodelArray}
+\end{figure} 
+
+
+\subsubsection{\texorpdfstring{\emph{1-D}}{1D} Markov Chain}
+
+In the markovian scenario, the probabilistic model exhibits the following spatial dependence: given the present, the future is independent of the past. For the proposed setting, see Fig. \ref{fig:1DmodelArray}, a past-present-future sorting has been imposed from location 1 to the location N.
+
+Let $X_{1}, X_{2}, , \ldots ,  , X_{i-1} , X_{i} , X_{i+1} ,  , \ldots ,  , X_{N-1} , X_{N}$ be a sequence of random variables taking values in a state space ($\mathcal{A} = \left\{ \mathcalligra{a}_{1}, \mathcalligra{a}_{2}, \ldots , \mathcalligra{a}_{ \left| \mathcal{A} \right| } \right\} $). Then, the markovian property states that:
+
+
+\begin{equation}
+\label{eq:Markov_Property}
+	 Pr( X_{i} = \mathcalligra{a}_{k} | \  X_{i-1} = \mathcalligra{a}_{l}, X_{i-2} = \mathcalligra{a}_{m}, \ldots , X_{1} = \mathcalligra{a}_{p})  = Pr(X_{i} = \mathcalligra{a}_{k} | \ X_{i-1} = \mathcalligra{a}_{l}) .
+\end{equation}
+
+
+In addition, under the assumption of stationarity and time invariance, the transition probability is given by:
+
+\begin{equation}
+\label{eq:Markov_TransProb}
+	p_{ l,k } =  Pr(X_{i} = \mathcalligra{a}_{k} | X_{i-1} = \mathcalligra{a}_{l} ) .
+\end{equation}
+
+From this transition probability the \emph{1-D} markov chain can be described by its transition matrix:
+
+\begin{equation}
+\label{eq:Markov_TransMatrix}
+	p = \left|	\begin{array}{cccccc}
+			p_{1,1} & p_{1,2} & \ldots & \ & \ldots & p_{1, \left| \mathcal{A} \right| } \\
+			p_{2,1} & \ & \ldots & \ & \ldots & \ \\
+			\ldots & \ & \ldots & \ & \ldots & \ \\
+			\ & \ & \ldots & p_{l, k } & \ldots & \ \\
+			\ldots & \ & \ldots & \ & \ldots & \ \\			
+			p_{\left| \mathcal{A} \right|,1} & \ & \ldots & \ & \ldots & p_{\left| \mathcal{A} \right|, \left| \mathcal{A} \right| }
+	\end{array}  \right|
+\end{equation}
+with $p_{l,k}$ denoting the probability of transition from $\mathcalligra{a}_{l}$ to $\mathcalligra{a}{k}$,  $ \forall  l,k \in \left\{ 1, \ldots, \left| \mathcal{A} \right| \right\}$. This transition probability is called single step transition because is related with the transition between two consecutive elements of the sequence of random variables, $\left\{X_{i}\right\}$. Extending this idea, the transition probability can be characterized relating elements, in the random sequence, separated by $M$ steps by the multiplication of the single step transition matrix by itself $M$ times. Thus:
+
+\begin{equation}
+\label{eq:Markov_TransProbM}
+	Pr(X_{i} = \mathcalligra{a}_{k} | X_{i-M} = \mathcalligra{a}_{l}, X_{i-M-1} = \mathcalligra{a}_{m}, \ldots , X_{1} = \mathcalligra{a}_{p} ) =  Pr(X_{i} = \mathcalligra{a}_{k} | X_{i-M} = \mathcalligra{a}_{l} ) = \left(p^{M}\right)_{ l,k } .
+\end{equation}
+
+
+\subsubsection{Joint probability mass of the sequence $\left\{ X_{i} \right\}$}
+
+For a \emph{1-D} markov chain the joint probability mass function can be written as:
+
+\begin{equation}
+\label{eq:Markov_PMF}
+	p(x_{1},x_{2},\ldots,x_{N}) = p(x_{1}) \cdot \prod_{r=2}^{N}{p(x_{r} | x_{r-1})}
+\end{equation}
+
+Then, the Joint Entropy for the sequence $\left\{ X_{i} \right\}$, using the theorem 2.5.1 in \cite{cover_2006}, is described by:
+
+\begin{equation}
+\label{eq:Markov_JointH}
+	H(X_{1},X_{2}, \ldots , X_{N}) = \sum_{i=1}^{N}{H(X_{i} | X_{i-1}, X_{i-2} \ldots , X_{1})} =  \sum_{i=1}^{N}{H(X_{i} | X_{i-1})}
+\end{equation}
+
+The conditional probability can be given from the transition matrix $p$. For the two point joint probability $p(x_{i},x_{i-1})$ , using the fact that $p(x_{i},x_{i-1}) = p(x_{i-1}) \cdot p(x_{i} \ | \ x_{i-1})$. Finally, given the marginal entropy for the initial state $X_{1}$, the remaining marginal can be expressed by:
+
+\begin{equation}
+\label{eq:Markov_marginalP}
+	p(x_{i}) = \sum_{x_{i-1} \in \mathcal{A}}{ p(x_{i-1}) \cdot p(x_{i} \ |  \ x_{i-1}) }
+\end{equation}
+
+\subsubsection{Conditioning to a subset of states}
+
+The main challenge is to apply the proposed \emph{OSP} approach to the \emph{1-D} markov chain. As presented in sec. \ref{sec_adaptive_seq_sensing_PI}, the entropy based \emph{OSP} can be stated in several equivalent ways. First, given a subset of previously measured locations (or at least selected to be measured), the target is to find the non measured location with maximum entropy, $X^{*}_{i} = argmax H(X_{i} \ | \  X_{Measured})$. Alternatively, it can be asked for the location minimizing the posterior entropy for the remaining non measured locations, $X^{*}_{i} = argmin H(X_{NoMeasured \ \setminus \ i} \ | \ X_{Measured, i}) $. These formulations require the joint \emph{pmf}s of the random variables at the unmeasured locations conditioned to the subset of the variables at the measured locations, $p( x_{i} \ | \  x_{Measured})$  or $p( x_{NoMeasured} \ | \  x_{Measured})$,  respectively.
+
+\subsubsection{Conditioning to any arbitrary subset of states}
+%To obtain the entropy of a state $X_{i}$, conditioned by the subset of measured locations $X_{Measured}$. The subset can be split in two disjoint subsets denoting the past and the futures variables, $\left\{XB\right\}$ and $\left\{XA\right\}$ respectively, conditioning the state $X_{i}$:
+
+Let $\left\{X_{b_{j}}\right\}$ and $\left\{X_{a_{j}}\right\}$ be two disjoint subsets denoting the past and the futures variables conditioning the state $X_{i}$. Then the measured locations can be represented by $X_{Measured}  =  \left\{X_{b_{j}}\right\} \bigcup \left\{X_{a_{j}}\right\}$, as illustrated in Fig. \ref{fig:1DmodelArray_BA_Subsets}.
+
+
+
+\begin{figure}[H]
+		\centering
+\begin{tikzpicture}[>=latex]
+\scriptsize
+\matrix[mymat,anchor=west,row 1/.style={nodes=draw}]
+at (0,0) 
+(mat1)
+{
+\ldots & X_{b_{1}} & \ldots & X_{b_{2}} & \ldots & b_{B} & \ldots & X_{i} & \ldots & X_{a_{1}} & \ldots & X_{a_{2}} & \ldots & X_{a_{A}} & \ldots \\
+};
+\end{tikzpicture}
+\caption{Measured Variables in separated past and future subsets.}
+\label{fig:1DmodelArray_BA_Subsets}
+\end{figure} 
+
+Then, the target conditional entropy for the state $X_{i}$, can be defined as:
+                   
+\begin{align}
+\label{eq:Markov_CondAB_H}
+	H(X_{i} \ | \ \left\{X_{b_{j}}\right\} & , \left\{X_{a_{j}}\right\}) \nonumber \\
+	&= - \sum_{  \left\{x_{b_{j}}\right\} \in \mathcal{A}^{B}  }{ \ \ \sum_{ x_{i} \in \mathcal{A} }{ \ \ \sum_{  \left\{x_{a_{j}}\right\} \in \mathcal{A}^{A}      }{ p(\left\{x_{b_{j}}\right\} , x_{i}, \left\{x_{a_{j}}\right\}) \cdot log \ p(x_{i} \ | \ \left\{x_{b_{j}}\right\} , \left\{x_{a_{j}}\right\})   }}}
+\end{align}
+
+Furthermore, it is possible to rewrite 
+\eqref{eq:Markov_CondAB_H} by using the definition of the conditional entropy as the expected value of the entropies of the conditional distributions, averaged over the conditioning random variables [Chapter 2.2, \cite{cover_2006}].
+
+
+\begin{align}
+\label{eq:Markov_CondAB_H_MargCond}
+	H(X_{i} &  \ | \ \left\{X_{b_{j}}\right\} , \left\{X_{a_{j}}\right\})  \nonumber \\
+	& = \sum_{  \left\{x_{b_{j}}\right\} \in \mathcal{A}^{B}  }{}{ \ \ \sum_{  \left\{x_{a_{j}}\right\} \in \mathcal{A}^{A}      }{ p(\left\{x_{b_{j}}\right\} , \left\{x_{a_{j}}\right\}) \cdot H(X_{i} \  | \ \left\{X_{b_{j}}\right\} = \left\{x_{b_{j}}\right\} , \left\{X_{a_{j}}\right\} = \left\{x_{a_{j}}\right\})   }}
+\end{align}
+
+
+
+In one hand, to evaluate the expression from \eqref{eq:Markov_CondAB_H}, it is required to work in the conditional \emph{pmf} of the state $X_{i}$. Thus, using the relationship of the joint \emph{pmf} and the conditional \emph{pmf}:
+
+
+\begin{align}\label{eq:Markov_CondAB_pmf}
+ p(x_{i} \ | \ \left\{x_{b_{j}}\right\} , \left\{x_{a_{j}}\right\}) & = \frac{p(\left\{x_{b_{j}}\right\} , x_{i}, \left\{x_{a_{j}}\right\})}{p(\left\{x_{b_{j}}\right\} , \left\{x_{a_{j}}\right\})} \nonumber \\
+    & = \frac{p(\left\{x_{b_{j}}\right\} , x_{i}, x_{a_{1}}, x_{a_{2}}, \ldots,  x_{a_{A}})}{p(\left\{x_{b_{j}}\right\} , x_{a_{1}}, x_{a_{2}}, \ldots,  x_{a_{A}})} \nonumber \\
+		    & = \frac{p(x_{a_{A}} \ | \ \left\{x_{b_{j}}\right\} , x_{i}, x_{a_{1}}, x_{a_{2}}, \ldots,  x_{a_{A-1}}) \cdot p(\left\{x_{b_{j}}\right\} , x_{i}, x_{a_{1}}, x_{a_{2}}, \ldots,  x_{a_{A-1}})}{ p(x_{a_{A}} \ | \   \left\{x_{b_{j}}\right\} , x_{a_{1}}, x_{a_{2}}, \ldots,  x_{a_{A-1}})  \cdot p(\left\{x_{b_{j}}\right\} , x_{a_{1}}, x_{a_{2}}, \ldots,  x_{a_{A-1}})} \nonumber \\
+				\text{\tiny{by markovian property}}  & = \frac{p(x_{a_{A}} \ | \  x_{a_{A-1}}) \cdot p(\left\{x_{b_{j}}\right\} , x_{i}, x_{a_{1}}, x_{a_{2}}, \ldots,  x_{a_{A-1}})}{ p(x_{a_{A}} \ | \  x_{a_{A-1}})  \cdot p(\left\{x_{b_{j}}\right\} , x_{a_{1}}, x_{a_{2}}, \ldots,  x_{a_{A-1}})} \nonumber \\
+				  & = \frac{ p(\left\{x_{b_{j}}\right\} , x_{i}, x_{a_{1}}, x_{a_{2}}, \ldots,  x_{a_{A-1}})}{ p(\left\{x_{b_{j}}\right\} , x_{a_{1}}, x_{a_{2}}, \ldots,  x_{a_{A-1}})} \nonumber \\
+\end{align}
+
+From Eq. \eqref{eq:Markov_CondAB_pmf}, the effect of the most future state, $X_{a_{A}}$,  vanishes for the markovian property and the presence of the closer future state, $X_{a_{A-1}}$. Furthermore, iterating the same principle for the rest of the variables in the subset of future states, it can post that:
+
+
+\begin{align}\label{eq:Markov_CondAB_pmf_2}
+ p(x_{i} \ | \ \left\{x_{b_{j}}\right\} , \left\{x_{a_{j}}\right\}) & = \frac{ p(\left\{x_{b_{j}}\right\} , x_{i}, x_{a_{1}})}{ p(\left\{x_{b_{j}}\right\} , x_{a_{1}})} \nonumber \\
+            & = p(x_{i} \ | \ \left\{x_{b_{j}}\right\} , x_{a_{1}}) \nonumber \\
+\end{align}
+
+
+From the above result, for a markovian chain, given a subset of future states, ${x_{a_{j}}}$, conditioning the present state, $X_{i}$, then the present state depends only the nearest future state that is part of the subset. The essence of this result was presented by \cite{Elfeki2001_a} by the formulation of the conditional probability $p(x_{i} \ | \ x_{i-1} ,x_{N} )$.
+
+In Eq. \eqref{eq:Markov_CondAB_pmf_2}, it is required to reduce the dependence related with the subset of past states. Thus,
+
+
+\begin{align}\label{eq:Markov_CondAB_pmf_3}
+ p(x_{i} \ | \ \left\{x_{b_{j}}\right\} , \left\{x_{a_{j}}\right\}) & = \frac{ p(\left\{x_{b_{j}}\right\} , x_{i}, x_{a_{1}})}{ p(\left\{x_{b_{j}}\right\} , x_{a_{1}})} \nonumber \\
+                 & = \frac{  p(x_{a_{1}}  \ | \ \left\{x_{b_{j}}\right\} ,   x_{i} ) \cdot p(\left\{x_{b_{j}}\right\} ,   x_{i} )   }{      p(x_{a_{1}} \ | \ \left\{x_{b_{j}}\right\} ) \cdot p(\left\{x_{b_{j}}\right\}  ) } \nonumber \\
+				\text{\tiny{by markovian property}}  & = \frac{  p(x_{a_{1}}  \ | \   x_{i} ) \cdot p(\left\{x_{b_{j}}\right\} ,   x_{i} )   }{      p(x_{a_{1}} \ | \ \left\{x_{b_{j}}\right\} ) \cdot p(\left\{x_{b_{j}}\right\}  ) } \nonumber \\
+				  & = \frac{  p(x_{a_{1}}  \ | \   x_{i} ) \cdot p(x_{i}  \ | \ \left\{x_{b_{j}}\right\}) \cdot p(\left\{x_{b_{j}}\right\} )   }{      p(x_{a_{1}} \ | \ \left\{x_{b_{j}}\right\} ) \cdot p(\left\{x_{b_{j}}\right\}  ) } \nonumber \\
+\end{align}
+
+Then, simplifying and applying the markovian property Eq. \eqref{eq:Markov_CondAB_pmf_3} can be reduced to:
+
+
+\begin{align}\label{eq:Markov_CondAB_pmf_4}
+ p(x_{i} \ | \ \left\{x_{b_{j}}\right\} , \left\{x_{a_{j}}\right\}) & = \frac{  p(x_{a_{1}}  \ | \   x_{i} ) \cdot p(x_{i}  \ | \ \left\{ x_{b_{j}}\right\})  }{      p(x_{a_{1}} \ | \ \left\{x_{b_{j}}\right\} )  }  \nonumber \\
+				\text{\tiny{by markovian property}}  & =  \frac{  p(x_{a_{1}}  \ | \   x_{i} ) \cdot p(x_{i}  \ | \ x_{b_{B}})  }{      p(x_{a_{1}} \ | \ x_{b_{B}} )  }  \nonumber \\
+\end{align}
+
+In other words,
+
+\begin{equation}
+\label{eq:Markov_CondAB_pmf_5}
+p(x_{i} \ | \ \left\{x_{b_{j}}\right\} , \left\{x_{a_{j}}\right\}) = p(x_{i} \ | \ x_{b_{B}} , x_{a_{1}})
+\end{equation}
+
+
+Summarizing the last results, conditioning a state $X_{i}$ by any subset of states reduce to conditional bivariate \emph{pmf}s only relating $X_{i}$ to the nearest past and to the nearest future states inside the set of measured variables.
+
+In the other hand, to calculate the required conditional entropy, the joint \emph{pmf} is needed, $p(\left\{x_{b_{j}}\right\} , x_{i}, \left\{x_{a_{j}}\right\})$. Applying Eq. \eqref{eq:Markov_PMF}:
+
+\begin{align}
+\label{eq:Markov_JointAB_pmf}
+p(\left\{x_{b_{j}}\right\} & , x_{i}, \left\{x_{a_{j}}\right\})   \nonumber \\
+& = p(x_{b_{1}}) \cdot \left[ \prod_{h = 2}^{B}{p(x_{b_{h}} \ | \ x_{b_{h-1}})} \right] \cdot p(x_{i} \ | \ x_{b_{B}}) \cdot p(x_{a_{1}} \ | \ x_{i}) \cdot \left[ \prod_{h = 2}^{A}{p(x_{a_{h}} \ | \ x_{a_{h-1}})}  \right]
+\end{align}
+
+In short, Eq. \eqref{eq:Markov_CondAB_pmf_4} and Eq. \eqref{eq:Markov_JointAB_pmf} can be expressed in terms of marginal and two points conditional probabilities. At this point, all the information required to efficiently calculate Eq. \eqref{eq:Markov_CondAB_H} is available, and consequently it is possible to solve the \emph{MES} rule. All conditional probabilities, in Eq. \eqref{eq:Markov_CondAB_pmf_4} and Eq. \eqref{eq:Markov_JointAB_pmf}, can be estimated from the transition matrix by the n-step transition probabilities from Eq. \eqref{eq:Markov_TransProbM}. In addition, the marginal probabilities for $p(x_{b_{1}})$ required in Eq. \eqref{eq:Markov_JointAB_pmf}, can be iteratively calculated \citep{cover_2006} by:
+
+\begin{equation}
+\label{eq:Markov_Marginal_pmf}
+	p(x_{i}) = \sum_{x_{i-1} \in \mathcal{A}}{ p(x_{i-1}) \cdot p(x_{i} | x_{i-1})}
+\end{equation}
+
+In brief, as expected for a \emph{1-D} Markov chain, all the conditional entropy characterization relies on the transition matrix and the initial marginal distribution for the state $X_{1}$.
+
+In addition, using Eq. \eqref{eq:Markov_CondAB_pmf_5} the target entropy of the conditional distribution for the state $X_{i}$, can be defined as:
+                   
+\begin{align}
+\label{eq:Markov_CondAB_H_Reduced}
+	H(X_{i} \ | \ \left\{X_{b_{j}}\right\} = \left\{x_{b_{j}}\right\} & , \left\{X_{a_{j}}\right\} = \left\{x_{a_{j}}\right\}) \nonumber \\
+	& = - \sum_{ x_{i} \in \mathcal{A} }{ p(x_{i} \ | \ \left\{x_{b_{j}}\right\} , \left\{x_{a_{j}}\right\}) \cdot log \ p(x_{i} \ | \ \left\{x_{b_{j}}\right\} , \left\{x_{a_{j}}\right\})   }   \nonumber \\
+	    \text{\tiny{by Eq. \eqref{eq:Markov_CondAB_pmf_5}}}  & =  - \sum_{ x_{i} \in \mathcal{A} }{ p(x_{i} \ | \ x_{b_{B}} , x_{a_{1}}) \cdot log \ p(x_{i} \ | \ x_{b_{B}} , x_{a_{1}})   }   \nonumber \\
+			 & =  H(X_{i} \ | \ X_{b_{B}} = x_{b_{B}} , X_{a_{1}} = x_{a_{1}})
+\end{align}
+
+Then, from Eq. \eqref{eq:Markov_CondAB_H_MargCond} and Eq. \eqref{eq:Markov_CondAB_H_Reduced}, the conditional entropy can be formulated as:
+
+\begin{equation}
+\label{eq:Markov_CondAB_H_Reduced_WithMargCond}
+	H(X_{i} \ | \ \left\{X_{b_{j}}\right\} , \left\{X_{a_{j}}\right\}) = \sum_{  \left\{x_{b_{j}}\right\} \in \mathcal{A}^{B}  }{ }{ \ \ \sum_{  \left\{x_{a_{j}}\right\} \in \mathcal{A}^{A}      }{ p(\left\{x_{b_{j}}\right\} , \left\{x_{a_{j}}\right\}) \cdot H( X_{i} \ | \ X_{b_{B}} = x_{b_{B}} , X_{a_{1}} = x_{a_{1}})   }}
+\end{equation}
+
+A preliminary attempt to reduce the Eq. \eqref{eq:Markov_CondAB_H_Reduced_WithMargCond} consisted in properly separating the conditional variables:
+
+%\tiny
+
+\begin{align}
+\label{eq:Markov_CondAB_H_reducing}
+	H(X_{i} \ | & \ \left\{X_{b_{j}}\right\} , \left\{X_{a_{j}}\right\})  \nonumber \\
+	= & \sum_{  \left\{x_{b_{j}}\right\} \setminus x_{b_{B}} \in \mathcal{A}^{B-1}  }\sum_{  x_{b_{B}} \in \mathcal{A}} \ \ \sum_{  \left\{x_{a_{j}}\right\} \setminus x_{a_{1}} \in \mathcal{A}^{A-1} }\sum_{x_{a_{1}} \in \mathcal{A} } \left[ \right. \nonumber \\
+	& \ \ \ \ \ \ \ \ \ \ \ \ p(\left\{x_{b_{j}}\right\} \setminus x_{b_{B}}, x_{b_{B}} , \left\{x_{a_{j}}\right\} \setminus x_{a_{1}}, x_{a_{1}}) \cdot H( X_{i} \ | \ X_{b_{B}} = x_{b_{B}} , X_{a_{1}} = x_{a_{1}})   \left. \right]   \nonumber \\
+	\nonumber \\
+	\text{\tiny{By Bayes}} = & \sum_{  \left\{x_{b_{j}}\right\} \setminus x_{b_{B}} \in \mathcal{A}^{B-1}  }\sum_{  x_{b_{B}} \in \mathcal{A}} \sum_{  \left\{x_{a_{j}}\right\} \setminus x_{a_{1}} \in \mathcal{A}^{A-1} }\sum_{x_{a_{1}} \in \mathcal{A} } \left[ \right. \nonumber \\
+	& \ \ \ \  p(x_{b_{B}} , x_{a_{1}} \ | \ \left\{x_{b_{j}}\right\} \setminus x_{b_{B}} , \left\{x_{a_{j}}\right\} \setminus x_{a_{1}}) \cdot p(x_{b_{B}} , x_{a_{1}})  \cdot H( X_{i} \ | \ X_{b_{B}} = x_{b_{B}} , X_{a_{1}} = x_{a_{1}})     \left. \right]  \nonumber \\
+	\nonumber \\
+	= & H( X_{i} \ | \ X_{b_{B}}, X_{a_{1}} ) \cdot \sum_{  \left\{x_{b_{j}}\right\} \setminus x_{b_{B}} \in \mathcal{A}^{B-1}  }\sum_{  x_{b_{B}} \in \mathcal{A}} \sum_{  \left\{x_{a_{j}}\right\} \setminus x_{a_{1}} \in \mathcal{A}^{A-1} }\sum_{x_{a_{1}} \in \mathcal{A} } \left[ \right. \nonumber \\
+	&  \ \ \ \ \ \ \ \ \ p(x_{b_{B}} , x_{a_{1}} \ | \ \left\{x_{b_{j}}\right\} \setminus x_{b_{B}} , \left\{x_{a_{j}}\right\} \setminus x_{a_{1}})  \left. \right]   \nonumber \\	
+		= & H( X_{i} \ | \ X_{b_{B}}, X_{a_{1}} ) 
+\end{align}
+\normalsize
+
+Only for these two conditioning variables:
+
+\begin{align}
+\label{eq:Markov_CondAB_H_Reduced_FullNom_FORTWO}
+	H(X_{i} \ | \ X_{b_{B}} , X_{a_{1}}) = & - \sum_{  x_{b_{B}} \in \mathcal{A}  }{ \ \ \sum_{ x_{i} \in \mathcal{A} }{ \ \ \sum_{  x_{a_{1}} \in \mathcal{A}      }{ }}} \left[ \left(   \right. \right.  \nonumber \\
+			&	p(X_{b_{B}} = x_{b_{B}}) \cdot p(X_{i} = x_{i} \ | \ X_{b_{B}} = x_{b_{B}}) \cdot p(X_{a_{1}} = x_{a_{1}} \ | \ X_{i} = x_{i})     \nonumber \\
+  		& \left. \left.	\right) \cdot log \ p(X_{i} = x_{i} \ | \ X_{b_{B}} = x_{b_{B}} , X_{a_{1}} = x_{a_{1}})  \right]  
+\end{align}
+
+
+Finally, using Eq. \eqref{eq:Markov_CondAB_pmf_4}:
+
+\begin{align}
+\label{eq:Markov_CondAB_H_Reduced_FullNom_FORTWO_2}
+	H(X_{i} \ | \ X_{b_{B}} , X_{a_{1}}) = & - \sum_{  x_{b_{B}} \in \mathcal{A}  }{ \ \ \sum_{ x_{i} \in \mathcal{A} }{ \ \ \sum_{  x_{a_{1}} \in \mathcal{A}      }{ }}} \left[ \left(   \right. \right.  \nonumber \\
+			&	p(X_{b_{B}} = x_{b_{B}}) \cdot p(X_{i} = x_{i} \ | \ X_{b_{B}} = x_{b_{B}}) \cdot p(X_{a_{1}} = x_{a_{1}} \ | \ X_{i} = x_{i})     \nonumber \\
+  		& \left. \left.	\right) \cdot log  \  \left(      \frac{  p(x_{a_{1}}  \ | \   x_{i} ) \cdot p(x_{i}  \ | \ x_{b_{B}})  }{      p(x_{a_{1}} \ | \ x_{b_{B}} )  }   \right)     \right]  
+\end{align}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+\section{Formulation and Implementation of Noisy Sparse Promoting Solvers}
+\label{sec_Meth_aNSR}
+
+Given sampling schemes provided by \emph{OSP}, its comparison with some sparse promoting oriented schemes has been proposed by the modification of classical $L1$ minimizers solver (available in the $L1$ magic and \emph{CVX} software). The contribution has been focused on formulating the signal recovery process as a generalized sampling problem. The idea relies on to take advantage of the sparse nature of channelized structures, the reduced spatial variations of the \emph{2-D} images in the proposed database and the use of a prior statistical model as an additional source of information related with spatial dependencies and pixel uncertainty.  
+
+Therefore, applying principles from \emph{Noisy compressive Sensing} (\emph{NCS}) to the reconstruction of binary channels of permeability for the estimation of the model, it is possible to use \emph{MPS} realizations as a source of statistical data. In particular, it allows the estimation of variance and covariance of the target regionalized variables.
+
+\subsection{\emph{NCS} and \textit{Whitening} process}
+
+The main idea supporting this preliminary work was to consider the noise associated to measurements in the sparse recovery solver. 
+
+The noise associated to measurements has been incorporated in the sparse recovery solver relaxing the search space. In this way, given a small amount of noisy measurements from geologic data ($m$ measures from a field of $N$ variables, with $m << N$), the target is to reconstruct the \emph{actual} channel. While traditional \emph{CS} approaches deal with time-invariant sparse signals without error in measurements, the motivation was supported by the next hypothesis: 1) \emph{NCS} provides a theory of signal recovery from highly incomplete noisy information, and 2) \emph{MPS} could provide information about signal variability required to the noise characterization on \emph{NCS} framework.
+
+Thus, a preliminary framework of \emph{NCS} has been  implemented and validated oriented to improve \emph{MPS} performance. Standard \emph{CS} implementation for channelized binary structures was proposed and implemented for others members of the \emph{IDS} Lab \footnote{Information and Decision Systems Laboratory, \emph{IDS} Lab, at Electrical Engineering Department, Universidad de Chile.}. The reader is referred to \cite{Calderon2015_a} for more details on this approximation. Classical conditions and theory of \emph{NCS} was described in sections \ref{subSecBasicCSFor} and \ref{subSecGeneralNCS}.
+
+%In an initial stage
+Here, previous works are extended in order to consider noisy measures, providing a framework to noise characterization. In order to apply the theory of \emph{NCS} a signal model with white noise is required, then a whitening process is needed to use the proposed methods. Thus,the next \emph{sensing model} has been considered: \\
+
+\begin{align}
+	 I & = \Phi \cdot Z     \\ 
+	 X & = I(:)             \\
+	 Y_{Sampled} & = A \cdot X + \xi 
+\label{eq_NCS_Model_UsModel}
+\end{align}
+
+
+{with}
+
+			\begin{itemize}
+					\item $Z$    ($M$ x $M$)   : Signal in transformed domain (in this case a \emph{2-D} \emph{DCT} coefficients matrix of size $200$ x $200$)
+					\item $\Phi$ ($M$ x $M$)   : Transform matrix (inverse \emph{DCT} in this work)
+
+					\item $I$    ($M$ x $M$)   : Image in canonical domain
+					\item $X$    ($N$ x $N$)   : Vectorization of signal in image domain ($N$ = $M$ x $M$, in this case $40000$)
+					
+					\item $A$    ($m$ x $N$) : Sampling matrix (m vectors randomly taken from $N$ x $N$ Identity matrix) 										
+															
+					\item $Y_{Sampled}$    ($m$ x $1$)   : vector of $m$ measurements (including Hard and Soft Data) 
+					\item $\xi$  ($m$ x $1$)   : vector of noise in measurements, with covariance matrix $C_v$ and mean $\xi_{mean}$.
+			\end{itemize}
+	
+At this point the Eq. \eqref{eq_NCS_Model_UsModel} only differs from \cite{Calderon2015_a} approach in the incorporation of noise component. Here, the noise $\xi$ would be a spatially correlated noise, requiring a \emph{whitening} pre-processing.
+
+	
+A signal model with zero mean noise has been described by the subtraction of the mean of noise $\xi_{mean}$ obtaining: \\
+	
+	\begin{align}
+			Y_{Sampled} - \xi_{mean} = A \cdot X + \xi - \xi_{mean}
+			\label{eq_NCS_Model_UsModel_zeroMean_Full}
+\end{align}
+
+Defining zero mean variables and rewriting the expression in Eq. \eqref{eq_NCS_Model_UsModel_zeroMean} is: \\
+
+\begin{align}
+			Y_{0} = A \cdot X + \xi_{0}
+			\label{eq_NCS_Model_UsModel_zeroMean}
+\end{align}
+					
+From Eq. \eqref{eq_NCS_Model_UsModel_zeroMean} it is required an additional process to obtain a model with a non correlated noise. In order to achieve a sensing model under white noise and assuming the existence of an invertible covariance matrix for $\xi_{0}$ the next formulation has been achieved: \\
+
+	\begin{align}
+			C_{v}^{\frac{-1}{2}} \cdot Y_{0} & = C_{v}^{\frac{-1}{2}} \cdot A \cdot X + C_{v}^{\frac{-1}{2}} \cdot \xi_{0} \\
+			C_{v}^{\frac{-1}{2}} \cdot Y_{0} & = C_{v}^{\frac{-1}{2}} \cdot A \cdot X + \eta  \\
+			\widehat{Y} & = C_{v}^{\frac{-1}{2}} \cdot A \cdot X + \eta	
+			\label{eq_NCS_Model_UsModel_whitenoise_Generic}
+\end{align}						
+
+Finally, replacing the vectorization process:
+
+	\begin{align}
+			\widehat{Y} & = C_{v}^{\frac{-1}{2}} \cdot A \cdot VEC(\Phi \cdot Z) + \eta 	
+			\label{eq_NCS_Model_UsModel_whitenoise}
+\end{align}						
+
+	
+The Eq. \eqref{eq_NCS_Model_UsModel_whitenoise} fits the classical framework of \emph{NCS} for signals under white noise model. The selection of the sampling matrix $A$ satisfies isotropic property, the vectorization process $VEC(\cdot)$ retain spatial dependence in the regionalized field, the basis DCT provides a domain where the signal is compressible, and $C_{v}$ is estimated as the experimental covariance of realizations of \emph{MPS}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%\section{Incorporation of Virtual Noisy Measures by \emph{MPS}}
+%\label{sec_Meth_iVNM}
+
+
+%\section{Integration of \emph{OWP} and \emph{NCS}}
+%\label{sec_Meth_iOWPandNCS}
+
+%\subsection{Bayesian Methods}
+
+%MAP estmn. using a sparse linear model
+%Also a regression problem with sparsity
+%promoting penalties (e.g., lp-norm)
+%l1-min (BP/LASSO) is a special case
+
+%MAP Estimation
+%\begin{align}
+%	\[ \mathbf{x}^{*} = argmax_{\mathbf{x}}{p\left( \mathbf{x} | \mathbf{y}   \right) } \]
+%	\[ \mathbf{x}^{*} = argmin_{\mathbf{x}}{- log \left( p\left( \mathbf{y} | \mathbf{x}\right) \right) - log \left( p \left( \mathbf{x} \right) \right) } \]	
+%	\[ \mathbf{x}^{*} = argmin_{\mathbf{x}}{ \left\| \mathbf{y} - \Phi \cdot \mathbf{x} \right\|_{2}^{2}  + \lambda \cdot \sum_{i = 1}^{N}{g \left( \left| x_{i} \right| \right) }} \]	
+%\end{align}
+
+%where $g \left( \left| x_{i} \right| \right)$ represents a Separable Prior.
+
+%For sparse solutions, g(|xi|) should be a concave,
+%nondecreasing function
+%Example: $g \left( \left| x_{i} \right| \right) = \left| x_{i} \right|^{p}$ with $p \leq 1$
+%Lasso is a special case: $p = 1$
+%Any local min. of the MAP estmn problem has at
+%most M nonzeros (Rao et al., 99)
+
+
+
+
+
+
+
+\subsection{On Noisy Compressive Sensing Performance}
+\label{sec_exp_NCS_APP}
+
+
+\emph{NCS} theory has been a motivation to study the spatial co-dependencies of the regionalized variable of interest. heretofore, how \emph{MPS} can help in achieving this task have been investigated and it generated a preliminary analysis of how the incorporation of spatial dependence improves sparse promoting algorithms.
+
+\subsubsection{Statistical Analysis from \emph{MPS}}
+
+Using the data base of multichannel \emph{$MC_{1}$} model, obtained $200$ \emph{MPS} realizations has been obtained from several sampling rates. For each sampling regime, the second order statistics has been estimated. As shown in fig. \ref{fig:StatsMC1} the field variance in low rate sampling regimes is higher than in regimes with more measurements. In the extreme case of $0.1 \% $ measurements, the variance at most field positions was extremely uncertain. As the measurements increased a reduction of non local variance has been observed, thereby the powerful of spatial conditioning from \emph{MPS} has been validated.
+
+		\begin{figure}[H]
+		\centering
+		\centerline
+		{
+			\begin{subfigure}[b]{0.15\textwidth}
+				\includegraphics[width=\textwidth]{Figs_Slides/01_Orig.png}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}
+					\includegraphics[width=\textwidth]{Figs_Slides/05_Orig.png}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}
+					\includegraphics[width=\textwidth]{Figs_Slides/1_Orig.png}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}
+					\includegraphics[width=\textwidth]{Figs_Slides/2_Orig.png}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}
+					\includegraphics[width=\textwidth]{Figs_Slides/3_Orig.png}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}
+					\includegraphics[width=\textwidth]{Figs_Slides/4_Orig.png}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}
+					\includegraphics[width=\textwidth]{Figs_Slides/5_Orig.png}
+			\end{subfigure}
+		}
+		\centerline{
+			\begin{subfigure}[b]{0.15\textwidth}{\includegraphics[width=\textwidth]{Figs_Slides/01_Mean.png}}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}{\includegraphics[width=\textwidth]{Figs_Slides/05_Mean.png}}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}{\includegraphics[width=\textwidth]{Figs_Slides/1_Mean.png}}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}{\includegraphics[width=\textwidth]{Figs_Slides/2_Mean.png}}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}{\includegraphics[width=\textwidth]{Figs_Slides/3_Mean.png}}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}{\includegraphics[width=\textwidth]{Figs_Slides/4_Mean.png}}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}{\includegraphics[width=\textwidth]{Figs_Slides/5_Mean.png}}
+			\end{subfigure}
+		}
+		\centerline{		
+			\begin{subfigure}[b]{0.15\textwidth}{\includegraphics[width=\textwidth]{Figs_Slides/01_Std.png}}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}{\includegraphics[width=\textwidth]{Figs_Slides/05_Std.png}}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}{\includegraphics[width=\textwidth]{Figs_Slides/1_Std.png}}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}{\includegraphics[width=\textwidth]{Figs_Slides/2_Std.png}}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}{\includegraphics[width=\textwidth]{Figs_Slides/3_Std.png}}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}{\includegraphics[width=\textwidth]{Figs_Slides/4_Std.png}}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.15\textwidth}{\includegraphics[width=\textwidth]{Figs_Slides/5_Std.png}}
+			\end{subfigure}
+		}
+		
+			\caption{Statistics from simulations.}
+			\scriptsize{ For scenarios considering 0.1 \%, 0.5 \%, 1 \%, 2 \%, 3 \%, 4 \%, and 5 \% of hard data measures.}
+		\label{fig:StatsMC1}	
+\end{figure}		
+
+As expected for \emph{MPS}, these preliminary outcomes shown that statistical analysis from \emph{MPS} realizations provides some kind of information about the variability of the value of a non measured pixel from the knowledge of positions and values of hard data measurements. This validate the use of \emph{MPS} realizations as an estimation of the spatial covariance between regionalized variables conforming the stochastic field.
+
+In next subsections several attempts of incorporating information from \emph{MPS} realizations in the \emph{NCS} problem has been explored. The main idea was to provide an estimation of covariance matrix and to use it in whitening process.
+
+
+\subsubsection{\emph{NCS}. Naive Approach I. what Covariance?}
+
+The most simple assumption was considered that there was no correlation between regionalized variables, and that all variables was modeled incorporating only withe noise with zero mean and the same variance for all the regionalized variables. Under this assumption the variance noise at each individual variable was estimated directly by pixel variance estimation from \emph{MPS} realizations.
+
+At standard \emph{CS} approaches only measurements are considered as input to the reconstruction methods and no one knowledge is given for unmeasured regionalized variables. The incorporation of \emph{MPS} allows no only statistical analysis for global stochastic field, but also the opportunity of considering simulated regionalized variables as noisy virtual measures. 
+
+Here most naive \emph{NCS} approach correspond to consider the model from Eq. \eqref{eq_NCS_Model_UsModel_whitenoise} but with $C_{v}^{\frac{-1}{2}}$ equal to the identity matrix of proper size. Thus, using a mixture of hard data measures and simulated \emph{virtual} measures in standard \emph{CS} does not take advantage of the statistical information provided for the proposed \emph{MPS} analysis because all measurements are considered without uncertainty. The above entails that the \emph{CS} reconstruction would be more close to the specific \emph{MPS} realization than to the real target image. 
+
+		\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.32	\textwidth]{Figs_Slides/pXY1SNR_NCS.png}
+		\includegraphics[width=0.32	\textwidth]{Figs_Slides/pXY2SNR_NCS.png}
+		\includegraphics[width=0.32	\textwidth]{Figs_Slides/pXY3SNR_NCS.png}
+
+		\includegraphics[width=0.32	\textwidth]{Figs_Slides/pXY1SSIM_NCS.png}
+		\includegraphics[width=0.32	\textwidth]{Figs_Slides/pXY2SSIM_NCS.png}
+		\includegraphics[width=0.32	\textwidth]{Figs_Slides/pXY3SSIM_NCS.png}
+
+		\caption[Performance Analysis of Naive Approach of \emph{NCS} by relaxing restrictions]{Performance Analysis of Naive Approach of \emph{NCS} by only relaxing restrictions on soft data.} \scriptsize{ From an initial amount of hard data measurements some level of soft virtual measurements are added from simulations and then \emph{CS} and naive \emph{NCS} approaches are applied. Upper row \emph{SNR} analysis, lower row \emph{SSIM} analysis.From left to right  : initial $1 \%$ of hard data , initial $2 \%$ of hard data, and initial $3 \%$ of hard data.}
+		\label{fig:Naive0MC1_Performance}
+		\end{figure}
+		
+As shown in fig. \ref{fig:Naive0MC1_Performance}, partial results on the most naive \emph{NCS} approach present a lower performance than classical \emph{CS}. As reference the performance of \emph{MPS} is shown by the statistics of simulations (mean and variance), \emph{CS} curves consider hard data and soft data as fixed measures while \emph{NCS} allows some uncertainty for these measures. For \emph{SSIM} indicator all reconstructions curves has very close performance, while for \emph{SNR} indicator the classical \emph{CS} achieves a better global performance.  
+
+Without incorporating  spatial correlations on the regionalized variables no advantage from \emph{NCS} theory has been achieved. Including uncertainty on measures only increase the searching space for the optimization algorithms. Thus, the next motivation was to include additional constraints promoting desired features on the regionalized variables. 
+
+The next step has corresponded to incorporate proposed amendments from section \ref{subSecGeneralNCS}. Using alternate recovery models promoting sparsity on signal gradients instead on the signal itself. 
+
+In figure \ref{fig:Naive1MC1}, several configurations of hard and virtual data are presented but considering reconstruction approaches using total variation. In terms of visual inspection is possible to appreciate an improvement in the performance of \emph{NCS}. This behavior is confirmed by analysis of the metrics \emph{SNR} and \emph{SSIM} as shown in fig. \ref{fig:Naive1MC1_Performance}. 
+
+		\begin{figure}
+		\centering
+		
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_imTrue.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_1_1_imNew.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_1_1_imH8.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_1_1_imF_DS8.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_1_1_imF_TV8.png}
+		
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_imTrue.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_1_10_imNew.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_1_10_imH8.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_1_10_imF_DS8.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_1_10_imF_TV8.png}
+		
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_imTrue.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_2_7_imNew.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_2_7_imH8.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_2_7_imF_DS8.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_2_7_imF_TV8.png}
+				
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_imTrue.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_4_4_imNew.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_4_4_imH8.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_4_4_imF_DS8.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_4_4_imF_TV8.png}
+						
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_imTrue.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_5_5_imNew.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_5_5_imH8.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_5_5_imF_DS8.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_5_5_imF_TV8.png}
+								
+        \includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_imTrue.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_5_10_imNew.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_5_10_imH8.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_5_10_imF_DS8.png}
+		\includegraphics[width=0.19	\textwidth]{Figs_Slides/Olds_5_10_imF_TV8.png}
+										
+		\caption{Examples of outcomes for \emph{NCS} without considering spatial dependence.}
+		\scriptsize{From left to right: Target field image, hard data plus simulated data (HD+SD level), standard \emph{CS} reconstruction for HD+SD, \emph{NCS} for HD+SD by Dantzig selector approach, \emph{NCS} for HD+SD by Dantzig selector and \emph{TV} approach. Rows: Different levels of hard data and simulated data from \emph{MPS} realizations: 1 \% \emph{HD} plus 0 \% \emph{SD}, 1 \% \emph{HD} plus 9 \% \emph{SD}, 2 \% \emph{HD} plus 8 \% \emph{SD}, 4
+	\% \emph{HD} plus 6 \% \emph{SD}, 5
+	\% \emph{HD} plus 5 \% \emph{SD}, 5
+	\% \emph{HD} plus 10 \% \emph{SD}
+		}
+		\label{fig:Naive1MC1}
+		%\caption{From left to right: Real Data: 1 \% , Total Data: 10 \%. True Image. Sim \& Real Data. CS reconstruction. NCS Dantzig. NCS Dantzig TV.}
+		\end{figure}
+
+
+		\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.32	\textwidth]{Figs_Slides/pXY1SNR.png}
+		\includegraphics[width=0.32	\textwidth]{Figs_Slides/pXY3SNR.png}
+		\includegraphics[width=0.32	\textwidth]{Figs_Slides/pXY4SNR.png}
+
+		\includegraphics[width=0.32	\textwidth]{Figs_Slides/pXY1SSIM.png}
+		\includegraphics[width=0.32	\textwidth]{Figs_Slides/pXY3SSIM.png}
+		\includegraphics[width=0.32	\textwidth]{Figs_Slides/pXY4SSIM.png}
+
+		\caption[Performance Analysis of Naive Approach of \emph{NCS} adding \emph{TV}.]{Performance Analysis of Naive Approach of \emph{NCS} by only relaxing restrictions on soft data adding \emph{TV} as sparsity promoting approach.}
+		\scriptsize{From an initial amount of hard data measurements some level of soft virtual measurements are added from simulations and then \emph{CS} and naive \emph{NCS} approaches are applied. Upper row \emph{SNR} analysis, lower row \emph{SSIM} analysis.From left to right  : initial $1 \%$ of hard data , initial $3 \%$ of hard data, and initial $4 \%$ of hard data.}
+		\label{fig:Naive1MC1_Performance}	
+	\end{figure}
+
+
+
+\subsubsection{\emph{NCS}. Naive Approach II. Spatial Independence }
+
+Here, regionalized variables are considered independent but for each pixel the noise variance is estimated from the empirical variance by the values simulated at this pixel. Thus far only qualitative results has been obtained at this point which account for an apparent improvement in the method's ability to capture something of the structure of original image (figs. \ref{fig:Naive2MC1_Performance_1}, \ref{fig:Naive2MC1_Performance_2}, \ref{fig:Naive2MC1_Performance_3} and \ref{fig:Naive2MC1_Performance_4}).
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/SC_1_imTrue.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/SC_1_imCS_BP_R_1.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/SC_1_imCS_QC_R_1.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/SC_1_imCS_DS_R_1.png}			
+		\caption[Example of \emph{NCS} reconstruction under independence: SC1]{Example of \emph{NCS} reconstruction under assumption of independence: SC1.}
+		\scriptsize{Hardata 0.1 \%. True Image. Standard \emph{CS}. \emph{NCS} by quadratic constraints. NCS by Dantzig selector.}
+				\label{fig:Naive2MC1_Performance_1}	
+		\end{figure}
+
+
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/MC_1_imTrue.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/MC_1_imCS_BP_R_1.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/MC_1_imCS_QC_R_1.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/MC_1_imCS_DS_R_1.png}			
+		\caption[Example of \emph{NCS} reconstruction under independence: MC1]{Example of \emph{NCS} reconstruction under assumption of independence: MC1.}
+		\scriptsize{Hardata 0.1 \%. True Image. Standard CS. NCS by quadratic constraints. NCS by Dantzig.}
+				\label{fig:Naive2MC1_Performance_2}		
+		\end{figure}
+
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/MC_2_imTrue.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/MC_2_imCS_BP_R_1.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/MC_2_imCS_QC_R_1.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/MC_2_imCS_DS_R_1.png}			
+		\caption[Example 1 of \emph{NCS} reconstruction under independence: MC2]{Example 1 of \emph{NCS} reconstruction under assumption of independence: MC2.}
+		\scriptsize{Hardata 0.1 \%, Soft data 29.9 \%. True Image. Standard CS. NCS by quadratic constraints. NCS by Dantzig selector.}
+				\label{fig:Naive2MC1_Performance_3}		
+		\end{figure}
+
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/MC_2_01_4_4_imTrue.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/MC_2_01_4_4_imCS_BP_R_1.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/MC_2_01_4_4_imCS_QC_R_1.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/MC_2_01_4_4_imCS_DS_R_1.png}			
+		\caption[Example 2 of \emph{NCS} reconstruction under independence: MC2]{Example 2 of \emph{NCS} reconstruction under assumption of independence:  MC2}
+		\scriptsize{Hardata 0.1 \%, Soft data 3.9 \%. True Image. Standard CS. NCS by quadratic constraints. NCS by Dantzig selector.}
+				\label{fig:Naive2MC1_Performance_4}		
+		\end{figure}
+
+
+
+\subsubsection{\emph{NCS}. Approach III. Full Covariance}
+
+Here, regionalized variables are considered with its full spatial dependence. The spatial dependence requires a dense covariance matrix of size $N$ by $N$ demanding more computational resources. Thus far only qualitative results has been obtained which account for an apparent improvement in the method's ability to capture both global structure and deltails of original image from low sampling regimes (figs. \ref{fig:Naive2MC2_Performance_1} and \ref{fig:Naive2MC2_Performance_2}).
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/Full_01_4_4_imTrue.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/Full_01_4_4_imCS_BP_R_1.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/Full_01_4_4_imCS_QC_R_1.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/Full_01_4_4_imCS_DS_R_1.png}			
+		\caption{Example 1 of \emph{NCS} with full covariance estimation: MC2.}
+		\scriptsize{Hardata 0.1 \%, Soft data 3.9 \%. True Image. Standard CS. NCS by quadratic constraints. NCS by Dantzig selector.}
+				\label{fig:Naive2MC2_Performance_1}			
+		\end{figure}
+
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/MC_2_Comp_StandarNCS.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/MC_2_Comp_StandarNCS.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/MC_2_Comp_QCNCS.png}
+			\includegraphics[width=0.24	\textwidth]{Figs_Slides/MC_2_Comp_DSNCS.png}			
+		\caption{Example 2 of \emph{NCS} with full covariance estimation: MC2.}
+		\scriptsize{Hardata 1 \%, Soft data 99 \%. True Image. Standard CS. NCS by quadratic constraints. NCS by Dantzig selector.}
+				\label{fig:Naive2MC2_Performance_2}					
+		\end{figure}
+

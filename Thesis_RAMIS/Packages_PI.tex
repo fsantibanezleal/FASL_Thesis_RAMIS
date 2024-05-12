@@ -1,0 +1,69 @@
+\RequirePackage{fix-cm}
+%
+%\documentclass{svjour3}                     % onecolumn (standard format)
+%\documentclass[smallextended]{svjour3}       % onecolumn (second format)
+%\documentclass[smallcondensed]{svjour3}     % onecolumn (ditto)
+%\documentclass[smallextended,referee,natbib]{svjour3}       % onecolumn (second format)
+%\documentclass[smallextended,natbib]{svjour3}       			% onecolumn (second format)
+%\documentclass[twocolumn]{svjour3}          % twocolumn
+%
+%\smartqed  % flush right qed marks, e.g. at end of proof
+%
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{arrows,positioning}
+\usetikzlibrary{calc,matrix}
+
+\usepackage{graphicx}
+\usepackage{color,soul}
+%
+% \usepackage{mathptmx}      % use Times fonts if available on your TeX system
+\usepackage{amsfonts}
+%
+% insert here the call for the packages your document requires
+\usepackage{amsmath, amssymb, mathbbol}
+\usepackage{lineno}
+\usepackage{multirow}
+
+
+%To highlight the text: --------------
+\newcommand{\red}[1]{\textcolor{red}{}}
+\newcommand{\js}[1]{\textcolor{blue}{#1}}
+\newcommand{\jsc}[1]{\textcolor{red}{#1}}
+\newcommand{\jse}{\textst}
+
+
+% FASL packages
+\usepackage{dsfont}
+\usepackage{algorithm2e}
+\usepackage{tikz}
+\usetikzlibrary{matrix,positioning,arrows.meta,arrows}
+
+\tikzset{
+mymat/.style={
+  matrix of math nodes,
+  text height=2.5ex,
+  text depth=0.75ex,
+  text width=6.25ex,
+  align=center,
+  column sep=-\pgflinewidth
+  },
+mymats/.style={
+  mymat,
+  nodes={draw,fill=#1}
+  }  
+}
+
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+
+\hyphenation{Goo-va-erts}
+
+%\usepackage{latexsym}
+% etc.
+%
+% please place your own definitions here and don't use \def but
+% \newcommand{}{}
+%\newcommand{\argmax}{\arg\!\max}
+%\newcommand{\argmin}{\arg\!\min}
+%\usepackage{natbib}
+%\bibliographystyle{plainnat}

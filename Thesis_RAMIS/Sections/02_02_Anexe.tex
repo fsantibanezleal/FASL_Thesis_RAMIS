@@ -1,0 +1,300 @@
+\clearpage
+\chapter{Complementary Material for Chapter \ref{chapter_PII}}
+\label{appendix_GOBLAL_PII}
+
+
+
+\section{App. I: Pseudocode}
+\label{appendix_seudo_code_PII}
+
+The implemented pseudo-code that summarizes the proposed framework is shown here.
+
+\vspace{0.5cm}
+
+\small{
+	\begin{algorithm}[H]
+		\label{HeuAdSEMES_PII}
+		\textbf{Initialization} \\
+		Reference image $\bar{X}$, the regularization term $\alpha$, the batch size $r$, the threshold $tsh_{grade}$ for ore-waste selection and the number of samples to take $K$\\
+		\tcc{Output: set of sampled positions}
+		$f^{bench}_{K} = \emptyset $ \\
+		\tcc{Inputs and variables. $\mathcal{H}^k$ Estimated Remaining entropy for $k-1$ samples}
+		$\mathcal{H}^k = ones(size(\bar{X}))$, $\mathcal{D} = inf(size(\bar{X}))$, $distMean = inf$\\
+		\textbf{Computation} \\
+		\For{$bench \leftarrow 1$}{
+			$f^{ 1}_{K} = Regular\_Sampling\_Approach(K)$\\
+			$\hat{X}^{1} = Kriging\_From\_Samples(f^{1}_{K})$\\
+			$\hat{I}^{1} = \hat{X}^{1} \geq tsh_{grade}$\\
+		}
+		\For{$bench \leftarrow 2$ \KwTo $B$}{
+			\tcc{Estimate initial TI from the upper bench}
+			$\hat{TI}^{bench} \leftarrow \hat{I}^{bench - 1}$\\
+			\tcc{Init the adaptive sampling process}
+			$f^{bench}_{K} = \emptyset $ , $f_{K} = \emptyset $ \\
+			\For{$k \leftarrow 1$ \KwTo $K$}{
+				$f^{bench}_{k-1} \leftarrow f_{K}$ \\
+				\tcc{Update {MPS} simulations from previous available samples}
+				\eIf{ $Criterion\_To\_Update\_MPS\_Realizations(k,r)$}{
+					$\mathcal{H}^{k} = Entropy_{Estimated\_by\_MPS\_\&\_Samples}(\hat{TI}^{bench},{X}^{bench}_{f_{k-1}},size(\bar{X}^{bench}),f^{bench}_{k-1})$ \\
+					$\mathcal{D} = Estimated\_Distances\_From\_Sampled\_Locations(size(\bar{X}),f^{bench}_{k-1})$\\
+					$distMean = Mean(\mathcal{D})$\\
+					
+					$\hat{X}^{bench} = Kriging\_From\_Samples(f^{bench}_{k-1})$\\
+					$\hat{I}^{bench} = \hat{X}^{1} \geq tsh_{grade}$\\
+					$\hat{TI}^{bench} \leftarrow \hat{I}^{1}$\\
+				}{
+					$\mathcal{H}^{bench} = \mathcal{H}^{bench}  - Local\_Mutual\_Information_{empirical}(f^{bench}_{k-1}(k-1))$ \\
+					$\mathcal{D} = \mathcal{D} .\cdot Radial\_Attenuation\_Centred\_At\_Location(size(\bar{X}^{bench}),distMean,k-1)$\\
+				}
+				\tcc{Set of current available position to sample. The complement set of the previously sampled locations}
+				$\hat{f}^{bench}_{k-1} = Complement\_Set\_Of\_F(f^{bench}_{k-1})$ \\
+				\tcc{Regularized Criterion by Mixing of Entropy and Distance }
+				$\mathcal{M} = \alpha \cdot \mathcal{H}^{bench} + (1.0 - \alpha) \cdot  \mathcal{D}$\\
+				\tcc{Choose a location randomly from the set of non sampled locations with maximal value for the objective function}
+				$ f^{bench}_{K}(k) = Select\_Random\_Location\_From\_Maximum\_Criterion(\mathcal{M}_{\hat{f}^{bench}_{k-1} } ) $
+			}
+		}	
+		\caption{Pseudo code implementing the adaptive framework from rules in (\ref{eq_subsec_ObjectiveFunction_1_PII}). 
+			%and (\ref{eq_subsec_ObjectiveFunction_6_PII}).
+		} 
+	\end{algorithm}
+}
+
+\section{App. II: Detailed Database}
+\label{app_databases_PII}
+
+\subsection{Case Study 2}
+For case study 2, the available drill-hole samples and blasting samples for the 6 benches are shown in fig. \ref{fig:db_drill-holes_CS2_PII} and fig. \ref{fig:db_blast_CS2_PII} respectively. The ground truth was created using the software kt3d (fig. \ref{fig:db_gt_CS2_PII}).
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1.\columnwidth]{Figs_PII/Figure_09a_PII}
+	\caption{\label{fig:db_drill-holes_CS2_PII} Drill-hole samples data for case study $2$. From left to right: Benches 1-6. Colormap: the same as in Fig. \ref{fig:db_drill-holes_CS1_PII}.}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1.\columnwidth]{Figs_PII/Figure_09b_PII}
+	\caption{\label{fig:db_blast_CS2_PII} Blast-hole data for case study $2$. From left to right: Benches 1-6. Colormap: the same as in Fig. \ref{fig:db_drill-holes_CS1_PII}.}
+\end{figure}	
+	
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1.\columnwidth]{Figs_PII/Figure_09c_PII}
+	\caption{\label{fig:db_gt_CS2_PII}Ground truth estimated from drill-holes and blast-holes for case study $2$. From left to right: Benches 1-6. Colormap: the same as in Fig. \ref{fig:db_drill-holes_CS1_PII}.}
+\end{figure}
+
+\clearpage
+\newpage
+\subsection{Case Study 3}
+The $6$ benches for case study $3$ are shown in the fig. \ref{fig:db_drill-holes_CS3_PII} and the fig. \ref{fig:db_blast_CS3_PII} describing the available drill-holes and blast-holes, respectively. The reference dense benches created by kriging analysis are shown in fig. \ref{fig:db_gt_CS3_PII}.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1.\columnwidth]{Figs_PII/Figure_10_PII}
+	\caption{\label{fig:db_drill-holes_CS3_PII} Drill-hole samples data for case study $3$. From left to right: Benches 1-6. Colormap: the same as in Fig. \ref{fig:db_drill-holes_CS1_PII}.}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1.\columnwidth]{Figs_PII/Figure_11_PII}
+	\caption{\label{fig:db_blast_CS3_PII} Blast-hole data for case study $3$. From left to right: Benches 1-6. Colormap: the same as in Fig. \ref{fig:db_drill-holes_CS1_PII}.}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1.\columnwidth]{Figs_PII/Figure_12_PII}
+	\caption{\label{fig:db_gt_CS3_PII}Ground truth estimated from drill-holes and blast-holes for case study $3$. From left to right: Benches 1-6. Colormap: the same as in Fig. \ref{fig:db_drill-holes_CS1_PII}.}
+\end{figure}
+
+\clearpage
+\newpage
+\section{App. III: Additional Experimental Results}
+
+\subsection*{Case study 1: \emph{Cut-Off} grade $1.241\%$}
+
+With \emph{Cut-Off} grade $1.241\%$, Figs. \ref{fig:CS1_1241_GS_PII}, \ref{fig:CS1_1241_EG_PII} and \ref{fig:CS1_1241_GC_PII}  describe the outcome.
+
+
+\vspace{-0.5cm}
+% Fig samples
+\begin{figure}[h!]
+	\centering
+	\frame{\includegraphics[width=.7\columnwidth]{Figs_PII/Figure_13_PII}}
+	\caption{\label{fig:CS1_1241_GS_PII} Samples for Case Study 1. From left to right: Benches \emph{2-6}. Top: Kriging from structured sampling. Down: Kriging from adaptive sampling using \emph{Cut-Off} grade $1.241\%$.}
+
+	\vspace{.1cm}
+	\centering
+	\frame{\includegraphics[width=.7\columnwidth]{Figs_PII/Figure_14_PII}}
+	\caption{\label{fig:CS1_1241_EG_PII} Estimated grade for Case Study 1. From left to right: Benches \emph{2-6}. Top: Kriging from structured sampling. Down: Kriging from adaptive sampling using \emph{Cut-Off} grade $1.241\%$.}
+\end{figure}
+
+% Fig grade control
+\begin{figure}[h!]
+	\centering
+	\frame{\includegraphics[width=.7\columnwidth]{Figs_PII/Figure_15_PII}}
+	\caption{\label{fig:CS1_1241_GC_PII} Estimated grade control for Case Study 1. From left to right: Benches \emph{2-6}. From top to bottom: Ground truth,  structured sampling,  adaptive sampling using \emph{Cut-Off} grade $1.241\%$.}
+	\centering
+	\frame{\includegraphics[width=.8\columnwidth,height=0.5\columnwidth]{Figs_PII/Figure_16_PII}}
+	\caption{\label{fig:CS1_1241_CC_PII} Confusion Matrix for Case Study 1. From left to right: Benches \emph{2-6}. Top: Structured sampling. Down: Adaptive sampling using \emph{Cut-Off} grade $1.241\%$.}
+\end{figure}
+
+
+
+\clearpage
+\subsection*{Case study 1: \emph{Cut-Off} grade $1.518\%$}
+
+Considering the \emph{Cut-Off} grade $1.518\%$, the outcome for the benches 2,3,4,5 and 6 is described in Figs. \ref{fig:CS1_1518_GS_PII}, \ref{fig:CS1_1518_EG_PII} and \ref{fig:CS1_1518_GC_PII}.
+
+% Fig samples
+\begin{figure}[h!]
+	\centering
+	\frame{\includegraphics[width=.7\columnwidth]{Figs_PII/Figure_17_PII}}
+	\caption{\label{fig:CS1_1518_GS_PII} Samples for Case Study 1. From left to right: Benches \emph{2-6}. Top: Kriging from structured sampling. Down: Kriging from adaptive sampling using \emph{Cut-Off} grade $1.518\%$.}
+	\centering
+	\frame{\includegraphics[width=.7\columnwidth]{Figs_PII/Figure_18_PII}}
+	\caption{\label{fig:CS1_1518_EG_PII} Estimated grade for Case Study 1. From left to right: Benches \emph{2-6}. Top: Kriging from structured sampling. Down: Kriging from adaptive sampling using  \emph{Cut-Off} grade $1.518\%$.}
+\end{figure}
+
+
+
+
+
+
+% Fig grade control
+\begin{figure}[h!]
+	\centering
+	\frame{\includegraphics[width=.7\columnwidth]{Figs_PII/Figure_19_PII}}
+	\caption{\label{fig:CS1_1518_GC_PII} Estimated grade control for Case Study 1. From left to right: Benches \emph{2-6}. From top to bottom: Ground truth,  structured sampling,  adaptive sampling using \emph{Cut-Off} grade $1.518\%$.}
+	\centering
+	\frame{\includegraphics[width=.8\columnwidth,height=0.5\columnwidth]{Figs_PII/Figure_20_PII}}
+	\caption{\label{fig:CS1_1518_CC_PII} Confusion Matrix for Case Study 1. From left to right: Benches \emph{2-6}. Top: Structured sampling. Down: Adaptive sampling using \emph{Cut-Off} grade $1.518\%$.}
+\end{figure}
+
+\clearpage
+\newpage
+\subsection*{Confusion Matrices for Case Study 2}
+
+% Fig CM
+\begin{figure}[h!]
+	\centering
+	\frame{\includegraphics[width=1.\columnwidth, height=.6\columnwidth]{Figs_PII/Figure_21_PII}}
+	\caption{\label{fig:CS2_022_CC_PII} Confusion Matrix for Case Study 2. From left to right: Benches \emph{2-6}. Top: Structured sampling. Down: Adaptive sampling using  \emph{Cut-Off} grade $0.22\%$.}
+	\centering
+	\frame{\includegraphics[width=1.\columnwidth, height=.6\columnwidth]{Figs_PII/Figure_22_PII}}
+	\caption{\label{fig:CS2_0445_CC_PII} Confusion Matrix for Case Study 2. From left to right: Benches \emph{2-6}. Top: Structured sampling. Down: Adaptive sampling using \emph{Cut-Off} grade $0.445\%$.}
+\end{figure}
+	
+	
+	
+\begin{figure}[h!]
+	
+	\centering
+	\frame{\includegraphics[width=1.\columnwidth, height=.55\columnwidth]{Figs_PII/Figure_23_PII}}
+	\caption{\label{fig:CS2_0692_CC_PII} Confusion Matrix for Case Study 2. From left to right: Benches \emph{2-6}. Top: Structured sampling. Down: Adaptive sampling using \emph{Cut-Off} grade $0.692\%$.}
+\end{figure}
+
+
+
+
+
+\subsection*{Confusion Matrices for Case Study 3}
+
+% Fig CM
+\begin{figure}[h!]
+	\centering
+	\frame{\includegraphics[width=1.\columnwidth, height=.55\columnwidth]{Figs_PII/Figure_24_PII}}
+	\caption{\label{fig:CS3_0115_CC_PII} Confusion Matrix for Case Study 3. From left to right: Benches \emph{2-6}. Top: Structured sampling. Down: Adaptive sampling using \emph{Cut-Off} grade $0.115\%$.}
+\end{figure}
+
+\clearpage
+% Fig CM
+\begin{figure}[h!]
+	\centering
+	\frame{\includegraphics[width=1.\columnwidth, height=.6\columnwidth]{Figs_PII/Figure_25_PII}}
+	\caption{\label{fig:CS3_0273_CC_PII} Confusion Matrix for Case Study 3. From left to right: Benches \emph{2-6}. Top: Structured sampling. Down: Adaptive sampling using \emph{Cut-Off} grade $0.273\%$.}
+	\centering
+
+\hspace{5cm}
+	\frame{\includegraphics[width=1.\columnwidth, height=.6\columnwidth]{Figs_PII/Figure_26_PII}}
+	\caption{\label{fig:CS3_0486_CC_PII} Confusion Matrix for Case Study 3. From left to right: Benches \emph{2-6}. Top: Structured sampling. Down: Adaptive sampling using \emph{Cut-Off} grade $0.486\%$.}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+\clearpage
+\section{App. IV: Economic Evaluation}
+\label{appendix_profit_PII}
+
+In order to perform a realistic evaluation of cost and profit several considerations must be defined for the mining and waste processing. In particular, in this work the variables summarized in table \ref{tab:variables_profit_PII} have been considered, where a range of realistic values for these variables is proposed. This analysis takes into account the block size (fixed to $1000$ $m^3$, the same block size used in the experimental section), the mining cost by mined ton, the metallurgical recovery, and the stripping ratio (the proportion of tons of expected waste material and ore material). For the purpose of the present analysis, the economic costs considered were the processing cost by processed ton, the price and selling cost per pound of copper.
+
+\begin{table}[!h]
+	\caption{Variables Considered in the Profit Analysis.}
+	\label{tab:variables_profit_PII}
+	\begin{center}
+		\footnotesize
+		\begin{tabular}{lccccc}\toprule
+			Variable & Symbol & Initial Value & Units & Range \\\midrule
+			Block size & $size_b$ & $1000$ & $m^3$ & - \\
+			Density & $d_b$ & $2.70$ & $t/m^3$ & $2.3$ - $2.9$  \\
+			Mining cost  & $Cost^m$ & $3.0$ & $US\$ /t_{mined}$ & $1.70$ - $3.50$  \\
+			Stripping ratio & $S_r$ & $2.50$ & - &  $2.50$ - $3.00$ \\
+			Processing cost & $Cost^p$ & $10.00$ & $US\$ /t_{processed} $ & $7.00$ - $12.00$ \\
+			Price of a lb of $Cu$ & $Price_{Cu}$ & $2.30$ & $US\$ /lb $ & $2.50$ - $2.10$ \\
+			Selling cost by $lb_{Cu}$ & $Cost^s$ & $0.50$ & $US\$ /lb$  &  $0.30$ - $0.55$ \\
+			Metallurgical recovery & $R_m$ & $85.00$ &  $\%$ &  $80.00$ - $90.00$ \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+\end{table}
+
+In practice, the \emph{CutOff} grade, $Cg$, can be defined by,
+\begin{align}\label{eq_cutoff_PII}
+Cg = \frac{10000 \cdot (Cost^m*(1+S_r) +  Cost^p )}{ (Price_{Cu} - Cost^s) \cdot R_m \cdot 2204.6},
+\end{align}
+where the value $2204.6$ corresponds to the conversion factor from pounds to tons.
+
+Given the set of values for the considered parameters, then it is possible to estimate the profit of a block. In the one hand, for a block with an estimated grade under the \emph{Cut-Off} grade value, for simplification it has been defined that the cost to process the waste block in the dump facilities is considered equal for each dumped block without taking into account its actual mineral grade or another variables. For this brief analysis, the revenue from dumping the block is zero (in practice if the block has a zero profit, since it has already been mined then it could be considered as stock pile). Thus:
+
+\begin{align}\label{eq_cutoff_2_PII}
+Profit_{d} = - Cost^m 
+\end{align}
+
+In the other hand, in the case of a block estimated as ore (estimated block grade is above the \emph{Cut-Off} grade), then it is processed by the mine and its benefit is calculated considering the content of metal in percentage of tons of copper as,
+\begin{align}\label{eq_cutoff_3_PII}
+Cont_{m} = \frac{Grade_{b}}{100.0}  \cdot size_b \cdot d_b
+\end{align}
+
+The content of recovered metal in tons of copper is estimated as 
+\begin{align}\label{eq_cutoff_4_PII}
+Cont_{m}^r = \frac{Cont_{m} \cdot R_{m}}{100.0}
+\end{align}
+
+Then, the revenue from mining the block is estimated by,
+\begin{align}\label{eq_cutoff_5_PII}
+Rev_{b}^{m} = Cont_{m}^{r} \cdot 2204.6 \cdot (Price_{Cu}-Cost^s),
+\end{align}
+while the processing cost of the block is estimated as
+\begin{align}\label{eq_cutoff_6_PII}
+Cost_b^p = size_b \cdot d_b \cdot ({Cost}^m + {Cost}^p). 
+\end{align}
+
+Finally, the profit of the processed block is defined by,
+
+\begin{align}\label{eq_cutoff_7_PII}
+Profit_{b}^p = Rev_{b}^m  -  Cost_{b}^p.
+\end{align}
+
+Therefore, from Eq. \eqref{eq_cutoff_2_PII}, Eq. \eqref{eq_cutoff_7_PII} and the cost of processing ore and waste blocks, it is possible to estimate the profit or loss of any block.
+
+Considering the \emph{Cut-Off} grade of the experimental analysis and Eq. \eqref{eq_cutoff_PII}, the appropriate economic parameters have been estimated. The initial values shown in Table \ref{tab:variables_profit_PII} are provided as an example to obtain the  \emph{CutOff} grade as the first quartile in Case Study 1. For each case study and for every empirical \emph{CutOff} grade, the best set of parameters has been estimated in order to perform the economic analysis. 
+
+Then, from the experimental data the profit of every block has been evaluated in the proposed scenarios for the sampling strategies under analysis. Given an estimated bench block model from a specific sampling strategy, then the economic profit can be calculated as the sum of the profit for each block conforming this bench. 
+

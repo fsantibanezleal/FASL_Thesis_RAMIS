@@ -1,0 +1,352 @@
+The following sections summarize several additional information required to contextualize the information presented in this thesis, but not included in the main text for the sake of fluency for the reader.
+
+\section{Details on \emph{MPS}}
+\label{sec_app_GLOBALMPS}
+
+\subsection{\emph{MPS} and the role of Training Images}
+\label{sec_TrainingImages}
+
+\emph{MPS} incorporates a prior model by the use of a training image. It can be defined as a \emph{2-D} or \emph{3-D} valid realization of a field with the same structures that the target field (e.g. structures like channels, reefs, bars, dikes, oriented facies) representing the full range of possible shapes and its scales. \emph{MPS} was proposed for going beyond \emph{two-point} statistics \citep{guardiano_1993} using training images to describe the full range of structures present in the geological field. Therefore, training images allow to model complex geological features and their connectivity. The training image must be considered as a conceptual representation of the geological field instead of an actual realization of it, providing only relative spatial information of the distribution of variables of interest in the field \citep{Scheidt2009_a}.
+
+The generation and selection of training images is an important challenge for the \emph{MPS} methodology. A classical option is the simulation of unconditioned realizations using object-based approaches where an expert user defines the facies shapes and dimensions of interest. In order to select an appropriate training image from a set of available ones, a consistency check has been proposed to compare and validate available well data \citep{Strebelle_2004a}.
+
+Due to the limited size of training images only the inference of a very reduced portion of the real \emph{multiple-point} statistics is accurate. Therefore, statistics for large scale structures are usually ignored because this can lead to undesired discontinuities.
+
+	
+\subsection{Statistics from \emph{MPS} Process}
+\label{sec_StatsTrainingImages}
+
+It is important to note that training images are a source of expected patterns in the target field. For example, let $X = \{ X_{i} : i \in \{1,\ldots, N\}  \}$ be a categorical field to be simulated, with $z_0, \ldots, z_r$ different states defining the alphabet of an individual variable, $X_{i}$. The more classical \emph{MPS} process is sequential by producing one pixel at time. In particular, a random path is defined to explore all positions to be simulated in the field (excluding sensed data positions, if available). Then the position simulated at a given time becomes conditioning data for the positions to be explored later in the path sequence. More precisely, let $X_{j}$ denotes an unsampled variable, a context based rule is required to define the $c$ closest and most relevant context for  $X_{j}$  that is denoted by $X_S = \{ X_{S_1} = x_{S_1}, \ldots, X_{S_c} = x_{S_c} \}$. These selected variables are chosen from the initial available data and from previously simulated variables in the path. Then, the probability that $X_{j}$ has the state $z$ conditioning n the context $X_{S}$ is estimated by the \emph{Bayes} rule:
+
+\begin{equation}
+p(X_{j} = z | X_{S} = x_{S}) = \frac{p(X_{j} = z, X_{S} = x_{S}) }{p(X_{S} = x_{S}) } .
+\label{eq:bayesMPS}
+\end{equation}
+
+
+In Eq. \eqref{eq:bayesMPS} $p(X_{j} = z, X_{S} = x_{S}) $ and $p( X_{j} = z)$ are estimated from the aforementioned training image. In particular, $p( X_{S} = x_{S}) = \frac{\#(x_{S})}{N}$ with $N$ the number of pixels of the training image (in this case equal to the size of the target field to be simulated), and $\#(x_{S})$ is the number of occurrences of the specific data pattern $x_{S}$ in the training image. The probability $p(X_{j} = z, X_{S} = x_{S}) $ can be estimated as a pattern with one additional conditioning. Then, the conditional probability associated to the occurrence of state $z$ at location $\{j\}$ can be estimated by:
+
+\begin{equation}
+p(X_{j} = z, X_{S} = x_{S})  =  \frac{\#(x_{S,j})}{N}
+\label{eq:bayesMPS_Final}
+\end{equation}
+with $\#(x_{S,j})$ the number of occurrences of the pattern including the conditioning data and the central variable $X_{j}$ with the specific value $z$. Thus, evaluating the expression \eqref{eq:bayesMPS_Final} for the $z$ possible values allows drawing a realization of the stochastic process for the explored variable.
+
+
+
+
+
+
+
+
+
+
+\section{Details of additional methods for Signal Recovery}
+\label{sec_app_GLOBALSPARSESR}
+
+\subsection{Methods used in Sparse Signal Recovery}
+\label{secSecRecIntro}
+
+In this section we explore some available methods oriented to obtain a reconstruction of a signal from a small amount of measurements under assuming a sparse or compressible model for these signals.
+
+\subsubsection{Sparse Signal Recovery}
+
+The recovery formulations have a close relation with the inverse problem presented in Eq. \eqref{eq:Eq_Sensing_General_Noise_Sampling}, because the target is the reconstruction of the signal $X$ from the observations $Y_{Sampled}$. In previous sections, signal reconstruction is not addressed because in the regime $m << N$ this is an ill-posed problem. 
+
+While the above is correct in general, recent results on \emph{Compressed Sensing} (\emph{CS}) theory provides novel insights for signal reconstruction under the assumptions of desired properties on the signal itself and in the sensing scheme, such as the sparsity at $X$ and the incoherence at the sensing matrix \textbf{A} \citep{Candes_2006_a,Eldar_2012_a}. 
+
+The \emph{CS} theory has found applications on several areas such as signal representation, functional approximation, spectral estimation, cartography, medical imaging, speech signal processing, and sparse channel estimation \citep{Eldar_2012_a,Elad_2010_a,Starck_2010_a}. 
+
+%(Mallat, Coifman, Wickerhauser, Donoho, etc)
+%(Chen, Nagarajan, Cun, Hassibi, etc)
+%Spectral estmn., cartography (Papoulis, Lee, Cabrera, Parks, etc)
+%EEG/MEG (Leahy, Gordonitsky, Ioannides, etc)
+%Medical imaging (Lustig, Pauly, etc)
+%Speech SP (Ozawa, Ono, Kroon, Atal, etc)
+%Sparse channel estimation (Fevrier, Greenstein, Proakis, Prasad and M., etc)
+
+\subsubsection{Basic formulation}
+\label{subSecBasicCSFor}
+%The Problem
+%Noiseless case: Given y and , solve  (eq1)
+%Noisy case: solve (eq2)
+%l0 norm minimization
+%Combinatorial complexity
+%Not robust to noise
+
+%Breakthrough 1:
+%Uniqueness
+%Underdetermined systems
+%Infinitely many solutions, but
+%Unique “sparse” solution if nullspace has no “sparse” vectors (Donoho, Elad 02)%
+%Unique soln. with high probability, if $M geq k+1$ (Bresler; Wakin etc)
+%Sub-Nyquist sampling (compression) when:
+%Restrict to sparse signals
+%Sample in an “appropriate” basis
+
+%Just Relax!
+%l1 min. instead of l0 min.
+%Convex optimization problem
+%Same solution as l0 minimization
+%If the measurement matrix is random
+%Use slightly larger number of measurements
+%Robust to measurement noise
+%See (Donoho; Candes, Romberg, Tao etc)
+\newcommand\dico{\mathbf{\Phi}}
+\newcommand\atom{\varphi}
+\newcommand\inn[2]{\langle\atom_{#1}, \atom_{#2}\rangle}
+\newcommand\ip[2]{\langle #1, #2\rangle}
+\newcommand\natoms{K}
+\newcommand\sparsity{S}
+\newcommand\spacedim{N}
+\newcommand\samples{m}
+\newcommand\nchans{N}
+\newcommand\good{\Lambda}
+\newcommand\bad{{\overline{\good}}}
+\newcommand\sensing{\mathbf{A}}
+\newcommand\satom{\psi}
+\newcommand\ident{\mathbf{I}}
+\newcommand\Id{\mathbf{I}}
+\newcommand\Proj{\mathbf{P}}
+%\newcommand\Q{\mathbf{Q}}
+\newcommand\Gram{\mathbf{G}}
+\newcommand\DX{D} %diagonal matrix with norms of coefficients
+\newcommand\coeff{\alpha}
+\newcommand\Dynamic{\operatorname{R}}
+\newcommand\PSNR{\operatorname{PSNR}}
+\newcommand\samesim{\chi}
+\newcommand\gwJ{{\good\backslash J}}
+\newcommand\eps{{\varepsilon}}
+\newcommand\nlevel{{\eta}}
+\newcommand\ie{{i.e., }}
+
+\newcommand\Y{Y}
+\newcommand\X{X}
+\newcommand\U{U}
+\newcommand\Err{E}
+\newcommand\diag{\textrm{diag}}
+\newcommand\B{\mathbf{B}}
+%\newcommand{\N}{{\mathbb{N}}}
+%\newcommand{\R}{{\mathbb{R}}}
+%\newcommand{\Z}{{\mathbb{Z}}}
+%\newcommand{\C}{{\mathbb{C}}}
+\renewcommand{\P}{{\mathbb{P}}}
+%\newcommand{\E}{{\mathbb{E}}}
+\newcommand\opnorm[1]{|\!|\!| #1|\!|\!|}
+
+\newcommand{\rec}{{\operatorname{recovery}}}
+\newcommand{\nrec}{{\operatorname{not~recovery}}}
+
+
+
+\emph{CS} attempts to determine the minimal number of observations $Y_{Sampled}$ required to a stable reconstruction of a sparse\footnote{A signal is k-sparse in the canonical domain, if it has at most $k$ terms different than zero} signal (with sparsity $\sparsity$). Considering a linear system, in Eq.\eqref{eq:Eq_Sensing_General_Noise_Sampling} each individual observation is the inner product of the signal $X$, of size $\spacedim$, with a row vector in the sensing matrix $\mathbf{A}$ as shown in Eq.\eqref{eq:Eq_LinearSensing_General_Noise_Sampling}.
+
+\begin{equation}
+\label{eq:Eq_LinearSensing_General_Noise_Sampling}
+	Y_{Sampled} = \mathbf{A} \cdot X +  \eta .
+\end{equation}
+
+The simplest approach for the noiseless case correspond to solve the $\ell_0$ minimization problem: 
+
+\begin{equation}
+(P_0) \hspace{0.8cm} \min_{X \in \R^{\spacedim}} \|X\|_0 \mbox{ subject to } Y_{Sampled} = \mathbf{A} \cdot X .
+\label{eq:CS_basisNoiseless}
+\end{equation}
+
+
+For the noisy case: 
+
+\begin{equation}
+(P_0n) \hspace{0.8cm} \min_{X \in \R^{\spacedim}} \|X\|_0 \mbox{ subject to } \|Y_{Sampled}-\mathbf{A} \cdot X\|_2\leq \eta .
+\label{eq:CS_basisNoise}
+\end{equation}
+
+The norm $\|\cdot\|_0$ counts the non-zero entries of the signal $X$ while the norm $\|\cdot\|_2$ denotes \emph{euclidean} norm.
+
+The optimization problems formulated in Eq.\eqref{eq:CS_basisNoiseless} and Eq.\eqref{eq:CS_basisNoise} are \emph{NP hard}. Due this fact, two main types of methods have been proposed in the last decade to achieve a practical solution.
+
+In the one hand, greedy algorithms like \emph{(Orthogonal) Matching Pursuit} (\emph{(O)MP}) or \emph{Thresholding} methods perform approximations to obtain a suboptimal solution. \emph{Thresholding} method estimates the inner products of the target signal $X$ with all sensing atoms\footnote{Row vectors conforming the sensing system in the linear model in Eq.\eqref{eq:Eq_LinearSensing_General_Noise_Sampling}} finding the largest ones (in the absolute values) and finally calculating the orthogonal projection onto the span of the selected atoms. The \emph{OMP} method is a sequential approach that selects the most representative atom (i.e. the one with largest absolute inner product with the signal residual) and estimates the signal by updating the residual (the misrepresented part of the observations) by the cumulative selection of atoms. See more details in Table \ref{table:greedy}.
+
+\begin{table} 
+\caption{Summary of classical greedy approaches}
+\scriptsize{Goal: An approximated estimation of $X$ from $Y_{Sampled} = \mathbf{A} \cdot X$. } 
+\scriptsize{$A_j$ denotes columns of $\mathbf{A}$ and $\mathbf{A}_\Lambda^\dagger$ the pseudo-inverse of $\mathbf{A}_\Lambda$ } \normalsize{} \\
+\begin{tabular}{|l|l|}
+\hline
+{\bf OMP} & {\bf Thresholding} \\ 
+\hline
+initialize: $R=Y_{Sampled}$, $\Lambda=\emptyset$ & \\
+find:   $k = \arg \max_{ j } |\ip{r}{A_j}|$     & find: The collection $\Lambda$ of indices providing \\
+update: $\good=\good \cup \{i\}$, & \phantom{find: } largest sparse representation by\\
+\phantom{update: }$R=Y_{Sampled} - \sensing_\good \sensing_\good^\dagger Y_{Sampled} $ & 
+\phantom{find: } $|\ip{Y_{Sampled}}{A_j}|$ \\
+iterate until $R$ based stopping criterion & \phantom{find: }  \\
+output: $X = \sensing^\dagger_\good Y_{Sampled}$ & output: $X=\sensing_\good^\dagger \cdot Y_{Sampled}$\\ \hline
+\end{tabular}
+\label{table:greedy}
+\end{table}
+
+On the other hand, another alternative to address the $(P_0)$ and $(P_0n)$ is by a convex relaxation of the $\ell_0$ norm. For the noiseless case, we obtain the relaxed problem termed Basis Pursuit (\emph{BP}):
+
+\begin{equation}
+(P_1) \hspace{0.8cm}\min_{X \in \R^{\spacedim}} \|X\|_1 \mbox{ subject to } Y_{Sampled}=\mathbf{A} \cdot X \label{eq:BaiscCs_BP} .
+\end{equation}
+
+The noisy version of $(P_1)$ is described by the expression termed \emph{Basis Pursuit Denoising} (\emph{BPDN}):
+
+\begin{equation}
+(P_1n) \hspace{0.8cm}\min_{X \in \R^{\spacedim}} \|X\|_1 \mbox{ subject to } \|Y_{Sampled} - \mathbf{A} \cdot X\|_2<\nlevel .
+\label{eq:BaiscCs_BPDN}
+\end{equation}
+
+Here, $\ell_1$-norm is calculated as $\|X\|_1 = \sum |X_i|$.
+
+The main goal of the \emph{CS} theory is to find guarantees of (near)perfect reconstruction and the associated sufficient conditions. Revolutionary results have established that under certain conditions greedy and \emph{BP} approaches achieves guarantees for perfect reconstruction \citep{Candes_2006_a,Boyko_2011_a}. For \emph{BPDN}, it is required that the sensing matrix $\sensing$ obeys a uniform uncertainty principle, which refers to the presence of well-conditioned submatrices in $\sensing$. 
+
+Formally, let $\good \subset \{1,\hdots,\spacedim\}$ be a collection of indices and the $\sensing_\good$ a submatrix of $\sensing$ constructed using the columns of $\sensing$ indexed by $\good$. Then, the local isometry constant $\delta_\good = \delta_\good(\sensing)$ is defined as the smallest value satisfying Eq. \eqref{def:local_iso} for all vectors $X$ supported on $\good$.
+
+\begin{equation}
+(1-\delta_\good) \|X\|_2^2 \leq \|\sensing_\good X\|_2^2 \leq (1+\delta_\good)\|X\|_2^2
+\label{def:local_iso}
+\end{equation}
+
+Finally, the (global) restricted isometry property (\emph{RIP}) is defined by he following constant:
+
+\begin{equation}
+\delta_\sparsity = \delta_\sparsity(\sensing) \,:=\, \sup_{|\good| = \sparsity}
+\delta_\good(\sensing),\quad \sparsity \in \N.
+\label{def:global_isoConstant}
+\end{equation}
+
+If $\sensing$ has a small restricted isometry constant, i.e.  $\delta_\sparsity(\sensing) \leq 1/2$, then $\sensing$ satisfies a uniform uncertainty principle \citep{Candes_2006_a}. 
+
+An important theorem for \emph{BPDN} states that if $\sensing$ satisfies $ \delta_{3\sparsity}(\sensing) + 3 \delta_{4\sparsity}(\sensing) < 2 $ for some $\sparsity \in \N$, and the noisy observations accomplish $Y_{Sampled}=\sensing \cdot X + \xi$ for some $\|\xi\|_2 \leq \nlevel$, then the signal $X^\#$ (solution of the problem $(P_1n)$) satisfies Eq. \eqref{BP_error} for an appropriate value of $C$ which only depends on $\delta_{3\sparsity}$ and $\delta_{4\sparsity}$ constants \citep{Eldar_2012_a}.
+
+\begin{equation}
+\label{BP_error}
+\|x^\# - x\|_2 \,\leq\, C \nlevel. % + C_2 \frac{\|x-x_M\|_1}{\sqrt{M}}.
+\end{equation}
+
+In fact, if $\delta_{4\sparsity} \leq 1/3$ then $C \leq 15.41$. In addition, the formulation related with the Eq. \eqref{BP_error} ensures exact reconstruction for the noiseless problem $(P_1)$ with $\nlevel = 0$.
+
+While these strong guaranties are only applicable for matrices satisfying the required principle, in practical cases few sensing schemes allow to reach perfect reconstruction. However, \emph{CS} literature remarks that with high probability a $\samples \times \spacedim$ random matrix where the columns are drawn from distributions with certain concentration properties (such as \emph{gaussian} distributions),  would have small restricted isometry constants $\delta_\sparsity$ when $\samples = {\cal O}(\sparsity \log(\spacedim/\sparsity))$.
+
+
+%The results for OMP in compressed sensing are weaker than for BP.  
+%While it can again be shown that with high probability a signal 
+%can be reconstructed from the random measurements 
+%$\sensing x$ if $\samples > C \sparsity \log{\spacedim}$, this result is 
+%no longer uniform in the sense that no single measurement matrix $\sensing$ will 
+%simultaneously work for all possible sparse signals.
+
+
+\subsubsection{General Approach for Sparse Reconstruction}
+\label{subSecGeneralNCS}
+
+Conceptually, \emph{CS} methodology poses a problem that arises quite naturally. The underlying idea corresponds to a regularized problem where the goal is to honor the available observations $Y_{Sampled}$ while trying to find the simplest solution. In $(P_0n)$ honoring of observations is carried out by bounding the \emph{Euclidean} error while the simplicity of the solution is achieved by minimizing  $\ell_0$-norm or  $\ell_1$-norm.
+
+It is possible to propose a more general scheme for this regularization approach. The compromise between fitting observations and simplicity can be subsumed by the following unconstrained convex minimization problem.
+
+\begin{equation}
+(P_G) \min_{X \in \R^{\spacedim}} \left\| \textbf{C}_{u}^{\frac{-1}{2}} \cdot \left( Y_{Sampled} - \textbf{A}\cdot X \right) \right\| _{p}  + \gamma \cdot \left\| \textbf{W} \cdot X \right\| _{q} .
+\label{eq:GeneralCS}
+\end{equation}
+
+This regularization problem promotes simplicity using $\ell_q$-norm on the target signal $X$. In addition, a weighting matrix $W$ can be used to incorporate some prior information about the preponderance of some entries of $X$. 
+
+Honoring the observations can be achieved by the $\ell_p$-norm of the observation error $Y_{Sampled} - \textbf{A}\cdot X$. The use of the matrix $\textbf{C}_{u}^{\frac{-1}{2}}$ allows working with signals that have some level of correlation. Approaches that consider the noisy scenario are usually termed as Noisy Compressive Sensing (\emph{NCS}) approaches.
+
+The problem $(P_1n)$, known as Least-absolute shrinkage and selection operator (\emph{LASSO}), is a version of $(P_G)$ by $\ell_1$-norm regularization with a quadratic constraint \citep{Boyko_2011_a}.
+
+\begin{equation}
+\min_{X \in \R^{\spacedim}} \ \  \gamma \left\| X \right\| _{1}  + \frac{1}{2} \cdot \left\| \textbf{A} \cdot X - Y_{Sampled} \right\| _{2}^{2} .
+\label{eq:BPDN_reg}
+\end{equation}
+
+As previously presented, it approach finds the vector $X$ with minimum $\ell_1$-norm that comes close to explaining the observations $Y_{Sampled}$.
+
+An alternative approach called \emph{Dantzig Selector} searchs the minimum $\ell_1$-norm but with bounded residual correlation \citep{Candes_2007_a}, as can be seen in the following expression:
+
+\begin{equation}
+\min_{X \in \R^{\spacedim}} \left\| X \right\| _{1} \mbox{ subject to }  \left\| \sensing^\dagger \cdot (\sensing \cdot X - Y_{Sampled}) \right\| _{\infty} \leq \epsilon .
+\label{eq:Dantzig_reg}
+\end{equation}
+
+%\emph{Dantzig Selector} requires that the residual of the candidate vector $X$ not be too correlated with any of the columns of \textbf{A}.
+
+If the underlying target signal is a \emph{2-D} image, an alternate recovery approach is promoting sparsity on gradients of the signal instead of the signal itself. The \emph{2-D} gradient can be calculated from \emph{total variations} (\emph{TV}), where a possible definition is given by:
+
+\begin{equation}
+TV(X) := \sum{\sqrt{(D_{h;ij} \cdot X)^2+(D_{v;ij} \cdot X)^2}}_{ij} = \sum{\left\| D_{ij} \cdot X \right\| _{2}}_{ij} .
+\label{eq:TV_reg}
+\end{equation}
+
+Where $D_{h;ij}$ denotes the gradients on horizontal orientation and $D_{v;ij}$ the vertical ones. Then, the total variations based \emph{BPDN} (\emph{TV-BPDN}) approaches is defined by: 
+
+\begin{equation}
+\min_{X \in \R^{\spacedim}} \ \ TV(X) \hspace{0.8cm}  \mbox{ subject to } \|Y_{Sampled} - \mathbf{A} \cdot X\|_2<\nlevel .
+\label{eq:TV_reg_BPDN}
+\end{equation}
+
+Finally, the \emph{TV-Dantzig Selector} regularization problem can be written as:
+
+
+\begin{equation}
+\min_{X \in \R^{\spacedim}} \ \  TV(X)  \hspace{0.8cm}  \mbox{ subject to }  \left\| \sensing^\dagger \cdot (\sensing \cdot X - Y_{Sampled}) \right\| _{\infty} \leq \epsilon
+\label{eq:TV_reg_Dantzig}
+\end{equation}
+
+Although these combinations of regularization factors do not have known theoretical guarantees (as the case of \emph{CS}), in practical applications of image processing they have demonstrated good performances \citep{Chambolle_2010_a}.
+
+
+%\subsubsection{Basis Pursuit (norm $p = 1$)}
+%\subsubsection{FOCUSS (norm $p leq 1$)}
+%\subsubsection{Lasso (BPDN)}
+%\subsubsection{Dantzig Selector}
+
+%\subsection{Sequential recovery methods}
+%\subsubsection{Matching Pursuit}
+%\subsubsection{Orthogonal Matching Pursuit}
+%\subsubsection{CoSamp}
+
+
+%The Optimization Problem
+%To solve
+%g(x) concave, monotonically " in $|x|$
+%G(x) convex + concave
+
+%\subsubsection{Bayesian Compressive Sensing}
+%\subsubsection{Iterative reweighted l1}
+% (Candes et al. 2008)
+%\subsubsection{Iterative reweighted l2}
+% (Chartrand and Yin 2008)
+%\subsubsection{EM-based SBL}
+%(Tipping, 2001), (Wipf, Rao 2007)
+%%\subsubsection{AMP}
+%(Schniter 2008), (Rangan 2011)
+
+
+
+%\subsection{Performance Guarantees}
+%Mutual coherence
+%Result (noiseless case): If
+%OMP converges x after k iterations, where k = num. of %nonzeros in x (Tropp 03)%
+%The sparse vector x0 that generated y is the unique soln to (Donoho, Elad 03)%
+%Similar guarantees in the noisy case and in terms of restricted isometry constant etc.
+
+%Limitations of Greed and Relaxation
+%Performance of BP and OMP depend on the form of the dictionary
+%Poor performance when condns. violated
+%Hard to relate estimation error to the dictionary
+%BP: perf. indep. of nonzero coeffs (Malioutov et al. 2004)
+%Performance does not improve when situation is favorable
+%OMP: performance highly sensitive to magnitudes of nonzero coeffs
+%Poor performance with unit magnitudes
+
+%Other Limitations of Convex Relaxation
+%Scaling/shrinkage:
+%Noiseless: l0 <-> l1 <-> l2. Shrinking large coeffs can reduce variance, but at the cost of sparsity
+%Noisy: The $\tau ?$ in lasso that minimizes the MSE could result in a much larger number of nonzero coeffs
+%Correlated dictionary: disrupts l0-l1 equivalence
+%Estimating embedded params (e.g., in $\Psi$ )
+

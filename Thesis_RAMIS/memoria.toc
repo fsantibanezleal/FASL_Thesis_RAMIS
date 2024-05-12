@@ -1,0 +1,120 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Context}{1}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Inverse Problem and Sensing}{1}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Inverse Problems in the Context of Sampling}{2}{subsection.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.3}Inverse Problems in Geosciences: A Sampling Problem}{3}{subsection.1.1.3}%
+\contentsline {subsection}{\numberline {1.1.4}Geosciences and Uncertainty}{4}{subsection.1.1.4}%
+\contentsline {section}{\numberline {1.2}Problem Statement}{5}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Channelized Structures}{5}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}The Problem}{6}{subsection.1.2.2}%
+\contentsline {section}{\numberline {1.3}Hypotheses}{6}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Objectives}{7}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Main Objective}{7}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Specific Objectives}{7}{subsection.1.4.2}%
+\contentsline {section}{\numberline {1.5}Contribution of this Thesis}{7}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Summary of the results}{8}{subsection.1.5.1}%
+\contentsline {subsubsection}{Publications on ISI Journals and International Conferences}{9}{section*.10}%
+\contentsline {section}{\numberline {1.6}Thesis Organization}{9}{section.1.6}%
+\contentsline {chapter}{\numberline {2}General Background and Related Topics}{10}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Geostatistical Analysis and Inference}{10}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Two-Point Statistics}{11}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Object-based Simulation}{11}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Multi-Point Simulations \emph {MPS}}{12}{subsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.1.4}Comparison of the Inference Techniques}{12}{subsection.2.1.4}%
+\contentsline {section}{\numberline {2.2}Methods used for Sensing Design in \emph {Geostatistics}}{13}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Sensor Placement Strategies}{13}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Another Sampling Techniques}{14}{subsection.2.2.2}%
+\contentsline {chapter}{\numberline {3}{Sampling} Strategies for Uncertainty Reduction in Categorical Random Fields: Formulation, Mathematical Analysis and Application to Multiple-Point Simulations}{15}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Introduction}{15}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Related Works on Geological Uncertainty and Sampling Design}{18}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Preliminaries: Notation and Basic Concepts}{19}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Information Measures}{19}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Entropy as an Indicator of Simulation Complexity}{20}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}A Basic Sensing Decision Problem}{20}{subsection.3.3.3}%
+\contentsline {section}{\numberline {3.4}{Sampling} Strategies for Uncertainty Reduction}{21}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Problem Setting}{21}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}The Equivalent Maximum Information Strategy}{22}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}The Iterative Sequential Rule}{23}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}The Adaptive Sensing Problem}{26}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Pseudo code to implement the Adaptive Rule}{27}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Analysis of the Information Gain}{28}{subsection.3.5.2}%
+\contentsline {section}{\numberline {3.6}Case Study: A Binary Markov Chain}{31}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}The Sequential Maximum Information Strategy (SMIS)}{31}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Empirical Analysis}{32}{subsection.3.6.2}%
+\contentsline {subsection}{\numberline {3.6.3}The Adaptive Strategy AMIS}{34}{subsection.3.6.3}%
+\contentsline {section}{\numberline {3.7}Application to Multiple-Point Simulations}{35}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Proposed Preferential Sampling Strategy for MPS}{37}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}Practical Considerations for the Estimation of \\ $H(X_{i,j}| X_{S_{k-1}} = x_{S_{k-1}} )$ }{38}{subsection.3.7.2}%
+\contentsline {subsection}{\numberline {3.7.3}Pseudo-code of the RAMIS solution}{39}{subsection.3.7.3}%
+\contentsline {subsection}{\numberline {3.7.4}Experimental Setting and Validation}{40}{subsection.3.7.4}%
+\contentsline {subsection}{\numberline {3.7.5}Selecting the Regularization Parameter $\alpha $}{41}{subsection.3.7.5}%
+\contentsline {subsection}{\numberline {3.7.6}Comparison with non preferential sampling methods}{44}{subsection.3.7.6}%
+\contentsline {subsubsection}{Analysis of the Single-channel Model}{45}{section*.29}%
+\contentsline {subsubsection}{Analysis of the Multi-channel Models}{47}{section*.30}%
+\contentsline {section}{\numberline {3.8}Discussion and Final Remarks}{50}{section.3.8}%
+\contentsline {chapter}{\numberline {4}Improving Short-Term Planning and Grade Control with an Entropy-based Adaptive Sampling Strategy}{51}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Entropy-based Adaptive Sampling Strategy}{53}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Maximum Entropy Sampling}{53}{subsection.4.1.1}%
+\contentsline {paragraph}{The Sequential Adaptive Strategy}{54}{section*.35}%
+\contentsline {paragraph}{The Regularized Adaptive Strategy}{55}{section*.36}%
+\contentsline {section}{\numberline {4.2}Optimal Sampling for Grade Control}{55}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Proposed Methodology for Sampling}{56}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Classification Process}{57}{subsection.4.2.2}%
+\contentsline {section}{\numberline {4.3}Case Studies and Experiments}{58}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Database Description}{58}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Construction of Validation Block Model}{59}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Experimental Results: Adaptive Sampling Strategy}{61}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Performance Assessment}{64}{subsection.4.3.4}%
+\contentsline {paragraph}{Binary Image Inference Performance}{64}{section*.48}%
+\contentsline {paragraph}{Economic Performance}{65}{section*.52}%
+\contentsline {section}{\numberline {4.4}Chapter Conclusions}{66}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Conclusions}{67}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Future Work}{68}{section.5.1}%
+\contentsline {chapter}{\numberline {A}Complementary Material for Chapter \ref {chapter_PI}}{69}{appendix.A}%
+\contentsline {section}{\numberline {A.1}App. I: Entropy as an Indicator of Simulation Complexity}{69}{section.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}The Operational Complexity Indicator for Simulation}{69}{subsection.A.1.1}%
+\contentsline {subsection}{\numberline {A.1.2}Derivation of The Representation Result in (\ref {eq_sec_pre_6_PI})}{70}{subsection.A.1.2}%
+\contentsline {section}{\numberline {A.2}App. II: Proof of Proposition \ref {pro_iter_information_gain_PI}}{72}{section.A.2}%
+\contentsline {section}{\numberline {A.3}App. III: Optimality of the Sequential Rule for Fields with no Inter-Pixel Dependency}{73}{section.A.3}%
+\contentsline {section}{\numberline {A.4}App. IV: Analysis of the Adaptive Sampling Scheme for the Markov Chain Case}{74}{section.A.4}%
+\contentsline {section}{\numberline {A.5}App. V: Analysis of the Partial Update of Conditional Entropies}{74}{section.A.5}%
+\contentsline {chapter}{\numberline {B}Complementary Material for Chapter \ref {chapter_PII}}{77}{appendix.B}%
+\contentsline {section}{\numberline {B.1}App. I: Pseudocode}{77}{section.B.1}%
+\contentsline {section}{\numberline {B.2}App. II: Detailed Database}{79}{section.B.2}%
+\contentsline {subsection}{\numberline {B.2.1}Case Study 2}{79}{subsection.B.2.1}%
+\contentsline {subsection}{\numberline {B.2.2}Case Study 3}{80}{subsection.B.2.2}%
+\contentsline {section}{\numberline {B.3}App. III: Additional Experimental Results}{81}{section.B.3}%
+\contentsline {section}{\numberline {B.4}App. IV: Economic Evaluation}{88}{section.B.4}%
+\contentsline {chapter}{\numberline {C}Complementary Information and Development}{90}{appendix.C}%
+\contentsline {section}{\numberline {C.1}Details on \emph {MPS}}{90}{section.C.1}%
+\contentsline {subsection}{\numberline {C.1.1}\emph {MPS} and the role of Training Images}{90}{subsection.C.1.1}%
+\contentsline {subsection}{\numberline {C.1.2}Statistics from \emph {MPS} Process}{91}{subsection.C.1.2}%
+\contentsline {section}{\numberline {C.2}Details of additional methods for Signal Recovery}{91}{section.C.2}%
+\contentsline {subsection}{\numberline {C.2.1}Methods used in Sparse Signal Recovery}{91}{subsection.C.2.1}%
+\contentsline {subsubsection}{Sparse Signal Recovery}{91}{section*.77}%
+\contentsline {subsubsection}{Basic formulation}{92}{section*.78}%
+\contentsline {subsubsection}{General Approach for Sparse Reconstruction}{94}{section*.80}%
+\contentsline {section}{\numberline {C.3}Resolvability Capacity of the random field X }{96}{section.C.3}%
+\contentsline {subsection}{\numberline {C.3.1}Resolvability Capacity of the Iterated Principle}{96}{subsection.C.3.1}%
+\contentsline {subsection}{\numberline {C.3.2}RAMIS and Resolvability Capacity Properties}{97}{subsection.C.3.2}%
+\contentsline {subsection}{\numberline {C.3.3}Stopping Rule via $\mathcal {C}_{K}$ Evolution }{98}{subsection.C.3.3}%
+\contentsline {section}{\numberline {C.4}On Regionalized variables with spatial dependence}{100}{section.C.4}%
+\contentsline {subsection}{\numberline {C.4.1}\emph {MRF} models and \emph {Cliqué} structure estimation}{100}{subsection.C.4.1}%
+\contentsline {subsection}{\numberline {C.4.2}\emph {Cliqué} estimation and Mutual Information}{100}{subsection.C.4.2}%
+\contentsline {subsection}{\numberline {C.4.3}Multi-point and Two-Point Mutual Information relation}{101}{subsection.C.4.3}%
+\contentsline {section}{\numberline {C.5}Markovian 1D Scenario}{103}{section.C.5}%
+\contentsline {subsection}{\numberline {C.5.1}\emph {1-D} Markovian Spatial model}{103}{subsection.C.5.1}%
+\contentsline {subsubsection}{\emph {1-D} Markov Chain}{103}{section*.83}%
+\contentsline {subsubsection}{Joint probability mass of the sequence $\left \{ X_{i} \right \}$}{104}{section*.84}%
+\contentsline {subsubsection}{Conditioning to a subset of states}{105}{section*.85}%
+\contentsline {subsubsection}{Conditioning to any arbitrary subset of states}{105}{section*.86}%
+\contentsline {section}{\numberline {C.6}Formulation and Implementation of Noisy Sparse Promoting Solvers}{110}{section.C.6}%
+\contentsline {subsection}{\numberline {C.6.1}\emph {NCS} and \textit {Whitening} process}{110}{subsection.C.6.1}%
+\contentsline {subsection}{\numberline {C.6.2}On Noisy Compressive Sensing Performance}{112}{subsection.C.6.2}%
+\contentsline {subsubsection}{Statistical Analysis from \emph {MPS}}{112}{section*.88}%
+\contentsline {subsubsection}{\emph {NCS}. Naive Approach I. what Covariance?}{113}{section*.90}%
+\contentsline {subsubsection}{\emph {NCS}. Naive Approach II. Spatial Independence }{116}{section*.94}%
+\contentsline {subsubsection}{\emph {NCS}. Approach III. Full Covariance}{117}{section*.99}%
+\contentsline {chapter}{Bibliography}{119}{figure.caption.101}%
+\contentsline {chapter}{Nomenclature}{119}{figure.caption.101}%

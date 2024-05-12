@@ -1,0 +1,158 @@
+\documentclass[upright, contnum]{umemoria}
+
+%fix for the oneside argument
+\makeatletter
+\g@addto@macro\titlepage{\pagenumbering{Alph}}
+\g@addto@macro\endtitlepage{\pagenumbering{roman}}
+\makeatother
+
+\depto{Departamento de Ingeniería Eléctrica}
+\author{Felipe Andrés Santibáñez Leal}
+\title{AN INFORMATION-THEORETIC SAMPLING STRATEGY FOR THE RECOVERY OF GEOLOGICAL IMAGES: MODELING, ANALYSIS, AND IMPLEMENTATION}
+\titleesp{ESTRATEGIA DE MUESTREO BASADO EN TEORIA DE INFORMACIÓN PARA LA RECUPERACIÓN DE IMÁGENES GEOLOGICAS: MODELAMIENTO, ANÁLISIS, E IMPLEMENTACIÒN}
+\auspicio{CONICYT PHD Fellowship $2013$, 21130890; BNI Postdoctoral Bridge Fellowship $2017$; The Information and Decision Systems Group (IDS) (Dep. of Electrical Engineering, University of Chile); The Advanced Laboratory for Geostatistical Supercomputing (ALGES) (Advanced Mining Technology Center (AMTC) CONICYT Project AFB180004, Dep. of Mining Engineering, University of Chile); and  The Advanced Center for Electrical and Electronic Engineering, AC3E, Basal Project FB0008.}
+\date{2019}
+\datefulleng{DECEMBER 2019}
+\datefullesp{DICIEMBRE 2019}
+\guia{Ph.D. JORGE SILVA SANCHEZ, Ph.D. JULI\'AN ORTIZ CABRERA}
+\carrera{Doctor en Ingeniería Eléctrica}
+\memoria{Tesis para optar al Grado de \break  Doctor en Ingeniería Eléctrica}
+\comision{Javier Ruiz del Solar, Ronny Vallejos Arriagada, Matias Zañartu Salas}
+
+\usepackage{lipsum}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\include{Packages_QE}
+\include{IncludeFigure}
+
+\include{Packages_PI}
+\usetikzlibrary{babel}
+
+\RequirePackage{fix-cm}
+\usepackage{lineno}
+
+\usepackage{booktabs}
+\newcommand{\ci} {\subseteq}
+% FASL packages
+\usepackage{dsfont}
+\usepackage{algorithm2e}
+\usepackage{algorithmic}
+\SetKwInOut{Parameter}{parameter}
+\usepackage{eqparbox}
+\renewcommand\algorithmiccomment[1]{%
+  \hfill\#\eqparbox{COMMENT}{\tiny{#1}}%
+}
+
+
+
+\usepackage[semicolon,round,sort&compress,sectionbib]{natbib} 
+%\bibliographystyle{plain}
+
+\usepackage{usebib}
+\newbibfield{journal}
+\newbibfield{volume}
+\newbibfield{author}
+
+\usepackage{bibentry}
+\bibinput{References/main_owp}
+\nobibliography*
+%\usepackage{chapterbib}
+%\usepackage[resetlabels]{multibib}
+
+
+\usepackage{nomencl}
+\makenomenclature
+
+\usepackage[acronym,toc,nonumberlist]{glossaries}
+\makeglossaries
+\input{Sections/_00_00_Nomenclature.tex}
+\glsaddall
+\glsaddallunused
+
+\newglossarystyle{mylong}{%
+  \setglossarystyle{long}%
+  \renewenvironment{theglossary}%
+     {\begin{longtable}[l]{@{}p{\dimexpr 2cm-\tabcolsep}p{0.8\hsize}}}% <-- change the value here
+     {\end{longtable}}%
+ }
+
+\usepackage{comment}
+\newif\ifengtable
+\engtabletrue
+%\engtablefalse
+
+
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\newcommand{\jsr}[1]{\textcolor{red}{[JS comment: #1]}}
+
+\pgfplotsset{compat=1.15}
+\begin{document}
+
+\frontmatter
+\maketitle
+
+\begin{abstractesp}
+\input{Sections/_00_01_Resumen.tex}
+\end{abstractesp}
+
+\begin{abstract}
+\input{Sections/_00_01_Abstract.tex}
+\end{abstract}
+
+\begin{dedicatoria} % opcional
+\input{Sections/_00_02_Dedication.tex}
+\end{dedicatoria}
+
+\begin{thanks} % opcional
+\input{Sections/_00_03_Thanks.tex}
+\end{thanks}
+\cleardoublepage
+
+\tableofcontents
+\listoftables % opcional
+\listoffigures % opcional
+\mainmatter
+
+\input{intro.tex}
+
+\input{cap1.tex}
+
+\input{cap2.tex}
+
+\bibliographystyle{spbasic}    % Basics
+
+\input{conclu.tex}
+
+\appendix
+
+\input{Sections/01_02_Anexe.tex}
+\input{Sections/02_02_Anexe.tex}
+
+\chapter{Complementary Information and Development}
+
+\label{App_BASICS}
+\input{Sections/03_00_Anexe.tex}
+
+\label{App_QE}
+\input{Sections/03_02_Anexe.tex}
+
+\clearpage
+%\chapter{Bibliography}
+\addcontentsline{toc}{chapter}{Bibliography}
+%\bibliographystyle{spbasic}    % Basics
+%\texttt{}
+
+\bibliography{References/main_owp}
+
+
+%\input{glosario.tex} % opcional
+\clearpage
+\addcontentsline{toc}{chapter}{Nomenclature}
+\printnomenclature[2cm] % <-- change the value here
+%\printglossary[title=Special Terms, toctitle=List of terms]
+\clearpage
+\printglossary[style=mylong,type=\acronymtype,title=Special Terms, toctitle=List of terms]
+
+\end{document}

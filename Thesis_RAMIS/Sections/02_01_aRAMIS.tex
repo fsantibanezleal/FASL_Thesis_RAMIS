@@ -1,0 +1,660 @@
+\chapter{Improving Short-Term Planning and Grade Control with an Entropy-based Adaptive Sampling Strategy}
+\label{chapter_PII}
+
+%Authors: {Felipe Santiba\~nez*, Juli\'an M. Ortiz, Jorge F. Silva}
+
+%Affiliation: F. Santiba\~nez (ORCID $0000-0002-0150-3246$) and J. F. Silva,
+%              Information and Decision System  Group (IDS), 
+%              Department of Electrical Engineering, University of Chile, Av. Tupper 2007, Santiago, 837-0451, Chile. 
+              %\\
+%              %Advanced Mining Technology Center (AMTC), University of Chile\\
+%              %Tel.: +56-2-9784090\\
+%              %Fax: +56-2-6953881\\
+%              %Web: www.ids-uchile.cl\\
+%              {fsantibanezleal@ing.uchile.cl, josilva@ing.uchile.cl}           %  \\
+%           \\ \\
+%           J. M. Ortiz, The Robert M. Buchan Department of Mining, Queen`s University.
+%             {julian.ortiz@queensu.ca} 
+%}
+
+%{Received: May 2019 / Accepted: under revision}
+% The correct dates will be entered by the editor
+
+%\section{Abstract}
+
+Grade control and short-term planning determine the performance of a mining project. 
+%At this stage is when the final assignment of a block to the processing plant or to the waste dump is done. 
+Improving this decision, by collecting the most informative samples (data) may have significant financial impact on the project. In this research, a method to select sampling locations is proposed in an advanced drilling grid for short-term planning and grade control in order to improve the correct assessment (ore-waste discrimination) of blocks.  %to the process that maximizes the profit. 
+The proposed sampling strategy is based on a regularized maximization of the conditional entropy of the field, functional that formally combines global characterization of the field with the principle of maximizing information extraction for ore-waste discrimination\footnote{The content of this chapter is based on the \bibentry{Santibanez2019_b}. Submitted. Under Revision}.
+%
+%The sampling strategy is based on the inference of conditional entropies, from the limited data available at previously mined benches. Thus, the strategy begins by sampling in a regular grid, from which block grades are estimated by kriging. Blocks in this estimated field are classified as ore or waste and this binary field is used as a training image to generate multiple realizations of ore waste distribution. These realizations allow inference of the conditional entropies, from which optimum sampling locations are selected in subsequent benches, thus adapting the sampling strategy to locations with maximum conditional entropy. As mining progresses, the advanced sampling grid adapts to better characterize the contacts between ore and waste. 
+%
+This sampling strategy is applied to three real cases, where dense blast-hole data is available for validation from several benches. %Dense blast-hole information is used to determine the grade value at the proposed sample locations, and to validate the ore waste classification after estimating the block grades from these sampled locations.
+Remarkably, results show relevant and systematic improvement with respect to the standard regular grid strategy, where for deeper benches in the field the gains in ore-waste discrimination are more prominent.
+
+
+%\emph{Entropy and conditional Entropy, uncertainty reduction, multiple-point statistics, %geostatistics, maximum entropy sampling, short term planning, advanced sampling.}
+
+
+%==========================================================
+%==========================================================
+
+%==========================================================
+%==========================================================
+
+\label{sec_intro_PII}
+Short-term planning and grade control aim at determining the optimum assignment of each block of material in a mine, considering the potential economic profit, complying with the mine plan and the constraints in the mine and processing facilities. This assignment can be a specific process, a stockpile or the waste dump. In this chapter, the analysis has been limited to the binary decision case of ore sent to the processing plant or waste sent to the dump. In this context, the grade and other properties of each block are estimated from samples located in its neighborhood. In most open pit mines, these samples are taken where blast-holes are drilled. Two important considerations about this estimation procedure are:
+
+\begin{itemize}
+	\item The block grade estimation involves a change of support, that is the volumetric support of the samples is usually much smaller than that of the block; and 
+	\item The block grade is estimated based on the most current information, which during production is the sampled grades obtained at blast-holes.
+\end{itemize}
+
+Because of these considerations, the estimation technique of the block grade must account for the \emph{support effect} as the block ordinary kriging is typically used to determine the block grade. Secondly, the fact that the assignment of the block to a specific destination is based on an estimation from limited data, means that sampling errors in that information impair the final assignment \cite[p.~7]{Chiles2012} \citep{Abzalov2010}, which is known as \emph{information effect} \cite[p.~442]{Chiles2012}
+
+Short-term planning and grade control are almost always based on samples taken from a pseudo-regular grid of blast-holes. These samples suffer from high 
+%sampling and sample preparation 
+errors due to numerous factors: poor sample recovery near the collar of the blast-hole, delimitation error by including the subdrill, and careless applications of sampling procedures since production has priority and the area must be freed prior to loading explosives \citep{Franc1983,Pitard1993,Ortiz2012}. Poor sample quality leads to extremely large economic losses, which increase when geological domains are poorly understood or when estimation of the block grades suffers from large errors \citep{Magri2000}. These sources of uncertainty are hidden, but have a significant impact in the financial performance of mining projects \citep{Magri2010,Magri2011,Ortiz_2004_a}.
+
+Regarding the information used for grade control, most applications in mining deal with a regular grid, and optimization is aimed at determining the spacing of the samples to comply with some measures of quality \citep{Ortiz2014}. These measures of quality are often linked to the kriging variance, as the measure of performance of the estimation \citep{McBratney1981a,McBratney1981b,Blackwell1998,Lloyd1998,Hassanipak2004,Vasat2010}. The use of geostatistical simulation allows to consider uncertainty that may be a function of the block grade, accounting for the \emph{proportional effect} \citep{Journel2004}. 
+
+Furthermore, although in most applications conventional two-point simulation methods, such as sequential Gaussian or sequential indicator simulation are used, some authors have introduced the use of multiple-point geostatistical simulation in mining applications \citep{Ortiz2003,Ortiz_2004_a,Boisvert2008}. These methods require the use of a training image \citep{Mariethoz_2014_a}, which is commonly built from an analogue, outcrop or a geological interpretation \citep{Boisvert2008}. Data driven training images can also be used \citep{Ortiz_2004_a,Silva2015} and are precisely the approach taken in this study.
+
+Advanced drilling considering a reverse circulation (RC) drilling rig has been studied as an option to improve the quality of the samples for short-term planning and grade control, and to provide grades and other geological information in advance to build a reliable model for decision-making. This approach has led to improved financial returns \citep{Magri2010,Magri2011,Ortiz2012,Ortiz2014} and allows the use of more sophisticated tools to build the short-term plan, such as cokriging or cosimulation to account for multivariate relationships. Furthermore, advanced drilling allows a characterization of the geological features of the rock (lithology, alteration, mineralization), hence these samples can be used to improve and update the geological interpretation. Advanced drilling is normally applied considering a regular drilling grid with a spacing wider than the blast-hole spacing. From the high quality samples obtained in the advanced drilling grid, a short-term model can be built using geostatistical estimation (kriging or cokriging) or simulation \citep{Journel1974}. The simulation approach has usually relied on a multiGaussian method and to the best knowledge of the authors, multiple-point geostatistics has not been applied in grade control. Cost functions that account differently for the costs of misclassification as ore or waste have also been used frequently in mining \citep{Deutsch2000,Journel2004,Verly2005,Dimitrak2014}. 
+
+%It should be emphasized that grade control often deals with a binary decision of determining whether a block is ore or waste. In our research, we limit ourselves to this binary case. Under these circumstances, the sampling should be aimed at determining the location of the contact between the ore and the waste. 
+%[Jorge]: This is redundant.......
+%It should be emphasized that grade control often deals with a binary decision of determining whether a block is ore or waste. In our research, we limit ourselves to this binary case. Under these circumstances, the sampling should be aimed at determining the location of the contact between the ore and the waste. Our proposal aims at characterizing that contact between ore and waste, by learning from previously mined benches the location and geometry of the contact, and determining the best locations to be sampled at the current bench. This results in an irregular grid of samples. Furthermore, the sample locations adapt to the local conditions as more information becomes available from previous benches. Sampling occurs at the locations that have the highest conditional entropy, based on the available samples within the bench and also on the spatial continuity of the ore and waste blocks, which is unknown, but is inferred from the estimated model from previously mined benches.
+
+% The introduction without subsections!!!
+%\subsection{Contribution and Organization}
+This work presents a new methodology for short-term planning sampling and grade control based on the selection of the sampling locations that are the most informative in terms of ore-waste discrimination. The proposal aims at characterizing the contact between ore and waste, by learning from the data of previously mined benches the location and geometry of the contact, and determining the best locations to be sampled at the current bench. The implementation of this principle results in an irregular grid of samples. Furthermore, the sample locations adapt to the local conditions of the problem.  
+%as more information becomes available from previous benches.  
+New samples are drilled at locations that have the highest conditional entropy based on the available samples (within the bench) and on the spatial continuity of the ore and waste blocks. This last component of the model is cleverly estimated from previously mined benches. On the specifics, an algorithm is adopted to this problem to select the best locations, previously introduced by the authors in \cite{Santibanez2019_a}, (Section \ref{sec_Pre_RAMIS_PII}). This methodology is applied to three real scenarios and then the results for each case are analyzed, showing the performance improvement with respect to an advanced regular sampling grid. Then, the limitations and potential economic benefits of this approach are discussed and some final conclusions are provided. 
+
+
+\section{Entropy-based Adaptive Sampling Strategy}
+\label{sec_Pre_RAMIS_PII}
+
+In this section, the proposed method for determining the best sample locations over a binary two-dimensional field is reviewed. 
+%The method works in two stages: first, the general features of the field are learned through a coarse regular sampling grid; then, the sampling adapts to the features learned from the regular grid and aims at characterizing the contacts between ore and waste. The process can be applied sequentially, where each sample is used to make decisions about the subsequent locations to be sampled; or in batches, where sets of samples are used to make decisions about where to place the next batch of samples.
+%
+This strategy is based on a regularized maximum entropy sampling problem presented in \cite{Santibanez2019_a}, which provides a  sampling scheme that maximizes the information extracted from the measurements. 
+%outperforms regular sampling at the same sampling rate.
+
+\subsection{Maximum Entropy Sampling}
+
+
+To formalize the problem, let consider a \emph{2-D} field with unknown spatial correlation. Notice that this spatial correlation may be fully characterized by a variogram or may require higher order statistics to be described \citep{Mariethoz_2014_a,Ortiz2003}. Then, and without loss of generality, the regionalized variable $X$ is a \emph{2-D} random array of variables representing a discrete image of finite size $A \cdot B$, %consisting of $M^2$ discrete random variables:
+\begin{equation} \label{eq:Pre_Z_PII}
+X_{u,v} :(\Omega,\mathds{P})\rightarrow \mathcal{A} = \{0, 1\} \quad \forall  (u,v) \in [A] \times [B]  ,
+\end{equation}
+with values in the finite alphabet $\mathcal{A}$ (limited here to the binary case), and $(\Omega,\mathds{P})$ describing the sample space and the probability measure for the stochastic regionalized variable.
+%In addition, without loss of generality, the random field $Z$ can be rearranged as a finite dimensional vector $X$ in $\mathbb{R}^N$.
+
+Adopting the concept of entropy as a measure of uncertainty of a random variable \citep{cover_2006}, an algorithm that finds the placement rule $f$ through optimal reduction of the {posterior} entropy after doing measurements is proposed.  For any given number $K\leq A \cdot B$ of sample positions to be taken, let $\mathbf{F}_K \equiv \left\{ f:\left\{1,..,k,.., K \right\} \rightarrow [A] \times [B] \right\}$ be the collection of functions that select $K$-elements in $[A]\times[B]$. Then for any $f \in  \mathbf{F}_K$ (sampling rule of size $K$) let's denote the measured random vector by: 
+%.........................
+\begin{equation}\label{eq:Meth_Theo_Xf_PII}
+X_{f} \equiv ( X_{f(1)},X_{f(2)}, \ldots ,X_{f(K)}) ,
+\end{equation}
+and the remaining non-measured random vector by, 
+%%.........................
+\begin{equation}\label{eq:Meth_Theo_Xfc_PII}
+X^f \equiv (X_{ i }: i \in [A]\times [B] \setminus f ) .
+\end{equation}
+In this context, the conditional posterior entropy of $X^f$ given $X_f$ measures the remaining uncertainty of the field $X$ after sensing the position in $X_{f}$ \citep{cover_2006}. It can be computed as the joint entropy of the entire process minus the joint entropy of the variables measured by $f$, as shown in Eq. \eqref{eq:Meth_CondEntropy_PII}.
+\begin{equation}
+\label{eq:Meth_CondEntropy_PII}
+H(X^f|X_f) = H(X) - H(X_f) .
+\end{equation}
+Then, the optimal decision of size $K$ is the solution of 
+\begin{equation} \label{eq:Meth_Theo_OWP_minH_PII}
+f_{K}^{*} \equiv \argmin_{f \in \mathbf{F}_K} H(X^f|X_{f}),
+\end{equation}
+which minimizes the uncertainty of the field after $K$ measurements. 
+Interestingly, adopting some information theory identities \citep{cover_2006}, 
+the optimal decision in (\ref{eq:Meth_Theo_OWP_minH_PII}) is equivalent to the solution of the 
+{\em maximum entropy problem} \citep{Santibanez2019_a}: 
+%%.........................
+\begin{equation}\label{eq_sec_owp_9_PII}
+f^*_K = \arg \max_{f\in \mathbf{F}_K} 	H({X}_f) 
+\end{equation}
+that finds the $K$ positions that jointly lead to the highest a priori (before the measurements) entropy. This principle is easier to implement as it requires marginal distributions and not the complete joint distribution of $X$, model for the implementation of the Eq. \eqref{eq:Meth_Theo_OWP_minH_PII}. 
+
+%The Adaptive Strategy -----------------
+\paragraph{The Sequential Adaptive Strategy} 
+
+From the general principle in Eq.(\ref{eq_sec_owp_9_PII}), the focus is on the realistic {\em sequential problem} where the decision is taken sample by sample, and furthermore, the measurements taken in previous iteration of the algorithm are considered to upgrade the model (or adapt the model 
+to the data) in the next iteration.  Considering the set of previous sensed position $f^*_k=((i_1,j_1),...,(i_k,j_k))$ and the measurements of the field $X$ taken at those selected places, i.e., $\bar{x}=(x_1,..,x_k)$, the solution of the $k+1$ position is given by the maximum entropy principle in (\ref{eq_sec_owp_9_PII}) conditioned on $X_{(i_1,j_1)}=x_1$,.., $X_{(i_{k-1},j_{k-1})}=x_{k-1}$ and $X_{(i_k,j_k)}=x_k$, i.e., 
+%..........................................................................
+\begin{align}\label{eq_adaptive_1_PII}
+(i_{k+1},j_{k+1}) = 
+\argmax_{(i,j)\in [A]\times [B] \setminus \left\{(i_l,j_l): l=1,..,k\right\}} H(X_{i,j}|X_{f^*_k}=\bar{x}), 
+\end{align}
+where $f^*_{k+1}=(f^*_k,(i_{k+1},j_{k+1}))\in \mathbf{F}_{k+1}$.
+Then iterating this rule from $k=1,..,K$ offers an adaptive and sequential solution 
+for the problem of selecting the more informative $K$ positions of the field.
+
+%JOrge------------------------------------------
+% Over the collection of decision rules $\mathbf{F}_K$, we choose the rule that minimizes, in average, the remaining uncertainty after taking the measurements, or the uncertainty of the remaining variables conditioned by the measured ones. 
+
+% Then considering a specific measure $X_{f} = x_{f} \in \mathcal{A}^K$, the remaining uncertainty can be quantified by the \emph{Shannon entropy} \cite{cover_2006} of $X^f$ given $X_f$, \emph{i.e.} $H(X^f|X_{f} = x_{f})$. Note that $H(X^f|X_{f} = x_{f})$ represents the uncertainty conditioned to the specific measured values $(x_{f(1)},\ldots,x_{f(K)})$. In practice, we do not have access to these measurements while making a decision on $\mathbf{F}_K$. Consequently, our objective function should consider the posterior uncertainty in average with respect to the statistics of $X_{f}$. In other words, we consider the \emph{Shannon conditional entropy} \cite{cover_2006} of $X^f$: % given $X_{f}$, \emph{i.e.}: 
+% \begin{equation} \label{eq:Meth_Theo_Hc_PII}
+% \footnotesize{
+% %\begin{multiline*}
+% H(X^f|X_{f}) =  -\displaystyle\sum_{x_{f} \in A^K} P_{X_{f}}(x_{f}) H(X^f|X_{f}=x_{f}) ,
+% %\end{multiline}
+% }
+% \end{equation}
+% as the objective function. Then the allocation of $K$-measurements reduces to:
+%\begin{equation} \label{eq:Meth_Theo_OWP_minH_PII}
+%f_{k}^{*} \equiv \argmin_{f \in \mathbf{F}_k} H(X^f|X_{f}),
+%\end{equation}
+% which is the solution that minimizes the posterior uncertainty.
+%JOrge------------------------------------------
+
+\paragraph{The Regularized Adaptive Strategy} 
+
+The adaptive solution in  Eq. \eqref{eq_adaptive_1_PII} requires the knowledge of the statistics of $X$. In practice, this model is not available requiring to find a way to infer this model from empirical data. In the proposed solution, a training image is required that is deemed to represent the spatial continuity of the random function describing the spatial correlations in the underlying spatial model, and from this a model is estimated using conditional multiple point simulations \citep{Mariethoz_2014_a,Ortiz_2004_a}. In particular, a set of conditional probabilities  of the form $\hat{\mu}_{X_{i,j}| X_S}(x_{i,j}|x_S )$ are estimated,  where ${i,j}\in [A]\times [B]$,  $S\subset [A]\times [B]$ denotes the conditioning positions (attributed to sensed data),  and $x_{i,j}\in \mathcal{A}$ and $ x_S =(x_{i,j}:(i,j)\in S)\in \mathcal{A}^{\left|S \right|}$, which is the information needed to implement (\ref{eq_adaptive_1_PII}).
+
+%JOrge --------------------------------------------------
+%From the iterative solution, we formalize an appropriate framework to integrate these empirical sources. 
+
+%First, an optimal (from \emph{information theoretic} approach) sensor placement rule for select $K$ measurements is based on the maximization of the prior entropy $H(X_f)$ with $f \in F$. By chain rule for entropy:
+
+%\begin{equation}\label{eq:Meth_Pract_OWP_ChainRuleH_1_PII}
+%	H(X_f) = H(X_{f(1)}) + H(X_{f(2)}|X_{f(1)}) + \ldots + H(X_{f(K)}|X_{f(K-1)}, \ldots ,X_{f(1)} , )
+%\end{equation}
+
+%In preliminary formulation we considered case of the initial $K$ measurements without previous sampled positions in the field. As iterative \emph{OWP} rules take measurements one by one or in groups we can rewrite the entropy isolating the positions previously measured. Thus, the expression of Eqn. \eqref{eq:Meth_Pract_OWP_ChainRuleH_1_PII} can be divided in two parts. Let $j$ be an index that accounts for the position of the $J$ variables that have been previously measured by a rule $\widetilde{f}$, and $m$ the index for the current optimization process $f$ of $M = |f|$. Then,  %new sampling positions is applied. Then,
+
+
+%\begin{multline}\label{eq_def_chain_rule_PII}
+%H(X_f)  =  \sum_{j=1}^{J} H(X_{\widetilde{f}{(j)}} | X_{\widetilde{f}{(j-1)}},\ldots,X_{\widetilde{f}{(1)}}) + \\
+%           \sum_{l = 1}^{M}H(X_{f(l)} | X_{f(l-1)},\ldots,X_{f(1)},   X_{\widetilde{f}{(J)}},X_{\widetilde{f}{(J-1)}},\ldots,X_{\widetilde{f}{(1)}} ) .
+%\end{multline}
+%\begin{align}\label{eq:Meth_Pract_OWP_ChainRuleH_2_PII}
+%H(X_f) = & \sum_{j=1}^{J} H(X_{\widetilde{f}{(j)}} | X_{\widetilde{f}{(j-1)}},\ldots,X_{\widetilde{f}{(1)}}) + \nonumber \\
+%         & \sum_{m = 1}^{M}H(X_{f(m)} | X_{f(m-1)},\ldots,X_{f(1)},   X_{\widetilde{f}{(J)}},X_{\widetilde{f}{(J-1)}},\ldots,X_{\widetilde{f}{(1)}} ) .
+%\end{align}
+
+%The first sum is equal to zero, because each component $H(X_{\widetilde{f}{(j)}} = x_{\widetilde{f}{(j)}} | X_{\widetilde{f}{(j-1)}},\ldots,X_{\widetilde{f}{(1)}})$ is equal to zero (the entropy of a certain outcome (measured variable) is zero). In addition, in the second sum we can recognizes two kind of conditioning variables as exposed in the next definition:
+
+%\begin{equation}\label{eq:Meth_Pract_OWP_Xs_PII}
+%X_{S_{m}} = \{  X_{f(m-1)},X_{f(m-2)},\ldots,X_{f(1)},   X_{\widetilde{f}{(J)}}, X_{\widetilde{f}{(J-1)}},\ldots,X_{\widetilde{f}{(1)}}  \} .
+%\end{equation}
+%While variables indexed from rule $\widetilde{f}$ from $1, \ldots , J$ are previous sampled positions and the specific realization for each variable could be accessible by the measurement process, the variables indexed by the rule $f$ from $1, \ldots, M$ are the target of the current \emph{OWP} rule.
+
+%For simplicity, we can use a sorted combination $\widehat{f}$, of the rules $\widetilde{f}$ and $f$ with indexes from $1, \ldots, K$. Indexes from $1, \ldots, J$ account the positions obtained from the rule $\widetilde{f}$ and the indexes from $J+1, \ldots, K$ accounts the positions obtained from the rule $f$. The we can define the subset of conditioning variables:
+%\begin{equation}\label{eq:Meth_Pract_OWP_XsJoint_PII}
+%X_{S_{K}} = \{ X_{\widehat{f}(1)}, \ldots, X_{\widehat{f}(J)} , X_{\widehat{f}(J+1)}, \ldots, X_{\widehat{f}(K)} \} .
+%\end{equation}
+
+%Now, by the entropy chain rule we have rewritten the initial method, as the sum of marginal entropy of each wanted sensor position and its conditionals. This representation 
+%The maximization of target function from \eqref{eq_def_chain_rule_PII} keeps the issue from original formulation: As we are doing an optimization over a space of size
+%To choose ${N - J \choose M} $ positions by the optimal rule $\widehat{f}$ still requiring an algorithm of combinatorial complexity which is unfeasible or at least highly computationally intensive for fields with thousands or more variables. Instead, we propose to analyze each element separately in an iterative algorithm. 
+%\begin{equation}\label{eq:Meth_Pract_OWP_maxH_PII}
+%\widehat{i}^* = \argmax\limits_{\substack{i\in [N] \\ i \notin S_{i}}} H(X_{i}|X_{S_{i}}) ,
+%\end{equation}
+%with: 
+%\begin{equation}\label{eq:Meth_Pract_OWP_HCondXs_PII}
+%H(X_{i}|X_{S_i}) = \sum_{x_{S_i} \in A^{|S_{i}|}} P(X_{S_i}) H(X_{i} | X_{S_i} = x_{S_i}) .
+%\end{equation}
+
+%Here, $x_{S_i}$ denotes the set of values that $X_{S_i}$ takes in a particular realization. %There is still a problem with the estimation of joint distribution for the variables we are optimizing on. 
+%In our iterative approach, we can assume that $P(X_{S_i})$ follows a degenerated distribution after $X_{S_i} = x^{0}_{S_i}$ was measured. This assumption allows us to rewrite Eq. \eqref{eq:Meth_Pract_OWP_HCondXs_PII} to:
+%\begin{equation}\label{eq:Meth_Pract_OWP_HCondXsMeasured_PII}
+%H_{adaptive}(X_{i}|X_{S_i}) =  H(X_{i} | X_{S_i} = x^{0}_{S_i}) .
+%\end{equation}
+
+%The Eq. \eqref{eq:Meth_Pract_OWP_HCondXsMeasured_PII} reduces the number of degrees of freedom in the joint distribution. Therefore, we only need to estimate the probabilities of $X_{i}$ in the alphabet $A$ conditioned to the specific $x^{0}_{S_i}$ realization. This conditional entropy can be easily estimated using pattern search tools or \emph{MPS} techniques for case of \emph{2-D} channelized structures studied in this work.
+
+Finally, a convex combination between the maximal entropy adaptive criterion in (\ref{eq_adaptive_1_PII}) and a regularization principle that promotes uniform covering of the sampling space is proposed. It has been found that a mixed rule that promotes a compromise between selecting the most informative points (from the conditional model and previous data) and a good cover of the sampling space is better than the rule based on a pure adaptive principle \citep{Santibanez2019_a}.  
+More precisely, let $S_{k} = \left\{(i^a_l,j^a_l): l=1,..,k\right\}$ denote the collection of $k$ positions previously obtained.  $X_{S_{k}} = \left\{ X_{i^a_1,j^a_1},.., X_{i^a_{k},j^a_{k}} \right\}$ denote the random vector at the locations $S_{k}$, and $x_{S_{k}} = \left\{ x_1,.., x_{k} \right\}$ be the data collected at $S_{k}$. Then, the regularized rule is the solution of
+%----------------------
+\begin{align}\label{eq_subsec_ObjectiveFunction_1_PII}
+&(i^a_k,j^a_k) =\nonumber\\ 
+& \argmax_{(i,j)\in [A]\times [B] \setminus S_{k-1}} \alpha \cdot  H(X_{i,j}| X_{S_{k-1}} = x_{S_{k-1}} )  + (1 - \alpha) \cdot D((i,j), S_{k-1}).
+\end{align}
+%where, the regularization factor $\alpha$ allows to weight between entropy and distance criteria. Here, the distance criterion is defined using the minimum distance from the location $(i,j)$ from the locations in the set $S_{l}$ by 
+Note that the second term promotes a uniform sampling by using a distance criterion %from $(i,j)$ to  the set $S_{k-1}$ by 
+\begin{align}\label{eq_subsec_ObjectiveFunction_2_PII}
+D(({i,j}),{S_{k-1}}) = \min_{({\tilde{i},\tilde{j}}) \in S_{k-1}}  d(({i,j}), ({\tilde{i},\tilde{j}})),
+\end{align}
+where $d(({i,j}), ({\tilde{i},\tilde{j}})) \equiv \sqrt{(\tilde{i}-i)^2+ (\tilde{j}-j)^2}$. Therefore, the proposed regularized rule corresponds to a global maximin strategy.
+%Further details about this adaptive approach can be found at [REFTHEORETICALPAPER]. 
+%\begin{align}\label{eq_subsec_ObjectiveFunction_2_PII}
+%	D(X_{i,j}, X_{S_{l}}) = \min_{(i^{*},j^{*}) \in S_{l}}  Dist2Points(X_{i,j},X_{i^{*},j^{*}})
+%\end{align}
+%where, $Dist2Points(X_{i,j},X_{i^{*},j^{*}})$ corresponds to the distance between the locations of the variables $X_{i,j}$ and $X_{i^{*},j^{*}}$. Under the assumption of a relative position of the random variables given by its own indexes, classical geometric \emph{2-D} distance, $ \left| \left| i - i^{*} \right|^{2}  +   \left| j - j^{*} \right|^{2}  \right|^{\frac{1}{2}} $ , is used in this work.
+
+%It works (regular grid first and then targets boundaries).
+
+\section{Optimal Sampling for Grade Control}
+\label{sec_os_grade_control_PII}
+
+In grade control the target is to define the destination of every single block in the current mining bench. In order to achieve this task, the estimated grade  of the block is considered and compared with the  \emph{Cut-Off} grade. The \emph{Cut-Off} grade corresponds to the minimum grade required for a block to be considered for processing (expecting a positive economical benefit). Therefore, a block found to be above this \emph{Cut-Off} grade is considered to be ore, while a block below this grade is considered to be waste. Then, the grade control relies on a binary decision even when the value of the block grade corresponds to a continuous variable. 
+
+The \emph{Cut-Off} grade can be established by various methods. Its selection is related to a certain production objective, such as the use of resources or economic benefit. These objectives give rise to different types of targets, such as maximizing global economic benefits, immediate benefits and so on. The  \emph{Cut-Off} grade does not have a fixed or predefined value, but instead it corresponds to a strategic variable that has important implications in the design and production of the mine.
+
+The application of the adaptive sampling strategy to grade control is described in this section by considering a scenario where several benches are to be mined in a sequential process. The sampling strategy is used with the objective of improving the prediction of ore-waste contact in successive working benches. 
+For every bench, the method works in two stages: first, the general features of the field are learned through a coarse regular sampling grid; then, the sampling adapts to the features learned from the regular grid and aims at characterizing the contacts between ore and waste for a better characterization of non-sensed blocks as learned from the benches previously mined out. In each bench, the process is applied sequentially, where current samples are used to make decisions about the subsequent locations to be sampled.  %; or in batches, where sets of samples are used to make decisions about where to place the next batch of samples.
+
+\subsection{Proposed Methodology for Sampling}
+%In order to characterize the geometry of the process, 
+Considering a collection of $M$
+benches, where every bench is indexed by $m\in \lbrace 1,\cdots,M\rbrace$ an it is a rectangular grid, i.e., a \emph{2-D} image, denoted by $I_{grade} ^{m} \in \mathbb{R}^{A x B}$ of size $A$ x $B$. 
+%is established (on whose blocks, every single location in the grid, the grade control task will be determined). 
+On each bench $m$, $K$ measurements will be taken to infer a model of the mineral distribution of non-sampled blocks at this bench. Therefore, the main problem is to define the best $K$ locations %\footnote{in the sense of the grade control task, i.e. in terms of the optimal ore-waste contact discrimination under the available number of samples} 
+using the framework presented in Section \ref{sec_Pre_RAMIS_PII}.
+%for the $K$ samples to be acquired.
+From these $K$ samples an estimation is made on all the non-sensed blocks of the bench producing what is defined as the block model. Finally, a hard threshold is applied on the block model using a \emph{Cut-Off} grade to create a binary \emph{2-D} image denoted by $I_{o-w}^{m} \in \mathcal{A}^{A x B}$ (with $| \mathcal{A} | = 2$), where, consequently, non-sensed blocks are classified as ore or waste.  
+%( binarized representation of the bench in terms of ore or waste classification).
+
+In the initial stage of this process ($m = 1$), the upper bench is considered. As no preliminary data is available from previous benches, the conditional entropies are drawn from an i.i.d distribution of ore and waste for implementing Eq. \eqref{eq_subsec_ObjectiveFunction_1_PII}. This worst case scenario in terms of prior information for the inference, reduces Eq. \eqref{eq_subsec_ObjectiveFunction_1_PII} to the classical near regular sampling, since its second term in Eq. \eqref{eq_subsec_ObjectiveFunction_2_PII} dominates the optimization promoting distance as a criterion where a uniform coverage of the space is the optimal solution. Thus for the bench $m = 1$, $K$ samples are distributed in a regular grid. An empirical estimation of the remaining (non sensed) mineral grades is performed by \emph{2-D} kriging. Finally, after applying the \emph{Cut-Off} grade the image $I_{o-w}^{1}$ is obtained.
+
+For benches $m = 2, \ldots, M$, the use of the previously estimated binary block model  $I_{o-w}^{m-1}$  for bench $m-1$ is used as the training image (model) for inference of the conditional entropies used in Eq.\eqref{eq_subsec_ObjectiveFunction_1_PII} in the current bench.  
+%The basic assumption here is that the model of the image at batch $s$ is the estimated recovered image of the previous batch.
+The key assumption made on this selection is that the previous bench $m - 1$ reflects the spatial distribution of the ore and waste blocks more accurately than the i.i.d. assumption made on the initial stage ($m = 1$). 
+Using $I_{o-w}^{m-1}$ as a training image along with \emph{MPS}, in particular the \emph{SNESIM} algorithm,  
+%conditioned on the available data at the current bench, 
+and the previous $k-1$ measurements at the current bench $m$, it is possible to estimate the entropy map, $\hat{H}^{m,k}$, for this bench. This is required for the implementation of the sampling rule in Eq.\eqref{eq_subsec_ObjectiveFunction_1_PII}.  The selection rule for the $k$-th sample at bench $m$ given the previously sampled locations $S_{k-1}^{m}$ corresponds to the solution of:
+%----------------------------------------------
+\begin{align}
+\label{eq_subsec_ObjectiveFunction_empirical_PII}
+&(i^a_k,j^a_k)^{m} =\nonumber\\ 
+& \argmax_{(i,j)\in [M]\times [M] \setminus S_{k-1}^{m}} \alpha  \hat{H}^{m,k}(X_{i,j}^{m}| X_{S_{k-1}^{m}}^{m} = x_{S_{k-1}^{m}} )  + (1 - \alpha) & D((i,j), S_{k-1}^{m}).
+\end{align}
+%REDUNDANT:--------------
+%Then, using the ore and waste blocks distribution $I_{o-w}^{m-1}$ from Bench $m-1$ as a training image, it is possible to create  unconditional simulations using $SNESIM$. Then, the regularized adaptive sampling strategy from \eqref{eq_subsec_ObjectiveFunction_empirical_PII} can be applied to select the batches of $s$ samples at bench $m$. 
+The solution of Eq.\eqref{eq_subsec_ObjectiveFunction_empirical_PII} places the new samples in the locations with an optimal balance between maximum conditional entropy (information criterion) and the maximum distance to previously sampled positions (regularization). It is important to mention that in the proposed practical implementation of  Eq.\eqref{eq_subsec_ObjectiveFunction_1_PII}, the adaptive sequential sampling strategy selects a new batch of $s$ samples at every sampling step. This iterative strategy is repeated until the $K$ samples are obtained. For completeness, a schematic representation of the sampling rule in \eqref{eq_subsec_ObjectiveFunction_empirical_PII} is illustrated in Fig. \ref{fig:schematic_ruleRAMISm_PII}. Finally, the pseudo-code of the implementation of Eq.(\ref{eq_subsec_ObjectiveFunction_empirical_PII}) is presented in App. \ref{appendix_seudo_code_PII}.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\columnwidth]{Figs_PII/Figure_01_PII}
+	\caption{\label{fig:schematic_ruleRAMISm_PII} Schematic diagram of the sampling rule \eqref{eq_subsec_ObjectiveFunction_empirical_PII}. }
+\end{figure}
+
+%For the first batch of $s$ samples, due to the lower number of conditioning data from samples at the bench $m$, the initial samples will be located mostly regularly over bench $m$ because the distance criterion still dominates the optimization process. Nevertheless, as new sampling locations are defined from \eqref{eq_subsec_ObjectiveFunction_empirical_PII} and these locations are effectively sampled, the new measured data allows to update the conditional entropies. This last update is done throughout the SNESIM simulations that provides an empirical estimation of the distribution of $X_{i,j}^{m}| X_{S_{k-1}^{m}}^{m} = x_{S_{k-1}^{m}}$ and the estimation of the conditional entropy, Given the entropy the available batches of samples ($s$ for the first batch step, $2 s$ for the second batch step, and so on).
+
+%After the $K$ samples are obtained for a bench, ordinary kriging is performed, using the routine provided in $GSLIB$ \citep{Deutsch_1998_a}. A variogram model is fit in each case over the $N$ available copper grade samples obtained, and estimation is performed using a minimum of $min$ samples and a maximum of $max$, with a search radius of $rad$ [m]. A block discretization of $nA \times nB \times nZ$ points per block is used. The resulting estimated map of the block grades in the bench is binarized by applying a threshold at grade $grade$. The resulting model represents the estimated ore and waste blocks that are used in short-term planning.
+%Finally, after the definition of the $K$ samples for bench $m$ and the consequent measurements, based on the grades of the $K$ samples, a final estimation by ordinary kriging of the block grades in the bench $m$ is performed, and a after applying a cutoff to label the blocks as ore or waste the image $I_{o-w}^{m}$ is obtained.
+
+%Inference of the conditional entropies is done over the $L$ simulated fields, which are constructed over a grid of dimension $A \times B$, using a limited neighborhood of radius $R$. $SNESIM$ is implemented in $SGEMS$ \citep{Remy_2009_a}. The simulation is run using the parameters summarized in the table \ref{tab:paramsSGEMS_PII}.
+
+%[Jorge This level of details is not really needed.....
+%Inference of the conditional entropies is done over the $L$ simulated fields, which are constructed over a grid of dimension $A \times B$, using a limited neighborhood of radius $R$. $SNESIM$ is implemented in $SGEMS$ \cite{Remy_2009_a}. 
+
+%For the first batch of $s$ samples, due to the lower number of conditioning data from samples at the bench $m$, the initial samples will be located mostly regularly over bench $m$ because the distance criterion still dominates the optimization process. Nevertheless, as new sampling locations are defined from \eqref{eq_subsec_ObjectiveFunction_empirical_PII} and these locations are effectively sampled, the new measured data allows to update the conditional entropies. This last update is done throughout the SNESIM simulations that provides an empirical estimation of the distribution of $X_{i,j}^{m}| X_{S_{k-1}^{m}}^{m} = x_{S_{k-1}^{m}}$ and the estimation of the conditional entropy, Given the entropy the available batches of samples ($s$ for the first batch step, $2 s$ for the second batch step, and so on).
+%[Jorge: Move this to the analysis of the method]
+
+\subsection{Classification Process}
+Concerning the final ore-waste classification, after the $K$ samples are taken in every bench, ordinary kriging is performed using the routine provided in $GSLIB$ \citep{Deutsch_1998_a}. A variogram model is fit in each case over the full bench, performing the estimation by using a minimum of $min_S$ samples and a maximum of $max_S$, with a search radius of $rad_S$ [m]. A block discretization of $nA \times nB \times nZ$ points per block is used. The resulting estimated block model for the bench is binarized by applying a \emph{Cut-Off} grade. The resulting binary model (image $I_{o-w}^{m}$) represents the estimated ore and waste blocks that are used in short-term planning.
+
+\section{Case Studies and Experiments}
+
+The proposed methodology has been applied to three different cases, two of them coming from the same ore deposit. The corresponding databases consist of drill-hole composites widely spaced and denser blast-hole samples, which are used to validate the sampling strategy. The two projects correspond to massive porphyry copper deposits that are currently under operation (more details can be found in Section \ref{subs_dataDescription}).
+
+In this section, the implementation parameters are provided and the results of the first case study are described in detail. For sake of space, only the relevant results for the other two cases are presented.
+
+\subsection{Database Description}
+\label{subs_dataDescription}
+
+Case studies 1 and 2 come from the same mining project, but from different areas of the open pit. These areas have already been mined out, providing blast-hole samples to test the hypothesis that adaptive sampling can achieve better discrimination between ore and waste than classical regular sampling. For this mining project, the available blast-hole database consists of nearly regularly spaced samples taken in a grid of approximately $10m$ by $10m$. The database contains areas without samples, therefore, it was split into two informed sectors to generate case studies 1 and 2. On the other hand, case study 3 comes from a different mining project with similar sampling conditions. 
+
+Blast-hole data are migrated to a regular grid creating 6 consecutive benches uniformly sampled for each case study. From the selected \emph{X-Y} section of the raw information provided by the blast-hole samples, a set of dense benches has been created that completely describe the ore distribution of the \emph{3-D} deposit.
+
+The basic statistical information used to build the case studies is summarized in Table \ref{tab:stats_PII} and Table \ref{tab:coord_PII}. %It is important to mention that over two thousand drill-hole samples are available from the advanced drilling campaign. These samples are the main information source for resource estimation and they are also used for long-term planning. In addition to these samples, blast-hole samples are available at a much denser resolution. 
+\begin{table}
+	\caption{Summary statistics.}
+	\label{tab:stats_PII}
+	\begin{center}
+		\begin{tabular}{lcccccc}\toprule
+			& \multicolumn{2}{c}{Case Study 1} & \multicolumn{2}{c}{Case Study 2}& \multicolumn{2}{c}{Case Study 3}\\
+			& {Drill-hole} & {Blast-hole} & {Drill-hole} & {Blast-hole} & {Drill-hole} & {Blast-hole}\\
+			& {Samples} & {Samples} & {Samples} & {Samples} & {Samples} & {Samples}\\\midrule
+			Count     & 2045  & 19752 & 747   & 95815 & 2368  & 158772 \\
+			Mean      & 1.07 & 1.18 & 0.34 & 0.42 & 0.57 & 0.48\\
+			Std. dev. & 0.67 & 0.78 & 0.47 & 0.56 & 0.55 & 0.58\\
+			Minimum   & 0.13  & 0.01  & 0.01 & 0.00  & 0.00  & 0.00\\
+			Maximum   & 7.24  & 9.90  & 4.04 & 35.00 & 4.04  & 35.00\\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}
+	\caption[Case study coordinates.]{Case study coordinates. Elevations represent the centers of the considered benches.}
+	\label{tab:coord_PII}
+	\begin{center}
+		\begin{tabular}{lcccccc}\toprule
+			& \multicolumn{2}{c}{Case Study 1} & \multicolumn{2}{c}{Case Study 2}& \multicolumn{2}{c}{Case Study 3}\\
+			& {Min}   & {Max}   & {Min}   & {Max}   & {Min} & {Max}\\\midrule
+			East      & 24550 & 24730 & 72200 & 72550 & 72600 & 72900 \\
+			North     & 25100 & 25550 & 83100 & 83500 & 83100 & 83600 \\
+			Elevation & 3860  & 3940  & 2405  & 2455  & 2415  & 2465 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\newpage
+The statistical distributions of blast-holes grades present in the analyzed case studies are described in Fig. \ref{fig:db_hist_PII}, along with their basic statistics.
+\begin{figure}
+	\centering
+	\includegraphics[width=1.\columnwidth]{Figs_PII/Figure_02_PII}
+	\caption[Grade distributions and statistics for the selected databases.]{\label{fig:db_hist_PII}Grade mineral distributions and basic statistics for the available blast-holes. From left to right: CS1, CS2, CS3. }
+\end{figure}
+\subsection{Construction of Validation Block Model}
+From the unevenly distributed blast-hole and drill-hole data, a fully informed block model is obtained by performing block ordinary kriging using the kt3d routine of \emph{GSLIB}. Finally, six consecutive benches were considered as ground truth for every case study by considering the blocks inferred from the densely sampled available information. The parameters for the kriging estimation are presented in Table \ref{tab:paramsSGEMS_PII}.
+
+%			Grid dimension (A x B)& 0.422 	& 0.571 	& 0.480\\
+\begin{table}
+	\caption{Summary Parameters SNESIM.}
+	\label{tab:paramsSGEMS_PII}
+	\begin{center}
+		\begin{tabular}{lcccccc}\toprule
+			& {Case Study 1} & {Case Study 2}& {Case Study 3}\\\midrule
+			Number of benches (M) & 6 		& 6 		& 6\\
+			Min data for kriging  & 4   		& 4  		& 4\\
+			Max data for kriging  & 16  		& 16  		& 16\\	             	   
+			Max data per octant   & 0		& 0			& 0\\
+			\ (0 : not used)   	 &   		&   		& \\       
+			Maximum search radii  &[80,80,10]&[80,80,10]&[80,80,10]\\
+			\ (x, y, z)   			 &   		&   	& \\ 
+			Min data for kriging  & 10   		& 10  		& 10\\
+			
+			\bottomrule
+		\end{tabular}
+	\end{center}
+\end{table}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1.\columnwidth]{Figs_PII/Figure_03a_PII}
+	\caption{\label{fig:db_drill-holes_CS1_PII} Drill-hole samples data for case study $1$. From left to right: Benches 1-6. Colormap denotes the grade of \emph{Cu}.}   
+	\centering
+	\includegraphics[width=1.\columnwidth]{Figs_PII/Figure_03b_PII}
+	\caption{\label{fig:db_blast_CS1_PII} Blast-hole data for case study $1$. From left to right: Benches 1-6. Colormap: the same as in Fig. \ref{fig:db_drill-holes_CS1_PII}.}
+\end{figure}
+
+
+
+
+
+
+In order to illustrate the density of available information for every single bench, Figs. \ref{fig:db_drill-holes_CS1_PII} and \ref{fig:db_blast_CS1_PII} show the drill-hole composites and blast-hole samples for the first case study. The block model estimated by ordinary kriging is displayed for these data in Fig. \ref{fig:db_gt_CS1_PII}. Systematic descriptions of the other two case studies can be found in Appendix \ref{app_databases_PII}.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1.\columnwidth]{Figs_PII/Figure_04_PII}
+	\caption[Ground truth images. Case study $1$.]{\label{fig:db_gt_CS1_PII}Ground truth estimated from drill-holes and blast-holes samples for case study $1$. From left to right: Benches 1-6. Colormap: the same as in Fig. \ref{fig:db_drill-holes_CS1_PII}.}
+\end{figure}
+
+
+\subsection{Experimental Results: Adaptive Sampling Strategy}
+
+As mentioned, the value for the \emph{Cut-Off} grade corresponds to an operational decision, then in order to demonstrate the benefit of the proposed sampling approach, results for different \emph{Cut-Off} grade values are presented.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% Fig samples
+\begin{figure}
+	\centering
+	\frame{\includegraphics[width=.7\columnwidth]{Figs_PII/Figure_05_PII}}
+	\caption{\label{fig:CS1_1012_GS_PII} Samples for Case Study 1. From left to right: Benches \emph{2-6}. Top: From structured sampling. Down: From adaptive sampling using \emph{Cut-Off} grade $1.012\%$. Colormap: Describe batch of samples in the order of the performed sampling.}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsubsection*{Case Study 1}
+
+To illustrate the implementation and outcomes of the adaptive sampling strategy, full details are provided for the first case study. For case studies 2 and 3 only summary figures and results are presented, in the understanding that the procedure is similar to that illustrated for case study 1.
+
+For each sampling strategy, $9\%$ of the available locations for each bench were sampled ($K = 0.09 * A_m * B_m$). For case study 1 the proposed samples are presented in Fig. \ref{fig:CS1_1012_GS_PII}. The outcomes for kriging estimation from the proposed samples are displayed in Fig. \ref{fig:CS1_1012_EG_PII} for the benches 2, 3, 4, 5 and 6. Three \emph{Cut-Off} grade values, corresponding to the three quartiles of the grade distribution, were considered to evaluate the differences between the classical structured sampling (\emph{STR}) and the proposed adaptive sampling (\emph{ADA}) approach (Fig. \ref{fig:CS1_1012_GC_PII}).
+
+
+% Fig krigging reconstructions
+\begin{figure}
+	\centering
+	\frame{\includegraphics[width=.7\columnwidth]{Figs_PII/Figure_06_PII}}
+	\caption{\label{fig:CS1_1012_EG_PII} Estimated grade for Case Study 1. From left to right: Benches \emph{2-6}. Top: Kriging from structured sampling. Down: Kriging from adaptive sampling using \emph{Cut-Off} grade $1.012\%$. Colormap: the same as in Fig. \ref{fig:db_drill-holes_CS1_PII}.}
+\end{figure}
+
+% Fig grade control
+\begin{figure}
+	\centering
+	\frame{\includegraphics[width=.6\columnwidth]{Figs_PII/Figure_07_PII}}
+	\caption{\label{fig:CS1_1012_GC_PII} Estimated grade control for Case Study 1. From left to right: Benches \emph{2-6}. From top to bottom: Ground truth, structured sampling,  adaptive sampling using \emph{Cut-Off} grade $1.012\%$.}
+	
+	\centering
+	\hspace{5cm}
+	
+	\frame{\includegraphics[width=.9\columnwidth, height=.5\columnwidth]{Figs_PII/Figure_08_PII}}
+	\caption{\label{fig:CS1_1012_CC_PII} Confusion Matrix for Case Study 1. From left to right: Benches \emph{2-6}. Top: Structured sampling. Down: Adaptive sampling using \emph{Cut-Off} grade $1.012\%$.}
+\end{figure}
+
+From the results presented in Fig. \ref{fig:CS1_1012_CC_PII}, it is clear that the number of misclassified blocks is reduced with the adaptive sample in comparison with the structured classical approach.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\clearpage
+\newpage
+\subsection{Performance Assessment}
+
+\paragraph{Binary Image Inference Performance}
+
+We begin by comparing the performances in terms of image recovery achieved by the proposed adaptive sampling strategy with respect to the classical structured sampling. The results are summarized in the Tables \ref{tab:performances_global_classification_cs1_PII}, \ref{tab:performances_global_classification_cs2_PII} and \ref{tab:performances_global_classification_cs3_PII} for case studies 1, 2, and 3, respectively. Here the performance is evaluated in the binary ore-waste estimated image for each bench by computing the proportion of  misclassified blocks. 
+
+
+\begin{table}
+	\caption{Performance Error Summary for Case Study 1.}
+	\label{tab:performances_global_classification_cs1_PII}
+	\begin{center}
+		\begin{tabular}{lcccccc}\toprule
+			& \multicolumn{6}{c}{Case Study 1} \\
+			& \multicolumn{2}{c}{Cutoff grade $1.102$} & \multicolumn{2}{c}{Cutoff grade $1.241$}& \multicolumn{2}{c}{Cutoff grade $1.518$}\\
+			& {\emph{STR}} & {ADA} & {\emph{STR}} & {ADA} & {\emph{STR}} & {ADA}\\\midrule
+			Bench 2 & 0.112  & \textbf{0.069} & 0.133   & \textbf{0.114} & 0.059  & \textbf{0.055} \\
+			Bench 3 & 0.138 & \textbf{0.106} & 0.104 & \textbf{0.102} & 0.066 & \textbf{0.064}\\
+			Bench 4 & 0.109 & \textbf{0.082} & 0.091 & \textbf{0.086} & 0.053 & \textbf{0.051}\\
+			Bench 5 & 0.084  & \textbf{0.048}  & 0.086 & \textbf{0.083}  & 0.090  & \textbf{0.083}\\
+			Bench 6 & 0.111  & \textbf{0.060}  & 0.127 & \textbf{0.108} & 0.109  & \textbf{0.097}\\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}
+	\caption{Performance Error Summary for Case Study 2.}
+	\label{tab:performances_global_classification_cs2_PII}
+	\begin{center}
+		\begin{tabular}{lcccccc}\toprule
+			& \multicolumn{6}{c}{Case Study 2} \\
+			& \multicolumn{2}{c}{Cutoff grade $0.220$}& \multicolumn{2}{c}{Cutoff grade $0.445$} & \multicolumn{2}{c}{Cutoff grade $0.692$}\\
+			& {\emph{STR}} & {ADA} & {\emph{STR}} & {ADA} & {\emph{STR}} & {ADA}\\\midrule
+			Bench 2 & 0.048   & \textbf{0.043} & 0.100  & \textbf{0.096} & 0.112  & \textbf{0.080} \\
+			Bench 3 & 0.039 & \textbf{0.032} & 0.109 & \textbf{0.097} & 0.091 & \textbf{0.068} \\
+			Bench 4 & 0.037 & \textbf{0.034} & 0.078 & \textbf{0.066} & 0.057 & \textbf{0.045} \\
+			Bench 5  & 0.055 & \textbf{0.038}  & 0.036  & \textbf{0.024} & 0.036  & \textbf{0.026} \\
+			Bench 6  & 0.031 & \textbf{0.015} & 0.025  & \textbf{0.010} & 0.013  & \textbf{0.010} \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}
+	\caption{Performance Error Summary for Case Study 3.}
+	\label{tab:performances_global_classification_cs3_PII}
+	\begin{center}
+		\begin{tabular}{lcccccc}\toprule
+			& \multicolumn{6}{c}{Case Study 3} \\
+			& \multicolumn{2}{c}{Cutoff grade $0.115$}& \multicolumn{2}{c}{Cutoff grade $0.273$} & \multicolumn{2}{c}{Cutoff grade $0.486$} \\
+			& {\emph{STR}} & {ADA} & {\emph{STR}} & {ADA} & {\emph{STR}} & {ADA}\\\midrule
+			Bench 2 & 0.067   & \textbf{0.048} & 0.060  & \textbf{0.039} & 0.067  & \textbf{0.054} \\
+			Bench 3 & 0.039 & \textbf{0.031} & 0.057 & \textbf{0.030} & 0.030 & \textbf{0.014} \\
+			Bench 4 & 0.049 & \textbf{0.029} & 0.052 & \textbf{0.033} & 0.054 & \textbf{0.049} \\
+			Bench 5  & 0.051 & \textbf{0.037}  & 0.053  & \textbf{0.041} & 0.053  & \textbf{0.034}\\
+			Bench 6  & 0.037 & \textbf{0.021} & 0.047  & \textbf{0.035} & 0.038  & \textbf{0.034} \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+\end{table}
+
+From the point of view of the binary allocation of blocks (as ore or waste), the adaptive sampling based method provides a better overall classification of the blocks. This behavior is consistent for the proposed cut-off grades along all three case studies presented. %Furthermore, in terms of pixel classification error measured as the percentage of misclassified blocks for each bench, the proposed adaptive method shows a better performance than the classic non-adaptive regular sampling based method for all case studies and under all the three levels of cut-off grade considered. 
+
+In general,  as the procedure advances down the benches (as $m$ increases), then the improvement increases as well in terms of the reduction of error as compared to the classical sampling method. Thus, the adaptive strategies outperform the classical sampling method, achieving a consistent improvement over all benches.
+
+It is worth mentioning that it is possible to improve the performance of the proposed technique by feeding the model for the training image of bench $m$ with all the information available from the previous benches ($1, .. ,m-1$) instead of just from the bench above (bench $m - 1$).
+
+
+\paragraph{Economic Performance}
+
+In order to provide a summary of the economic impact related with the sampling strategy in the ore/waste selection process, a brief evaluation of profit is presented taking into consideration some relevant scenarios. The variables and estimations considered for this economic analysis are detailed in Appendix \ref{appendix_profit_PII}. %Thus, the economic benefit was estimated for the cases of study presented in this work under the proposed sampling schemes. 
+The achieved results are summarized in Tables \ref{tab:profit_global_classification_cs1_PII}, \ref{tab:profit_global_classification_cs2_PII}, and \ref{tab:profit_global_classification_cs3_PII}.
+
+\begin{table}
+	\caption[Economic Profit Estimation for Case Study 1]{Economical Profit Estimation for Case Study 1. In MM $US\$$.}
+	\label{tab:profit_global_classification_cs1_PII}
+	\begin{center}
+		\begin{tabular}{lcccccc}\toprule
+			& \multicolumn{6}{c}{Case Study 1} \\
+			& \multicolumn{2}{c}{Cutoff grade $1.102$} & \multicolumn{2}{c}{Cutoff grade $1.241$}& \multicolumn{2}{c}{Cutoff grade $1.518$}\\
+			& {\emph{STR}} & {ADA} & {\emph{STR}} & {ADA} & {\emph{STR}} & {ADA}\\\midrule
+			Bench 2 &  33.574 &  \textbf{34.146} &  13.483   & \textbf{13.726}  &   \textbf{2.675} &  1.737 \\
+			Bench 3 &  \textbf{28.581} &  28.462 &  \textbf{10.419} & 9.439  &  1.284 &  \textbf{2.520}\\
+			Bench 4 &  33.562 &  \textbf{34.150} &  15.423 & \textbf{16.114} &  \textbf{6.295} &  5.792\\
+			Bench 5 &  41.065 &  \textbf{41.590}  & 23.272 & \textbf{23.814}  &   11.174 &  \textbf{11.502}\\
+			Bench 6 &  46.401 &  \textbf{47.135} &  27.623 & \textbf{28.165} &  \textbf{16.420} &  15.427\\
+			\hline \\
+			Global  &  183.183 &  \textbf{185.483}  & 90.221 & \textbf{91.257} &  \textbf{37.849} &  36.977\\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}
+	\caption[Economic Profit Estimation for Case Study 2]{Economical Profit Estimation for Case Study 2. In MM $US\$$.}
+	\label{tab:profit_global_classification_cs2_PII}
+	\begin{center}
+		\begin{tabular}{lcccccc}\toprule
+			& \multicolumn{6}{c}{Case Study 2} \\
+			& \multicolumn{2}{c}{Cutoff grade $0.220$}& \multicolumn{2}{c}{Cutoff grade $0.445$} & \multicolumn{2}{c}{Cutoff grade $0.692$}\\
+			& {\emph{STR} } & {ADA} & {\emph{STR}} & {ADA} & {\emph{STR} } & {ADA}\\\midrule
+			Bench 2 & 49.281  & \textbf{49.320} &   23.729   &  \textbf{23.992} &   6.096 &  \textbf{6.704} \\
+			Bench 3 & 39.309 & \textbf{39.458} &  \textbf{16.727} &  16.362 &  -5.363 &  \textbf{-4.555}\\
+			Bench 4 & \textbf{47.299} & 47.262 &  23.257 &  \textbf{23.646} &  8.957 &  \textbf{9.425}\\
+			Bench 5 & 36.460  & \textbf{36.703}  &  \textbf{19.278} &   19.181 &   10.392 &  \textbf{10.714}\\
+			Bench 6 & 9.790 & \textbf{9.994}  &  1.145 &  \textbf{1.330} &  -4.058 &  \textbf{-3.937}\\
+			\hline \\
+			Global  & 182.139  & \textbf{182.735}   &  84.137 &  \textbf{84.512} &  16.023 &  \textbf{18.351} \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}
+	\caption[Economic Profit Estimation for Case Study 3]{Economical Profit Estimation for Case Study 3. In MM $US\$$.}
+	\label{tab:profit_global_classification_cs3_PII}
+	\begin{center}
+		\footnotesize
+		\begin{tabular}{lcccccc}\toprule
+			& \multicolumn{6}{c}{Case Study 3} \\
+			& \multicolumn{2}{c}{Cutoff grade $0.115$}& \multicolumn{2}{c}{Cutoff grade $0.273$} & \multicolumn{2}{c}{Cutoff grade $0.486$} \\
+			& {\emph{STR}} & {ADA} & {\emph{STR}} & {ADA} & {\emph{STR}} & {ADA}\\\midrule
+			Bench 2 &  17.685 &  \textbf{17.974} &   \textbf{17.382}  &  17.371  &   \textbf{3.059} &  2.419\\
+			Bench 3 &  11.577 &  \textbf{11.674} &  10.136 &  \textbf{11.130} &  -2.159 &  \textbf{-1.943} \\
+			Bench 4 &  10.651 &  \textbf{10.904} &  9.772 &  \textbf{10.213} &  \textbf{-2.440} &  -2.553\\
+			Bench 5 &  14.629 &  \textbf{14.859} &  \textbf{14.111}  &   13.993 &   1.192 &  \textbf{1.725}\\
+			Bench 6 &  16.038 &  \textbf{16.288} &  \textbf{15.316} &  15.262 &  3.136 &  \textbf{3.964}\\
+			\hline \\
+			Global  &  70.580 &  \textbf{71.699} &  66.717 &  \textbf{67.969} &  2.787 &  \textbf{3.611} \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+\end{table}
+
+Although in some benches the economic results are variable, the overall result obtained shows a systematic improvement over the classic sampling scheme. %The reason behind this behaviour is that the statistics have been characterized from only the global information of the previous bench. In particular, for each case study, a fixed \emph{Cut-Off} was applied for all benches without taking into account the variability between benches grade and information from already exploited benches. A future improvement would be to take advantage of these sources of information to further improve the proposed approach.
+
+Even though the binary assignment as ore/waste is systematically better with the proposed adaptive approach (\emph{ADA}) in terms of mean global error, the current grades are not considered for this evaluation. Therefore, cases can be found where when block grades are close to the \emph{Cut-Off} value, then the classification may fail and the economic value for the bench may decrease.
+
+Negative profits may occur when the processing plants lack ore, and marginal material must be sent to fulfill the production requirements, which may have a negative value, but will likely be higher than dumping these blocks in the waste dump. Now, in most practical cases the \emph{Cut-Off} will be defined to generate profit, rather than minimize the loss.
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Chapter Conclusions}
+In this chapter,the problem of optimal sampling in the context of short-term planning and the task of classifying blocks to be processed as waste or ore  has been addressed. The problem has been formalized and its validation has been presented through the use of subsets of actual mining data. 
+
+The proposed methodology takes advantage of the information available from the locations previously sampled, allowing to improve the performance as compared with the classical non-adaptive sampling schemes that has been used for advanced drilling tasks. The proposed strategy has been validated with real blasting data from the exploitation of two copper mines.
+
+From the results obtained across the three analyzed scenarios, it is possible to see that in terms of both error in image reconstruction and global economic value, the proposed methodology achieves better performance than the regular grid based sampling strategy.
+
+
+
+%\newpage
+
+%The following sections provide details of the implementation and formalization of the proposed methods presented in this chapter.
+
+The Appendix \ref{appendix_GOBLAL_PII} provides details of the implementation and formalization of the proposed methods presented in this chapter.

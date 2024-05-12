@@ -1,0 +1,30 @@
+\ifglsentryexists{osp}{}%
+{%
+\gls@defglossaryentry{osp}%
+{%
+name={OSP},%
+sort={OSP},%
+type={main},%
+first={Optimal Sampling Placement\glsspace (OSP)},%
+firstplural={Optimal Sampling Placements\glsspace (OSPs)},%
+text={OSP},%
+plural={OSPs},%
+description={Optimal Sampling Placement},%
+descriptionplural={Optimal Sampling Placement\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Optimal Sampling Placement},%
+longplural={Optimal Sampling Placements},%
+short={OSP},%
+shortplural={OSPs},%
+counter={page},%
+parent={},%
+%
+}%
+}%

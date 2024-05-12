@@ -1,0 +1,367 @@
+
+
+\section{Hypotheses}
+
+The main hypotheses of this  work are:
+
+\begin{enumerate}
+	\item In \emph{Geostatistics}, at low sampling regimes, the incorporation of prior information (based on \emph{MPS} and training images) in the design of sampling strategy improves the performance with respect to classical sampling approaches.
+	
+	%\item Information theoretic quantities provide a way of quantifying information and uncertainty from empirical data, for the purpose of optimal sampling design.
+	
+	\item Adaptive sensing schemes can be integrated in the inference to improve the state-of-the-art of geological field characterization.
+	
+    %\item More informative sampling could be able to detect transition zones and provide overall a better characterization of the problem.
+    
+     \item Information measures are accurate predictors of the complexity of simulation tasks, and can be used to improve inference for the type of decisions carried out in planning and production stages.
+
+\end{enumerate}
+
+
+
+\section{Objectives}
+
+\subsection{Main Objective}
+\label{sec_Main_Obj}
+% 5. Sate the general and specific objectives.
+
+The main objective for this research is to enhance the reconstruction of images describing \emph{2-D} categorical regionalized variables by the use of new \emph{sensing} strategies that takes into account uncertainty reduction as a criterion and the use of previously sampled data and side information from a statistical model of the field. The focus of this research is on regionalized variables with several spatial dependence assumptions by taking advantage of its spatial structure and other sources of expert knowledge of the media of interest. 
+
+\subsection{Specific Objectives}
+\label{sec_Spec_Obj}
+
+The specific objectives addressed in this work are:
+
+\begin{itemize}
+	\item Formalize a general theoretical framework for optimal sampling design with focus on, but not limited to, categorical variables. 
+	\item Develop an adaptive sensing design framework using \emph{joint entropy} and \emph{mutual information} to measure uncertainty and spatial structure. 
+	\item Compare the performance of the full combinatorial sampling strategy with the sequential and the adaptive sequential strategies within sampling design framework for the optimal information decision task.
+	\item Study some stopping criterion for each sampling strategy as a function of the capacity of the field as a measure of its complexity.
+	\item Evaluate proposed sampling strategy on Markov random field models on finite alphabet for regionalized random variables as a controlled scenario to validate the proposed method.
+	%\item Study realistic statistical image models (\emph{MPS} and training images).
+	%\item Integrate the concepts of sensing design and inference on an adaptive sensing approach for the reconstruction of \emph{2-D} binary permeability channels.
+	\item Evaluate the proposed sampling strategy in a practical realistic context of grade control for short-term planning.
+\end{itemize}
+
+
+
+
+
+
+
+
+
+\section{Contribution of this Thesis}
+
+In this thesis, a new information driven formulation of a sampling strategy is proposed by formalizing some of the preliminary ideas introduced by \cite{wellman_2013}. In particular, a sampling framework that integrates both sampling data in a sequential scheme and the statistical information obtained from training images in the context of \emph{MPS} is proposed. The use of maximum entropy as a criterion for preferential sampling is proposed in this thesis as a concrete alternative to classical non-adaptive sampling schemes.
+
+%One main conjecture is that preferential sampling design by \emph{information theoretic} principles are distributed in facies transition zones and, consequently, can achieve enhanced reconstruction of channelized geological structures
+
+On the specifics, a new adaptive sequential empirical maximum entropy sampling (\emph{AdSEMES}) \footnote{Or regularized adaptive maximum information sampling (\emph{RAMIS}) strategy.} approach is formulated and implemented by integrating \emph{information theoretic} concepts. This sampling strategy can be seen as an adaptive way to locate the samples on the positions that maximizes discrimination about the transition zones of facies that determines the underlying phenomenon. In particular, three maximum entropy sampling frameworks have been formalized and implemented within the context of regionalized categorical variables with spatial dependencies.
+
+
+%\subsection{Research Aims}
+
+In specific, the contributions presented in this work answer the following questions.
+
+\begin{itemize}
+	\item Given $K$ available measurements, what is the \emph{best} disposition of theses measurements from an information perspective (in the sense of uncertainty reduction)?
+	\item Given an image model, is there a sampling regime where optimal sampling can outperform classical sampling approaches?
+	\item How the previous gain is determined by the complexity of the statistical model of the field?
+	\item What is the best inference methodology for the proposed optimal sensing strategy?
+	\item If the inference methodology is based on \emph{MPS}, can entropy and mutual information be good predictors of its performances?
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Summary of the results}
+
+The main contribution of this research is the formalization of the task of optimal %optimal sampling 
+sampling for the statistical simulation of a discrete random field addressed from the perspective of minimizing the posterior uncertainty of non-sensed positions given the information of the sensed positions. In particular, information theoretic measures are adopted to formalize the problem of optimal sampling design for field characterization,  where concepts like information of the measurements, average posterior uncertainty, and the  resolvability of the field are introduced. The use of the entropy and related information measures are justified by connecting the task of simulation with a source coding problem,  where it is well known that entropy offers a fundamental performance limit.
+On the application, a one-dimensional Markov chain model is explored where the statistics of the random object are known, and then the more relevant case of multiple-point simulations of channelized facies fields is studied, adopting in this case a training image to infer the statistics of a non-parametric model.  On both contexts, the superiority of  information-driven %sensing 
+sampling strategies is proved in different settings and conditions, with respect to random or regular sampling. The details of this contribution are presented in Chapter \ref{chapter_PI}, and a published article \citep{Santibanez2019_a}.
+
+The second main contribution of this thesis is a method to select sampling locations in an advanced drilling grid for short-term planning and grade control in order to improve the correct assessment (ore-waste discrimination) of blocks.  %to the process that maximizes the profit. 
+The sampling strategy is based on a regularized maximization of the conditional entropy of the field, an objective function that formally combines global characterization of the field with the principle of maximizing information extraction for ore-waste discrimination.
+%
+%The sampling strategy is based on the inference of conditional entropies, from the limited data available at previously mined benches. Thus, the strategy begins by sampling in a regular grid, from which block grades are estimated by kriging. Blocks in this estimated field are classified as ore or waste and this binary field is used as a training image to generate multiple realizations of ore waste distribution. These realizations allow inference of the conditional entropies, from which optimum sampling locations are selected in subsequent benches, thus adapting the sampling strategy to locations with maximum conditional entropy. As mining progresses, the advanced sampling grid adapts to better characterize the contacts between ore and waste. 
+%
+This sampling strategy is applied to three real cases, where dense blasthole data is available for validation from several benches. %Dense blasthole information is used to determine the grade value at the proposed sample locations, and to validate the ore waste classification after estimating the block grades from these sampled locations.
+Results show relevant and systematic improvement with respect to the standard regular grid strategy, where for deeper benches the gains in image inference are more prominent. 
+The details of this contribution are presented in Chapter \ref{chapter_PII} of this thesis. These results are part of a scientific article \citep{Santibanez2019_b}.
+
+\subsubsection{Publications on ISI Journals and International Conferences}
+\begin{itemize}
+    \item Journal article $2019a$: \bibentry{Santibanez2019_a}. Published.
+    \item Journal article $2019b$: \bibentry{Santibanez2019_b}. Published. Online First.
+    \item Journal article $2019$: \bibentry{Calderon2019_a}. Accepted.
+    \item International Conference Paper $2016$: \bibentry{Calderon2016_a}.  Published. Oral presentation performed by Santibáñez. {Rio de Janeiro, Brasil. Jul. 2016}.   
+\end{itemize}
+
+\section{Thesis Organization}
+
+The rest of this thesis is organized in two main chapters that present the main contribution of this work.
+
+Chapter 2 summarized the general background in \emph{Geostatistics} related with the research performed in this work.
+
+Chapter 3 introduces the formalization of the optimal sampling decision problem and the proposed regularized adaptive sampling strategy. The relation between sampling strategies and uncertainty reduction is described in order to formulate the proposed adaptive sampling methodology. Both analytic and experimental studies are conducted on different scenarios. Finally some practical considerations are addressed and results are presented that demonstrated the advantages of the propose method.
+
+Chapter 4 presents a new methodology for optimal sampling in the context of ore-waste discrimination. The problem of optimal sampling is formalized in this binary decision context and a novel methodology is proposed. The objective considers both the image recovery and the economic impact of the project.
+
+Chapter 5 concludes with a summary of this thesis work, and offers directions and discussion for future research. Finally, the appendices contain complementary material that support the presentation of this work.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ %\begin{intro}
+\chapter{General Background and Related Topics} 
+\label{sec_intro_GB}
+
+In \emph{Geostatistics} the community has developed several statistics tools in order to achieve good estimations for describing structures with spatial dependence such as channelized fields. In this section the \emph{state-of-art} of multi-point simulations (Sec. \ref{secSecGeoIntro}), and sensing design (Sec. \ref{secSecSenIntro}) is summarized.
+
+
+\section{Geostatistical Analysis and Inference}
+\label{secSecGeoIntro}
+
+In recent decades, geologists have achieved realistic representations of the internal structure of reservoirs considering complex and heterogeneous geological environments through the use of \textit{Geostatistics} \citep{Arpat_2007_a, bittencourthorne1997, Strebelle_2004a, Man_2013_a, Holden_1998_a, Journel2004}. \textit{Geostatistics} deal with spatially correlated data such as geological facies, reservoir thickness, porosity, and permeability \citep{Oliver_2008_a, Raef_2015_a, Calderon2016_a, Calderon2019_a}. \emph{Geostatistics} tools allow to evaluate potential exploration of a reservoir and its production, where one of the main issues is to determine relevant samples location.
+
+More specifically, the term \emph{Geostatistics} refers to a branch of spatial statistics that is concerned with the analysis of an unobserved  spatial  phenomenon $X = \{X_{(u,v) } : (u,v) \in D \subset \R^2 \}$ (for the \emph{2-D} case), where $D$ denotes a geographical region of interest (see Fig. \ref{fig:example3Dreservoir}). When the spatial coordinates are discretized the subset $D$ is comprised by only $N$ positions allowing the representation of the field as the collection $X = \{X_{i} : i \in \{1,\ldots, N\} \}$. Therefore, \emph{Geostatistics} deal with stochastic processes defined in a region $D$, with $D \subset \R^d$ and considering $d= 1$, $2$, or $3$. For continuous valued stochastic fields, a classical assumption is that the field $X$ is modeled by a stationary and isotropic \emph{Gaussian process} (\emph{GP}), with zero mean, constant variance $\sigma^2$ and autocorrelation function $\rho(X_{i} , X_{i+h} ; \phi) = \mathds{E} \{ X_{i} \cdot X_{i + h}  \} $ given by $\rho(X_{i} , X_{i+h} ; \phi)=\rho(\parallel h \parallel;\phi)$, $\forall \{i\} \in D$ \citep{gaoetal1996, vangroenigenetal1999, Blackwell1998, abellan_2010a}. Typically for inference, the \emph{Regionalized Variable}(\emph{RV}) $X$ is known at $M$ limited locations that is denoted by $X_f = \{X_{f(m)} : m = 1:M \}$. The goal is to estimate from $X_f$ at unsampled locations. At every location, the \emph{RV} is interpreted as a random variable, the goal is to infer the conditional distribution of $X$ at unsampled locations. More details about this inference process will be presented in Sec. \ref{sec_app_GLOBALMPS} of this document. For completeness, the following subsections provide a general overview of some of the tasks and techniques used for this inference process. 
+
+\subsection{Two-Point Statistics}
+
+When large amount of measurements are available, it is a common practice to use interpolation techniques around the observed data \citep{kitanidis_1997_a}. One of theses techniques is \emph{Kriging} \citep{gaoetal1996, vangroenigenetal1999, Blackwell1998, abellan_2010a}, \emph{Kriging} is an interpolation technique that uses variogram of $X$ (second order statistics) \citep{Lam_1983_a} as shown in Fig. \ref{fig:VarioExample}. The variogram is a representation of the spatial correlation of a two or three dimensional model \citep{abellan_2010a}. Classical \emph{Kriging} approaches are based on \emph{two-point} statistics \citep{kitanidis_1997_a}. The variographic analysis measures only facies continuities between two regionalized variables, failing in the effective representation of curvilinear or multiscale structures that requires the inference of joint correlations of facies at multiple variables positions. Thus, these techniques based on variograms reproduction tend to fail in the modeling of realistic geological facies that can not be represented by stationary Gaussian fields. In practice, these models are unable to properly represent long-range properties of subsurface fields, misrepresenting the real reservoir connectivity. This mismodelling issue translates in poor reservoir characterization for exploration and production tasks \citep{Ortiz_2004_a,Bangerth_2005,olea1984_a}.
+
+		\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5	\textwidth]{Figs_Slides/variogram.jpg}
+
+		\caption{Example of a classical variographic analysis.}
+		\label{fig:VarioExample}
+		\end{figure}
+		
+		
+		
+		
+\subsection{Object-based Simulation}
+
+Both geologists and engineers have a keen interest in local scale details describing reservoir heterogeneities. For this challenging task, stochastic simulations provide an appropriate tool with special emphasis in the regime when a small level of data is available \citep{kitanidis_1997_a,Lam_1983_a}. An initial approach considered by the \textit{Geostatistics} community for stochastic simulation has been based on object-based simulation \citep{Holden_1998_a,Chiles_1999_aa}. This method simulates many spatial variables by the superposition of some predefined geometric patterns (e.g. discs, sinusoids, manifolds). Predefined geological shapes require to be manually selected by an expert. In contrast to the variographic analysis presented before, object-based methods provides realistic facies structures, but the selection and acquisition of an appropriate conditioning data is a critical limitation \citep{Holden_1998_a,Chiles_1999_aa}.
+
+
+\subsection{Multi-Point Simulations \emph{MPS}}
+
+In regimes of low data acquisition, the standard approach to the geostatistical inference involves the generation and analysis of multiple point simulations (\emph{MPS}) \citep{Scheidt2009_a, Ortiz_2004_a, huang_2013_a}. These are realizations of a spatial model conditioning on the available data (direct samples). This process is conducted by replicating patterns from a training image \citep{Ortiz_2004_a,Remy_2009_a}. 
+
+Geostatistical simulations provide a powerful and computationally efficient tool to reproduce more faithfully and realistically the spatial variability observed in a model when a small numbers of measurements are available \citep{Remy_2009_a,Ortiz_2004_a}. A simple illustration of this process is shown in Fig. \ref{fig:MPSExample}. Another important dimension of this approach is that, Geostatistical simulations lead to many realizations of a reservoir model that can be conditioned to geologic, seismic and production data. These models (or realizations) provide appropriate representations of \textit{geological heterogeneities} integrating various types of data at different scale and with different precisions. Finally, in any regime of data, expert knowledge is required to validate and to interpret the use of \emph{Geostatistical} simulations \citep{Oliver_2008_a, Bangerth_2006}. 
+
+
+	\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.65	\textwidth]{Figs_QE/Scheme.png}
+
+	\caption{Example of a simulation based system.}
+	\label{fig:MPSExample}
+	\end{figure}
+
+\subsection{Comparison of the Inference Techniques}
+
+Concerning deterministic \emph{Kriging}, this technique provides solutions that are good close to conditioning data. Object-based approaches, on the other hand, provides acceptable solutions for the reproduction of geological shapes. However, none of theses methods is good at both contexts \citep{Lam_1983_a,Ortiz_2004_a,Bangerth_2005,olea1984_a}. Classical \emph{MPS} was developed to combine the strengths of the two previously stated approaches. \emph{MPS} methodology recreates a realistic realization of the target field keeping the flexibility of pixel based simulation methods. At the same time, honoring well or seismic data is feasible at the initial stage of the simulated process. Furthermore, \emph{MPS} realizations can reproduce complex and realistic geologic structures by the estimation of simultaneous statistics at multiple positions from the reference model (training image).
+
+For completeness, more details about \emph{MPS} can be found in the App. \ref{sec_app_GLOBALMPS}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Methods used for Sensing Design in \emph{Geostatistics}}
+\label{secSecSenIntro}
+
+The selection of the best informative observations for an inference task is a critical problem in statistical signal processing, with numerous applications in inference and decision: temperature and light monitoring \citep{Davis_1995_a, krause08thesis}, sensing contamination in a river \citep{gutjahr1991, christakoskillam1993, christodoulou_2013a}, mining exploration \citep{McBratney1981a, Ortiz2014, aspiebarnes1990}, collaborative robotic networks design \citep{zidek_2000, krause08thesis}, statistical experimental design \citep{Vasat2010, McBratney1981b, magnant_2011a, olea1984_a}, among many others \citep{Krause_2006,Bangerth_2006,Krause_2008b,Guestrin_2005, bittencourthorne1997, xu_2017a}. In general, this optimization problem is NP-hard, which is very critical at low acquisition rates. 
+
+
+\subsection{Sensor Placement Strategies}
+
+%In this particular case is possible to impose a discrete representation at both the available locations and the alphabet of each stochastic variable at these locations.
+
+In the context of facies recovery in \emph{Geostatistics}, the focus has been on the scenario of pixel based measurements that model well logs. Here, the sensing design reduces to the optimal well placement (\emph{OWP}) problem. In a nutshell, \emph{OWP} finds the most proper locations to take measurements by drilling wells in the field of interest. The related more general problem of optimal sensor placement\emph{OSP} is an active area of research in \emph{communications} \citep{Krause_2011,krause09simultaneous} and \emph{machine learning} \citep{Guestrin_2005,Krause_2008a}. \emph{OSP} (and \emph{OWP} in particular) states the optimal (or near optimal) systematic way to take measurements in order to maximize the inference performance in some metric. For example, Fig. \ref{fig:sensingschemesoutcomes} illustrates the design in terms of two sensing approaches in a recovery based system.
+
+
+	\begin{figure}[ht!]
+	\centerline{
+		\begin{subfigure}[b]{0.4\textwidth}
+			\includegraphics[width=\textwidth]{Figs_QE/malmuestreo}
+		\end{subfigure}			
+	}
+	\vspace{-0.3cm}
+	\centerline{
+		\begin{subfigure}[b]{0.4\textwidth}
+			\includegraphics[width=\textwidth]{Figs_QE/buenmuestreo}
+		\end{subfigure}			
+	}
+		\caption{Sensing design example and its effect on reconstruction of the field.}
+		\scriptsize{ Upper row: an arbitrary structured sensing scheme (left) and the achieved reconstruction by the measures at this scheme locations (right). Lower row: a near optimal sensing scheme (left) and the achieved reconstruction by the measures at this scheme locations (right). The real image corresponds to the fig. \ref{fig:2Dpermeabilityfield} }
+	\label{fig:sensingschemesoutcomes}
+ 	\end{figure}
+
+
+\subsection{Another Sampling Techniques}
+
+Some approaches in the literature have proposed preferential sampling schemes oriented to optimize productivity (production functionals) and economic factors \citep{Onwunalu09, Bangerth_2005, Bangerth_2006}. Several optimization methods have been proposed to achieve some of these optimal functionals such as adjoint-based gradient \citep{Onwunalu09}, simultaneous perturbation stochastic approximation (\emph{SPSA}) \citep{Bangerth_2006}, finite difference gradient (\emph{FDG})  \citep{Bangerth_2006}, very fast simulated annealing (\emph{VFSA})  \citep{Bangerth_2006}, binary genetic algorithm (\emph{bGA})  \citep{Onwunalu09}, continuous or real-valued GA (\emph{cGA}) \citep{Onwunalu09}, and particle swarm optimization (\emph{PSO}) \citep{Onwunalu09}.
+
+While these economical and functional factors are important for specific applications, the idea of global uncertainty reduction is more fundamental and it could also have a positive impact on the improvement of economical and functional factors \citep{Krause_2006}. In this context, Wellmann \citep{wellman_2013} proposed the use of \emph{information theoretic} principles in the geostatistical analysis of a map making task. In this specific problem, a direct connection between \emph{conditional entropy} and its applicability to the characterization of the uncertainty of regionalized variables has been shown. On the theoretical side, Wellmann \citep{wellman_2013} proposed that, in a categorical stochastic field, the regionalized variables with higher \emph{conditional entropy} are located in the facies transition zones, implying that this information metric is relevant for detecting facies transitions.
+
+A related topic in signal recovery in an under-sampled setting is presented in the App. \ref{sec_app_GLOBALSPARSESR} for the case of sparse signal reconstruction based on linear measurements. 
+
+
+
+
+

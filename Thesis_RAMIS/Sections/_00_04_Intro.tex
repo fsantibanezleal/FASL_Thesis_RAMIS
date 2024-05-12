@@ -1,0 +1,386 @@
+ %\begin{intro}
+\chapter{Introduction} 
+\label{sec_intro_QE}
+
+\section{Context}
+\label{sec_intro_Base}
+
+In complex real scenarios the task of recovering an underlying phenomenon or system (for example, a variable from an industrial process, or a model or a mathematical object of an environment to be studied) from measurements could be extremely hard and surrounded by numerous sources of uncertainty \citep{Moon_2007a, Kay_1993_a, vapnik_1999,bousquet_2004,gray_2004,cover_2006,Scheidt2009_a,Chiles2012,Kochenderfer_2015}. In general, this task could be formulated as an inverse problem %\ifengtable (i.e. the problems described in Table \ref{tab:EngProblems}) \fi
+and relies on the interplay between the acquired information of the system (termed data or measurements), and the assumptions made about the underlying model, variable or phenomenon to be estimated (typically summarized in terms of a set of parameters). Some general categories for this problem are summarized in Table \ref{tab:EngProblems}.  Typically, the inverse problem reduces to finding the best or simplest explanation from the data, describing an attempt to estimate a model or phenomenon coherent with the available evidence \citep{Santamarina2005_a}. In this context, prior knowledge about the nature of the problem implies describing in mathematical terms the information available about the problem that is complementary to data.
+
+\ifengtable
+\begin{table}[h]
+\caption{Forward and Inverse problems in engineering and science}
+\label{tab:EngProblems}
+\small
+\begin{tabular}{l|c c|c c|}
+\hline
+& \multicolumn{2}{|c |}{\bf Forward Problems} & 
+ \multicolumn{2}{|c |}{\bf Inverse Problems} \\ 
+\hline
+\hline
+& {\bf System Design} & {\bf Convolution} & {\bf System identification} & {\bf Deconvolution}\\
+\hline
+Input: & Known &  Known &  Known &  \bfseries{Unknown} \\
+System: & \bfseries{To be designed} & Known &   \bfseries{Unknown} &  Known \\
+Output: & Predefined & \bfseries{Unknown} &  Known & Known \\
+\hline
+\end{tabular}
+\end{table}
+\fi
+
+
+
+\subsection{Inverse Problem and Sensing}
+\label{sec_intro_Inverseproblem}
+
+In an inverse problem, the general relationship between the distribution of the set of parameters to be estimated (denoted by $\mathbf{X}$ and related with the target hidden variable) and the observations or measurements, denoted by $\mathbf{Y}$, is often described by a complex and non-linear forward relationship given by the function $g(\cdot)$ in Eq. \eqref{eq:Eq_Sensing_General}. Therefore the data acquisition process (a \emph{sensing} process) is described by:
+
+\begin{equation}
+\label{eq:Eq_Sensing_General}
+	\mathbf{Y} = g(\mathbf{X}) .
+\end{equation}
+
+
+Some level of uncertainty can be added in the relationship \eqref{eq:Eq_Sensing_General} by incorporating a noise component, obtaining a more realistic observation model that offers a probabilistic mapping between $\mathbf{Y}$ and $\mathbf{X}$.
+
+\begin{equation}
+\label{eq:Eq_Sensing_General_Noise}
+	\mathbf{Y} = g(\mathbf{X}) + \nu .
+\end{equation}
+
+
+
+Then the inverse problem can be formulated as follows: given $Y$, consistent with a forward model $g(\mathbf{X})$, the objective is to estimate $\mathbf{X}$ with some criterion. As $\mathbf{X}$ is unknown, an objective function that measures the discrepancies or error between $Y$ and $g(\mathbf{X})$ is required. The standard metric is the square error. In addition, the problem could be ill-posed meaning that many possible sets of solutions are consistent with $Y$ and the observation model.
+
+In this context, a classical objective function to implement the inverse problem has the following form:
+
+\begin{equation}
+\label{eq:Eq_ObjectiveFunctional}
+	G(\mathbf{Y},\mathbf{X},g(\cdot)) = \left\|  \mathbf{Y} - g(\mathbf{X}) \right\|_{p} ,
+\end{equation}
+where $\left\|  \cdot \right\|_{p}$ denotes the $p$ norm. In addition, when the problem is ill-posed some form of regularization is added to Eq. \eqref{eq:Eq_ObjectiveFunctional} \citep{Davis_1995_a, magnant_2011a}. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%\section{Problem Relevance}
+\label{sec_intro_Relevance}
+\subsection{Inverse Problems in the Context of Sampling}
+\label{sec_intro_Sensing}
+
+% HERE INTRODUCE THE SENSING PROBLEM:::
+
+In a wide range of applications, $\mathbf{X}$ belongs to a high dimensional space, which makes unfeasible or at least impractical its full observation. Thus, considering $\mathbf{X}$ as a signal residing in a high dimensional space $\mathbb{R}^{N}$, only a finite number of measurements $m$ is available with $m << N$, $\mathbf{Y} \in \mathbb{R}^{m}$, obtaining the following sampling model:
+
+\begin{equation}
+\label{eq:Eq_Sensing_General_Noise_Sampling}
+	\mathbf{Y} = A(\mathbf{X}) +  \eta ,
+\end{equation}
+where the function $A(\cdot)$ represents the sampling scheme and $\eta$ is the noise associated to the measurements. 
+
+% Actual worl continuos -> nyquist sampling
+% Actual world -> Only access to limited Y_Obs < y
+% then we need to take (to sample) only some specific model outputs
+
+Traditional linear sampling signal processing theory \citep{Proakis_1996_a}[section $1.4.2$] states that data acquisition systems require to sample signals at a rate exceeding twice the highest spatial/temporal frequency for the purpose of losslessly recovering a band limited signal. This is the principle behind the majority of imaging acquisition and audio recorders. However, in many practical problems only $m << N$ measurements are accessible to recover $\mathbf{X}$ (i.e. solve the ill-posed problem) from Eq. \eqref{eq:Eq_Sensing_General_Noise_Sampling}, and consequently an error in the recovery is introduced.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Inverse Problems in Geosciences: A Sampling Problem}
+\label{secGeoAndInvProblems}
+
+In the context of many relevant inverse problems in \emph{Geosciences}, the relationship expressed by a model like Eq. \eqref{eq:Eq_Sensing_General_Noise_Sampling} needs to be stipulated from a physical model, or estimated from empirical evidence and a statistical model that connects the observed (sampled) data $\mathbf{Y}$ from a set of parameters representing $\mathbf{X}$. 
+
+An important task and the main focus of this thesis is the problem of reservoir characterization \citep{Onwunalu09,kitanidis_1997_a,Strebelle_2004a,Oliver_2008_a}. In the characterization of a reservoir, as the one shown in Fig. \ref{fig:example3Dreservoir}, several variables are relevant to describe a physical phenomenon including discrete ones such as fluid filling indicators, rock or sediments types, and continuous ones such as porosity and permeability \citep{kitanidis_1997_a,Strebelle_2004a,Oliver_2008_a}. One of the main challenges lies on the fact that no direct observations (or just a reduced amount of these observations) are available leading to the use of indirect correlated data for the inference of $\mathbf{X}$.
+
+		\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.37	\textwidth]{Figs_QE/reservoir3D_1}
+
+		\caption[Example of a \emph{3-D} geological reservoir.]{Example of a \emph{3-D} geological reservoir. By Minnesota Control Pollution Agency, https://www.pca.state.mn.us/karst-outreach. Accessed 01 May 2019.}
+		\label{fig:example3Dreservoir}
+		\end{figure}
+		
+In \textit{Geosciences}, an accurate description of the spatial distribution of a subsurface model is essential for reservoir characterization, which plays a key role for %mineral/fuel 
+exploration and production in the mining industry \citep{Oliver_2008_a,Onwunalu09,GuyagulerBaris2002_a,Bangerth_2005,Krause_2006,Bangerth_2006}. In the context of the model in Eq. \eqref{eq:Eq_Sensing_General_Noise_Sampling}, the limited access to measurements makes the inference of $\mathbf{X}$ a very challenging problem. In particular, the aforementioned sampling problem implies that geophysical inverse problems are typically undetermined. Therefore, characterizing a reservoir as the one shown in Fig. \ref{fig:example3Dreservoir} up to some level of accuracy requires the use of several sources of information, such as: \emph{wells} (direct samples), production data, and seismic data \citep{Oliver_2008_a,GuyagulerBaris2002_a,Krause_2008b,olea1984_a}. \emph{Seismic data} is usually available at large scale (low spatial resolution) and it is provided for the entire reservoir. However, this data is sampled on a coarse grid with several sources of uncertainties and noise. On the other hand, \emph{Well observations} consist on well logs taken from a process illustrated in Fig. \ref{fig:samplingWell}. \emph{Wells} are sampled on a fine grid in a specific path of interest providing excellent spatial resolution. The uncertainty associated with these measurements is significantly smaller than seismic data. However, \emph{well data} is sparse and only available in very restricted areas (provided by the existing wells) because it is a very expensive process. 
+
+
+		\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.12	\textwidth]{Figs_QE/sondaje1}
+		\includegraphics[width=0.37	\textwidth]{Figs_QE/sondaje2}
+
+		\caption[Sampling Devices in Mining.]{Sampling Devices in Mining.}
+		\scriptsize{Left: Example of a well sampling scheme. Right: Example of an actual well sampling system. Left image by GCZ ingenieros S.A.C. 2016, http://www.gczingenieros.com/productos.php?id=18, Accessed 01 May 2019. Right image by RTV.es, http://www.rtve.es/fotogalerias/odisea-33-mineros-atrapados-chile/56175/maquina-del-plan-alcanza-519-metros-rescate-33-mineros-chile/29/, Accessed 01 May 2019}
+		\label{fig:samplingWell}
+		\end{figure}
+
+In the case of \emph{production data}, the information is acquired along the production process in \emph{production wells}. This kind of data takes into account global factors related with features of reservoir that makes a great difference with the other two sensing modalities \citep{Oliver_2008_a, Strebelle_2004a, Man_2013_a, Raef_2015_a, Handwerger_2016_a, abellan_2010a}. This information, also known as \emph{historical data}, considers numerous scenarios which produces a large volume of information about the system. This information has been used very successfully to implement predictive based inference such as the history matching approaches \citep{kitanidis_1997_a, Oliver_2008_a, Scheidt2009_a}. It is important to mention that although it is a very relevant and interesting topic, production data has not been used or considered for the purpose of this thesis.
+
+
+
+\subsection{Geosciences and Uncertainty}
+
+As it was mentioned before, the information sources about the reservoir characterization contain uncertainties \citep{Onwunalu09,GuyagulerBaris2002_a,wellman_2013}. Therefore, several techniques have been developed in order to estimate, quantify, and represent these uncertainties \citep{Bangerth_2006,Krause_2008b}. In general, the access to noiseless observations of the subsurface structures is not possible because direct measurements are limited in number and these are unevenly distributed. Based on the above, the geological characterization is performed by using several indirect information sources \citep{kitanidis_1997_a,Oliver_2008_a}. In this context, a stochastic modeling of the problem is essential to capture the uncertainties in the inference process \citep{Bangerth_2006}.
+
+Reservoir properties at various grid locations (pixels on a discrete two or three dimensional representation) are largely unknown, hence each property of interest at every grid block (or pixel) is modeled as a random variable whose variability is described by a probability measure \citep{gaoetal1996, brusheuvelink2007, Blackwell1998, Lloyd1998}. The reservoir characterization relies not only on a reduced portion of available data but also on their spatial disposition. This rises the importance of sensing placement as a task that is intrinsic in the formulation of the inverse problem in Eq. \eqref{eq:Eq_Sensing_General_Noise_Sampling}. This task of optimal sensing design is the main focus of this thesis.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Problem Statement}
+
+In this thesis, the focus is on the characterization of subsurface structures from spatial observations and the role that \emph{sampling} and \emph{inference strategies} could jointly have in this task. 
+
+For \emph{Geosciences}, the global outcome corresponds to the characterization of an unknown complex reservoir field by the description of its individual components (such as high number of structures, facies\footnote{rock structures recognized by its composition or fossil content and mapped  by these characteristics.} and properties in the subsurface). The focus of this work is the recovery of a single subsurface property described by a \emph{2-D} regularized variable sampled in the spatial domain (see Fig. \ref{fig:2DpermeabilityIP}). The characterization of these kinds of structures is relevant for mineral prospecting, mine planning, and production stages where the number of available observations is severely restricted by technical and economical factors. Based on the above, the integration of adaptive sensing schemes and an appropriate inference methodology provides a promising solution to improve classical geostatistical inference that are based on non-adaptive sampling strategies \citep{krause08thesis,krause09simultaneous,Krause_2008b,GuyagulerBaris2002_a}.
+
+Beyond the prospecting context described above, both exploitation by mineral blasting and short-term mine planning could also benefit from the use of an adaptive sensing strategy for inference. While blast hole drilling systems has been focused on efficient drilling instead of high precision sampling, short term mine planning uses a medium term sampling strategy to choose mining units based on estimated distribution of ore and waste. Units classified as ore will be sent to the plant while waste units will be sent to the waste dump. Mistakes in this classification task have a significant impact on economic outcome of the productive process, and an adaptive sensing strategy could improve the inference and consequently
+the economic impact of a mining project.
+
+%Design of blast hole drilling and short term mine planning has been stated as structured grid sampling where the degrees of freedom only consider the scale of the grid. In this context our sensing design and inference approaches could improve decision-making issues in mining units classification.
+
+%The models and scenarios that have up until now been proposed as part of the data base are of major importance and relevance to the economic reality of Chile. In Chile, these reservoir characterization related processes are key in prospecting, exploration and exploitation of natural resources.
+
+
+\subsection{Channelized Structures}
+
+In the first part of this thesis, a classical geosciences scenario related with subsurface channels systems is explored. As previously shown in Fig. \ref{fig:example3Dreservoir}, several continuous or discrete variables could be related with channelized structures, where characterizing the extent and location of channels is relevant to infer petrophysical properties of the rock structure (porosity, permeability, etc.). In addition, a statistical model is used as part of the forward model describing the channelized structures, where a non-stationary assumption is needed to reproduce channel-like features \citep{Oliver_2008_a,Remy_2009_a}. An example of a realization of this model is presented in (Fig. \ref{fig:2Dpermeabilityfield}). %Structural geological models (an essential tool in reservoir characterization studies, exploration and prospecting) are used to describe this kind of fields by map estimation and map making tasks.
+
+		\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.2	\textwidth]{Figs_QE/ImagenOriginal}
+
+		\caption{Categorical permeability channel.}
+		\scriptsize{Example of a \emph{2-D} representation of a categorical channelized permeability field.}
+		\label{fig:2Dpermeabilityfield}
+		\end{figure}
+
+
+\subsection{The Problem}
+
+ Formally, the image model is a numerical representation of the spatial distribution of a subsurface  attribute, such as thickness, permeability, porosity, or flow rate \citep{kitanidis_1997_a, Lam_1983_a, Matheron_1971_a}. The general process of image reconstruction or characterization (i.e. inference of the spatial distribution) is described in Fig. \ref{fig:2DpermeabilityIP}, where given a reduced number of observations the main goal is to infer the underlying image or some significant feature such as first and second order statistics, connectivity, or transport metrics of the image.
+
+
+		\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}
+				\node[inner sep=0pt] (Original) at (0,-3)
+						{\includegraphics[width=.3\textwidth]{Figs_QE/ImagenOriginal}};
+					
+				\node[inner sep=0pt] (Sampled) at (4,-3)
+						{\includegraphics[width=.3\textwidth]{Figs_QE/ImagenMuestreada3}};
+					
+				\node[inner sep=0pt] (Infered) at (8,-3)
+						{\includegraphics[width=.3\textwidth]{Figs_QE/ImagenInferida}};
+					
+				\draw[->,thick] (1.15,-3) -- (1.43,-3);
+				\draw[->,thick] (2.6,-3) -- (2.87,-3);
+
+				\draw[->,thick] (5.15,-3) -- (5.43,-3);
+				\draw[->,thick] (6.6,-3) -- (6.87,-3);
+
+				\node[fill=blue!10,text width=0.9cm, text centered] (Sampled) at (2,-3) {\tiny{ Sampling System}};
+
+				\node[fill=blue!10,text width=0.9cm, text centered] (Infered) at (6,-3) {\tiny{ Inference System}};
+
+	\end{tikzpicture}
+		\caption{Basic inverse problem scheme.}
+		\scriptsize{Example of a basic scheme of inverse problem related with \emph{2-D} channelized structures characterization.}
+		\label{fig:2DpermeabilityIP}
+		\end{figure}
+
+
+
+
+
+
+%  \textit{Geostatistics} \ref{secSecGeoIntro}, Sensing design 
+%\ref{secSecSenIntro}, Recovery/reconstruction methods \ref{secSecRecIntro}, and finally some joint based methods \ref{secSecJointIntro}.
+
+
+The inverse problem of characterizing a field based on few measurements can be assessed from two angles: i) from the point of view of the inference (i.e. given an appropriate sensing scheme) the target is to infer some global and local properties of the field everywhere from the samples; ii) from the point of view of experimental design or sensing design, the optimal sensing schemes optimizing $m << N$ observations is the problem of finding the best positions for the observations in order to maximize the information to recover the signal $\mathbf{X}$. This problem is usually termed as \emph{Optimal Sensor Placement} (\emph{OSP}) \citep{olea1984_a,krause08thesis,Krause_2011}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

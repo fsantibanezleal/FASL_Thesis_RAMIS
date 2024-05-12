@@ -1,0 +1,19 @@
+\nomenclatureentry{a-N$N$@[{$N$}]\begingroup 1D random array size\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-NtoN$[N]\times[N]$@[{$[N]\times[N]$}]\begingroup Available positions set for a square \emph{2-D} image\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-X$X$@[{$X$}]\begingroup Regionalized Variable (R.V.)\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-Xij$X_{i,j}$@[{$X_{i,j}$}]\begingroup R. V. in $(i,j)$ position\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-Alphabet$\mathcal{A}$@[{$\mathcal{A}$}]\begingroup Alphabet\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-MarginalP$\mathds{P}_{X_{ij}}$@[{$\mathds{P}_{X_{ij}}$}]\begingroup Marginal Probability of $X_{ij}$\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-JointP$\mathds{P}_{X}$@[{$\mathds{P}_{X}$}]\begingroup Joint Probability of $X$\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-k$k$@[{$k$}]\begingroup Number of measurements\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-Ck$C_k$@[{$C_k$}]\begingroup Resolvability Capacity\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-f$f$@[{$f$}]\begingroup Set of $k$ measurements\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-fl$f(l)$@[{$f(l)$}]\begingroup $l$-th measurement in $f$\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-Fk$\mathbf{F}_k$@[{$\mathbf{F}_k$}]\begingroup Set of all $f$ of size $k$\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-fc$f^c$@[{$f^c$}]\begingroup Complement of $\mathbf{f}$\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-Xf$X_{f}$@[{$X_{f}$}]\begingroup $X$ subset within $f$\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-Entropy$H(X)$@[{$H(X)$}]\begingroup Shannon's entropy of $X$\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-ConditionalE$H(X_{f^c}|X_{f})$@[{$H(X_{f^c}|X_{f})$}]\begingroup Conditional Entropy\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-Faciesfacies@[{facies}]\begingroup Rock structures recognized by its composition or fossil content and mapped  by these characteristics\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-RMRm@[{Rm}]\begingroup Metallurgical Recovery\nomeqref {0}|nompageref}{A}
+\nomenclatureentry{a-Cv$C_v$@[{$C_v$}]\begingroup Covariance Matrix\nomeqref {0}|nompageref}{A}

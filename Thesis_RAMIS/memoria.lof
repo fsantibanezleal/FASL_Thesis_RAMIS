@@ -1,0 +1,78 @@
+\babel@toc {english}{}\relax 
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Example of a \emph {3-D} geological reservoir.}}{3}{figure.caption.6}%
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Sampling Devices in Mining.}}{4}{figure.caption.7}%
+\contentsline {figure}{\numberline {1.3}{\ignorespaces Categorical permeability channel.}}{6}{figure.caption.8}%
+\contentsline {figure}{\numberline {1.4}{\ignorespaces Basic inverse problem scheme.}}{6}{figure.caption.9}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Example of a classical variographic analysis.}}{11}{figure.caption.11}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Example of a simulation based system.}}{12}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Sensing design example and its effect on reconstruction of the field.}}{13}{figure.caption.13}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Diagram of the inputs and the required statistical model}}{25}{figure.caption.14}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Flow diagram to determine the sampling rule $\tilde {f}^*_k(\cdot )$}}{26}{figure.caption.15}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Diagram to solve the adaptive rule in Eq. (\ref {eq_adaptive_1_PI})}}{29}{figure.caption.16}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces { Flow diagram to determine the sampling rule in Eq. \ref {eq_adaptive_3_PI} } }}{30}{figure.caption.17}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Conditional entropies for a binary Markov chain.}}{33}{figure.caption.18}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Uncertainty reduction for $20$ realizations of the Markov chain.}}{35}{figure.caption.19}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Distribution of the conditional entropy of non-sensed locations.}}{36}{figure.caption.20}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Proposed training images.}}{39}{figure.caption.21}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Estimated maps for the model $SC_1$ at $k = 100 $.}}{42}{figure.caption.22}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Performance of non-sensed positions under RAMIS as a function of $\alpha $}}{43}{figure.caption.23}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Resolvability of non-sensed positions using RAMIS approach.}}{44}{figure.caption.25}%
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Example of the masks used to define transitions in channelized images.}}{45}{figure.caption.26}%
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Experimental performance for model $SC_1$ }}{46}{figure.caption.27}%
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Remaining Entropy maps for model $SC_1$}}{47}{figure.caption.28}%
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Experimental performance for model $MC_1$.}}{48}{figure.caption.31}%
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Experimental performance for the model $MC_2$.}}{48}{figure.caption.32}%
+\contentsline {figure}{\numberline {3.17}{\ignorespaces Remaining Entropy maps from $600$ realizations for model $MC_1$.}}{49}{figure.caption.33}%
+\contentsline {figure}{\numberline {3.18}{\ignorespaces Remaining Entropy maps from $600$ realizations for model $MC_2$.}}{50}{figure.caption.34}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Schematic diagram of the sampling rule \eqref {eq_subsec_ObjectiveFunction_empirical_PII}. }}{57}{figure.caption.37}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Grade distributions and statistics for the selected databases.}}{59}{figure.caption.40}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Drill-hole samples data for case study $1$. From left to right: Benches 1-6. Colormap denotes the grade of \emph {Cu}.}}{60}{figure.caption.42}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Blast-hole data for case study $1$. From left to right: Benches 1-6. Colormap: the same as in Fig. \ref {fig:db_drill-holes_CS1_PII}.}}{60}{figure.caption.42}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Ground truth images. Case study $1$.}}{61}{figure.caption.43}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Samples for Case Study 1. From left to right: Benches \emph {2-6}. Top: From structured sampling. Down: From adaptive sampling using \emph {Cut-Off} grade $1.012\%$. Colormap: Describe batch of samples in the order of the performed sampling.}}{61}{figure.caption.44}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Estimated grade for Case Study 1. From left to right: Benches \emph {2-6}. Top: Kriging from structured sampling. Down: Kriging from adaptive sampling using \emph {Cut-Off} grade $1.012\%$. Colormap: the same as in Fig. \ref {fig:db_drill-holes_CS1_PII}.}}{62}{figure.caption.46}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Estimated grade control for Case Study 1. From left to right: Benches \emph {2-6}. From top to bottom: Ground truth, structured sampling, adaptive sampling using \emph {Cut-Off} grade $1.012\%$.}}{63}{figure.caption.47}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Confusion Matrix for Case Study 1. From left to right: Benches \emph {2-6}. Top: Structured sampling. Down: Adaptive sampling using \emph {Cut-Off} grade $1.012\%$.}}{63}{figure.caption.47}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Remaining conditional entropy for symmetric transition matrix ($\beta = 0.2$)}}{75}{figure.caption.56}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Estimation error for symmetric transition matrix with $\beta = 0.1$}}{76}{figure.caption.57}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {B.1}{\ignorespaces Drill-hole samples data for case study $2$. From left to right: Benches 1-6. Colormap: the same as in Fig. \ref {fig:db_drill-holes_CS1_PII}.}}{79}{figure.caption.58}%
+\contentsline {figure}{\numberline {B.2}{\ignorespaces Blast-hole data for case study $2$. From left to right: Benches 1-6. Colormap: the same as in Fig. \ref {fig:db_drill-holes_CS1_PII}.}}{79}{figure.caption.59}%
+\contentsline {figure}{\numberline {B.3}{\ignorespaces Ground truth estimated from drill-holes and blast-holes for case study $2$. From left to right: Benches 1-6. Colormap: the same as in Fig. \ref {fig:db_drill-holes_CS1_PII}.}}{79}{figure.caption.60}%
+\contentsline {figure}{\numberline {B.4}{\ignorespaces Drill-hole samples data for case study $3$. From left to right: Benches 1-6. Colormap: the same as in Fig. \ref {fig:db_drill-holes_CS1_PII}.}}{80}{figure.caption.61}%
+\contentsline {figure}{\numberline {B.5}{\ignorespaces Blast-hole data for case study $3$. From left to right: Benches 1-6. Colormap: the same as in Fig. \ref {fig:db_drill-holes_CS1_PII}.}}{80}{figure.caption.62}%
+\contentsline {figure}{\numberline {B.6}{\ignorespaces Ground truth estimated from drill-holes and blast-holes for case study $3$. From left to right: Benches 1-6. Colormap: the same as in Fig. \ref {fig:db_drill-holes_CS1_PII}.}}{80}{figure.caption.63}%
+\contentsline {figure}{\numberline {B.7}{\ignorespaces Samples for Case Study 1. From left to right: Benches \emph {2-6}. Top: Kriging from structured sampling. Down: Kriging from adaptive sampling using \emph {Cut-Off} grade $1.241\%$.}}{81}{figure.caption.65}%
+\contentsline {figure}{\numberline {B.8}{\ignorespaces Estimated grade for Case Study 1. From left to right: Benches \emph {2-6}. Top: Kriging from structured sampling. Down: Kriging from adaptive sampling using \emph {Cut-Off} grade $1.241\%$.}}{81}{figure.caption.65}%
+\contentsline {figure}{\numberline {B.9}{\ignorespaces Estimated grade control for Case Study 1. From left to right: Benches \emph {2-6}. From top to bottom: Ground truth, structured sampling, adaptive sampling using \emph {Cut-Off} grade $1.241\%$.}}{82}{figure.caption.66}%
+\contentsline {figure}{\numberline {B.10}{\ignorespaces Confusion Matrix for Case Study 1. From left to right: Benches \emph {2-6}. Top: Structured sampling. Down: Adaptive sampling using \emph {Cut-Off} grade $1.241\%$.}}{82}{figure.caption.66}%
+\contentsline {figure}{\numberline {B.11}{\ignorespaces Samples for Case Study 1. From left to right: Benches \emph {2-6}. Top: Kriging from structured sampling. Down: Kriging from adaptive sampling using \emph {Cut-Off} grade $1.518\%$.}}{83}{figure.caption.68}%
+\contentsline {figure}{\numberline {B.12}{\ignorespaces Estimated grade for Case Study 1. From left to right: Benches \emph {2-6}. Top: Kriging from structured sampling. Down: Kriging from adaptive sampling using \emph {Cut-Off} grade $1.518\%$.}}{83}{figure.caption.68}%
+\contentsline {figure}{\numberline {B.13}{\ignorespaces Estimated grade control for Case Study 1. From left to right: Benches \emph {2-6}. From top to bottom: Ground truth, structured sampling, adaptive sampling using \emph {Cut-Off} grade $1.518\%$.}}{84}{figure.caption.69}%
+\contentsline {figure}{\numberline {B.14}{\ignorespaces Confusion Matrix for Case Study 1. From left to right: Benches \emph {2-6}. Top: Structured sampling. Down: Adaptive sampling using \emph {Cut-Off} grade $1.518\%$.}}{84}{figure.caption.69}%
+\contentsline {figure}{\numberline {B.15}{\ignorespaces Confusion Matrix for Case Study 2. From left to right: Benches \emph {2-6}. Top: Structured sampling. Down: Adaptive sampling using \emph {Cut-Off} grade $0.22\%$.}}{85}{figure.caption.71}%
+\contentsline {figure}{\numberline {B.16}{\ignorespaces Confusion Matrix for Case Study 2. From left to right: Benches \emph {2-6}. Top: Structured sampling. Down: Adaptive sampling using \emph {Cut-Off} grade $0.445\%$.}}{85}{figure.caption.71}%
+\contentsline {figure}{\numberline {B.17}{\ignorespaces Confusion Matrix for Case Study 2. From left to right: Benches \emph {2-6}. Top: Structured sampling. Down: Adaptive sampling using \emph {Cut-Off} grade $0.692\%$.}}{86}{figure.caption.72}%
+\contentsline {figure}{\numberline {B.18}{\ignorespaces Confusion Matrix for Case Study 3. From left to right: Benches \emph {2-6}. Top: Structured sampling. Down: Adaptive sampling using \emph {Cut-Off} grade $0.115\%$.}}{86}{figure.caption.74}%
+\contentsline {figure}{\numberline {B.19}{\ignorespaces Confusion Matrix for Case Study 3. From left to right: Benches \emph {2-6}. Top: Structured sampling. Down: Adaptive sampling using \emph {Cut-Off} grade $0.273\%$.}}{87}{figure.caption.75}%
+\contentsline {figure}{\numberline {B.20}{\ignorespaces Confusion Matrix for Case Study 3. From left to right: Benches \emph {2-6}. Top: Structured sampling. Down: Adaptive sampling using \emph {Cut-Off} grade $0.486\%$.}}{87}{figure.caption.75}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {C.1}{\ignorespaces Synthetic image by \emph {MRF} modeling }}{98}{figure.caption.81}%
+\contentsline {figure}{\numberline {C.2}{\ignorespaces \emph {1-D} regionalized variable.}}{103}{figure.caption.82}%
+\contentsline {figure}{\numberline {C.3}{\ignorespaces Measured Variables in separated past and future subsets.}}{105}{figure.caption.87}%
+\contentsline {figure}{\numberline {C.4}{\ignorespaces Statistics from simulations.}}{113}{figure.caption.89}%
+\contentsline {figure}{\numberline {C.5}{\ignorespaces Performance Analysis of Naive Approach of \emph {NCS} by relaxing restrictions}}{114}{figure.caption.91}%
+\contentsline {figure}{\numberline {C.6}{\ignorespaces Examples of outcomes for \emph {NCS} without considering spatial dependence.}}{115}{figure.caption.92}%
+\contentsline {figure}{\numberline {C.7}{\ignorespaces Performance Analysis of Naive Approach of \emph {NCS} adding \emph {TV}.}}{116}{figure.caption.93}%
+\contentsline {figure}{\numberline {C.8}{\ignorespaces Example of \emph {NCS} reconstruction under independence: SC1}}{116}{figure.caption.95}%
+\contentsline {figure}{\numberline {C.9}{\ignorespaces Example of \emph {NCS} reconstruction under independence: MC1}}{117}{figure.caption.96}%
+\contentsline {figure}{\numberline {C.10}{\ignorespaces Example 1 of \emph {NCS} reconstruction under independence: MC2}}{117}{figure.caption.97}%
+\contentsline {figure}{\numberline {C.11}{\ignorespaces Example 2 of \emph {NCS} reconstruction under independence: MC2}}{117}{figure.caption.98}%
+\contentsline {figure}{\numberline {C.12}{\ignorespaces Example 1 of \emph {NCS} with full covariance estimation: MC2.}}{118}{figure.caption.100}%
+\contentsline {figure}{\numberline {C.13}{\ignorespaces Example 2 of \emph {NCS} with full covariance estimation: MC2.}}{118}{figure.caption.101}%

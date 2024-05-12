@@ -1,0 +1,916 @@
+\chapter{{Sampling} Strategies for Uncertainty Reduction in Categorical Random Fields: Formulation, Mathematical Analysis and Application to Multiple-Point Simulations} 
+\label{chapter_PI}
+
+%\title{{Sampling} Strategies for Uncertainty Reduction in Categorical Random Fields: Formulation, Mathematical Analysis and Application to Multiple-Point Simulations}
+
+%\titlerunning{Optimal Sampling Strategies for Uncertainty Reduction}        % if too long for running head
+
+%Authors: Felipe Santiba\~nez*, Jorge F. Silva, Juli\'an M. Ortiz  %\and Alvaro Ega\~na.
+
+
+%\authorrunning{Short form of author list} % if too long for running head
+
+%Affiliation: F. Santiba\~nez (ORCID $0000-0002-0150-3246$) and J. F. Silva,
+%              Information and Decision System  Group (IDS), 
+%              Department of Electrical Engineering, University of Chile, Av. Tupper 2007, Santiago, 837-0451, Chile. 
+              %\\
+%              %Advanced Mining Technology Center (AMTC), University of Chile\\
+%              %Tel.: +56-2-9784090\\
+%              %Fax: +56-2-6953881\\
+%              %Web: www.ids-uchile.cl\\
+%              {fsantibanezleal@ing.uchile.cl, josilva@ing.uchile.cl}           %  \\
+%           \\ \\
+%           J. M. Ortiz, The Robert M. Buchan Department of Mining, Queen`s University.
+%             {julian.ortiz@queensu.ca} 
+%}
+
+
+%\institute{F. Santiba\~nez (ORCID $0000-0002-0150-3246$) \and J. F. Silva \at
+%              Information and Decision System  Group (IDS), 
+%              Department of Electrical Engineering, University of Chile, Av. Tupper 2007, %Santiago, 837-0451, Chile.\\ 
+%              %\\
+%              %Advanced Mining Technology Center (AMTC), University of Chile\\
+%              %Tel.: +56-2-9784090\\
+%              %Fax: +56-2-6953881\\
+%              %Web: www.ids-uchile.cl\\
+%              \email{fsantibanezleal@ing.uchile.cl, josilva@ing.uchile.cl}           %  \\
+%           \and
+%           J. M. Ortiz  \at
+%             The Robert M. Buchan Department of Mining, Queen`s University.\\
+%             \email{julian.ortiz@queensu.ca} 
+%}
+
+%{Received: June 2017 / Accepted: November 2018}
+% The correct dates will be entered by the editor
+
+%\maketitle
+
+
+%\section{Abstract}
+The task of optimal %optimal sampling 
+sampling for the statistical simulation of a discrete random field is addressed from the perspective of minimizing the posterior uncertainty of non-sensed positions given the information of the sensed positions\footnote{The content of this chapter is based on the \bibentry{Santibanez2019_a}. Published}. In particular, information theoretic measures are adopted to formalize the problem of optimal % 
+sampling design
+for field characterization,  where concepts like information of the measurements, average posterior uncertainty, and the  resolvability of the field are introduced. The use of the entropy and related information measures are justified by connecting the task of simulation with a source coding problem,  where it is well known that entropy offers a fundamental performance limit.
+On the application, a one-dimensional Markov chain model is explored where the statistics of the random object are known, and then the more relevant case of multiple-point simulations of channelized facies fields is studied, adopting in this case a training image to infer the statistics of a non-parametric model.  On both contexts, the superiority of  information-driven %sensing 
+sampling strategies is proved in different settings and conditions, with respect to random or regular sampling. 
+
+%\emph{Sampling strategies, optimal sampling design, %Optimal well placement 
+%information theory, entropy and conditional entropy, uncertainty reduction, multiple-point %simulations, channelized facies models, geostatistics}
+
+
+%==========================================================
+%==========================================================
+\section{Introduction}
+\label{sec_intro_PI}
+
+The recovery of an image from scarce measurements is at the core of many reconstruction problems in geosciences. In many contexts direct measurements are very expensive and consequently this inference task needs to be addressed in regimes where only scarce information from sensed data is available. In geostatistics, this lack of information from data has been addressed in the context of multiple-point statistics by the use of a prior statistical model estimated from a training image \citep{Mariethoz_2014_a,guardiano_1993,strebelle_2002,arpat_2007,wu_2008,Ortiz_2004_a}. The idea is to use prior information to interpret the measurements and to provide realistic scenarios of the underlying field uncertainty.  This prior information is represented by a probability model on the pixel space, the so-called multiple-point statistical model, that is used in conjunction with the available data to create independent and identically distributed (i.i.d.) realizations of the model conditioned on the measurements. In practice, MPS simulates non-sensed values in an inductive way by estimating the conditional probability of a non-sensed location given the values of the sensed and the previously simulated locations. This conditional probability is inferred from a training image. Therefore the recovery or characterization of non-sensed locations is obtained by a collection of conditional simulations where there is an intrinsic uncertainty that is captured by a set of feasible solutions (simulations). This stochastic recovery is justified from the fact that the focus is the regime of scarce measurements that translates in a significant posterior uncertainty after the measurements. It is evident that this high posterior uncertainty regime is not adequately represented by one solution, for instance the conditional mean attributed to the estimation problem \citep{gray_2004}. Simulations, provide a more adequate way of representing the intrinsic uncertainty of the field and realistic features from the training image \citep{Mariethoz_2014_a}.
+
+In order to properly characterize the random field considered, samples must be representative. This is usually achieved by having a non-preferential sampling through a regular or quasi-regular grid (squared or rectangular) of sensed locations \citep{rossideutsch2014} or a fully random scheme \citep{wellmer1998}. However, in practice in the case of categorical fields, knowledge about the location of transitions between categories is key to predict the economic performance of the reservoir or mineral deposit. A classical approach considers a two-stage approach. First, a wide-space regular grid is sensed to delineate favorable areas, and then relevant areas are characterized with a denser, but still regular grid \citep{kennedy1990}. 
+
+This work departs from this non-preferential principle and asks the question about the role of preferential sampling in MPS. In this context, the first objective is to evaluate the benefits of a preferential strategy and, secondly, to uncover  the role of the training image in this task and how this model can be used to improve the decision of where to measure. The main conjecture is that there is a sampling regime where the role of the model is relevant to determine where to measure and that, consequently, an adaptive sampling strategy can improve the performance of MPS. 
+
+In order to formalize this idea, the problem of sampling design (or sensing placement) is addressed from an information perspective \citep{MacKay_2002a,cover_2006}, posting it as the problem of reducing the uncertainty of non-sensed positions given the information provided by the sensed positions.  {This sampling principle is inspired by the work of \cite{wellman_2013}, where information theoretic measures are proposed as a way to quantify potential reduction in uncertainties given a new sample in the context of a general geological model}.  To formalize the notion of uncertainty and information in this simulation context, the role of the { Shannon entropy} is studied {following the works of \cite{wellman_2013,wellman_2012a}}. In particular, it is shown that the entropy offers a way of expressing the complexity of the simulation task. For that, the simulation problem is interpreted as the problem of characterizing a typical set where its cardinality can be seen as an indicator of the complexity of this task (See App. \ref{app_sec_entropy_for_simulations_PI}).  Therefore, the sampling design can be posted as the problem of minimizing the entropy of the posterior distribution of non-sensed positions given the sensed data (Sects. \ref{sec_owp_PI} and \ref{sec_adaptive_seq_sensing_PI}). Interestingly, the optimal sampling (OS) problem in this framework is the problem of selecting the more informative positions, {in the sense suggested in \citep[Sec.4]{wellman_2013}}, that is the positions that after being measured  provide {(in average)} the highest reduction in the uncertainty of the problem \citep{cover_2006}.
+
+On the application and validation of these ideas, a first exploration of a known scenario (one-dimensional Markov chain model) is studied where the entropy and related quantities can be computed with high precision. From this analysis, the benefits of preferential sampling are confirmed with respect to non-preferential solutions and, at the same time, insights are obtained into the way OS solutions are distributed in the pixel space. Interestingly, a link with quasi-regular sampling is presented as there is a case (non-adaptive) where this solution is optimal in the sense of reducing uncertainty under a Markov model assumption. 
+
+Moving on to the adoption of these sampling ideas in the task of multiple-point simulation (MPS), an information-driven sampling strategy is proposed that addresses some practical limitations that are not present in the idealized setting {where the model is assumed to be known}. The main difficulty in implementing the OS %OWP 
+strategy in this context comes from the need to estimate the model statistics from a training image. This leads to two main issues: one associated with the statistical inference errors of pattern statistics and the other with the algorithmic complexity of inferring statistics as new sensed locations become available. To address them, a solution is proposed with a compound objective function that reflects a compromise between the global and local characterization of the field. The local component emphasizes the most informative non-sensed areas typically around the transition zones of the true field, while the global component enforces a more uniform sampling of the domain. This preferential scheme is evaluated for three channelized facies models and in a range of sampling rates. Results are compared with two non-preferential solutions. Results show concrete evidences of the benefits of preferential sampling both in the sense that the obtained simulations are closer (in average) to the true image (bias) and also in that simulations show less variability in the non-sensed positions measured in terms of the average conditional entropy (variance). As expected, the magnitude of the gain depends on the complexity of the model. Finally, if only the surroundings of transition zones are analyzed, which can be considered the most relevant areas for facies characterization, the improvements given by the proposed preferential solution are even more significant for the three models explored.
+
+
+%\subsection{Organization of the chapter}
+%------------------------------------------------------------------------------------
+The rest of this chapter is organized as follows. {Section \ref{sec_literature_context_PI} offers an overview for two important topics that are closely related with this work on: uncertainty characterization for geological models and sampling design.} Section \ref{sec_pre_PI} introduces some basic information quantities that will be adopted for the formalization of the optimal sensing problem. Section \ref{sec_owp_PI} presents the general problem of optimal sampling (OS) and Section \ref{sec_adaptive_seq_sensing_PI} extends this formulation to its adaptive sensing variation that is essential to apply it in the context of conditional simulations. Section \ref{sec_1d_markov_PI} presents the preliminary study of one-dimensional Markov chain and Section \ref{sec_appl_mps_PI} addresses the main application in  MPS. Finally,  conclusions and final remarks are presented in Section \ref{sec_con_PI}. Some complementary material is relegated to the Appendices. 
+
+%-------------------------------------------------------------
+\section{Related Works on Geological Uncertainty and Sampling Design} %on Sampling Design}
+\label{sec_literature_context_PI}
+% Critical Section where comments from the main reviewer needs to be addressed. 
+% Felipe&Jorge. 
+{The analysis and quantification of uncertainty in geological models have been systematically addressed by the geo-scientific community} \citep{gutjahr1991,goovaerts2001,Scheidt2009_a,wellman_2012a}. { In this context, the Shannon entropy has been proposed to visualize and analyze spatial uncertainties in the context of structural maps and complex three-dimensional spatial geological models \citep{goodchild_1994,wellman_2012a,wellman_2010a}. Preliminary association between geostatistics and information theory can be found in \citep{peschel_1991a}, where the relationship between information entropy and the estimation variance of geostatistical methods is established under a joint Gaussian assumption for the model.
+ %but it is not extended to non-gaussian cases. 
+%In addition, the concept of exploration degree determined by the ratio between the existing information quality (from preceding exploration) and the required information needed to take decisions under an predefined risk is presented (described in terms of a priori and a posteriori entropies) \citep{peschel_1991a}. 
+More recently, \citep{wellman_2013} proposed the adoption of conditional entropy and mutual information to quantify spatial dependencies and spatial uncertainty reduction (attributed to the information) of a measurement (a drilling well) considering  a typical geological model.
+%In the same line, a general the approach to assess uncertainty in geological modeling done with an implicit potential field approach, which is based on cokriging, focusing in data and contact uncertainty is formulated in \citep{wellman_2010a}. 
+In addition, \citep{schweizer_2017a} considers the %information 
+entropy  as a %voxel based 
+measure to assess structural uncertainties by the comparison of multiple model interpretations and the subsequent track of changes across built models. Here the entropy is used to understand how a three-dimensional geological model evolves as new data of increasing complexity is integrated in the analysis.}
+ 
+{Considering the problem of optimal sensor placement (or sampling design), this is a fundamental problem that has been addressed in numerous contexts. For instance a classical task in signal processing is the sampling problem \citep{Eldar_2015a}, where the objective is to recover the signal from a under-sampling set of measurements (typically linear measurements) \citep{donoho_2006, candes_2006b,founcart_2009,vershynin_2012}. In this context, the optimal sampling design has been systematically addressed for the objective of full signal recovery (or perfect reconstruction) \citep{candes_2006,candes_2008,Boyko_2014} and the problem of estimating the signal using a mean square error criterion \citep{cohen_2009,Bui2015_a}. On this area, compressed sensing (CS) provides concrete results concerning the optimal sampling scheme, the reconstruction algorithms and the minimum number of samples needed to achieve optimal performance for signal recovery under some assumption about the structure of the signal \citep{candes_2008,baraniuk_2008}. Other widely explored application is in the context of sensor networks, where the problem of optimal sensor placements has been addressed systematically and the literature is rich \citep{Guestrin_2005, Krause_2006,Krause_2008a,Krause_2008b,Krause_2011, Bangerth_2005,Bangerth_2006}.}
+
+{Closer to the area of application of this work,  the problem of sensor placement has been addressed
+in the context of underground CO2 monitoring \citep{magnant_2011a}, geological investigation \citep{xu_2017a}, waterloss detection in a water distribution network \citep{christodoulou_2013a} and kriging for continuous Guassian fields \citep{abellan_2010a,peschel_1991a,cressie_1990,marchant_2007,zidek_2000}. In this last geostatistical context, the problem has been traditionally addressed for continuous variables by the minimization of the estimation variance coming from kriging or some of its variants \citep{McBratney1981a,McBratney1981b,olea1984_a,gaoetal1996,brusheuvelink2007,Vasat2010,cressie_1990,marchant_2007} or from an economic utility function of this uncertainty \citep{aspiebarnes1990}.  One line of work addressed the problem by using heuristics or by splitting it into a set of sequential decisions. Simulated annealing \citep{christakoskillam1993,vangroenigenetal1999,norrenadeutsch2002}, genetic algorithms \citep{bittencourthorne1997} or particle swarm optimization \citep{afsharietal2014}, numerical sparse approaches \citep{magnant_2011a} are among the typical approaches to overcome the complexity of the problem.
+On the other hand, \citep{abellan_2010a} proposed the use of information theory to formulate the optimal sampling design where the utility function selects the points that maximize the difference between the prior and posterior density of the model parameters given the measurements. They evaluate this approach in the context of kriging of a full Gaussian model where the Kullback-Leibler divergence (KLD) is used to measure the discrepancy between the prior  and posterior density.
+%Alternatively, the optimization focuses on flow performance (or a proxy streamline simulation) \citep{afsharietal2014} using particle swarm optimization. Conditional variance from Gaussian and indicator simulation can also be used for uncertainty quantification \citep{gutjahr1991,goovaerts2001}. However, these methods assume a simplified structure for the spatial correlation, limited to two-point spatial covariance models \citep{peschel_1991a,abellan_2010a}. 
+%More sophisticated approaches could account for the 
+In the context of geological prediction, the principle of maximum entropy sampling under a Markov assumption for the model
+was proposed for the disposition of observations points in \citep{xu_2017a} and the same principle was also presented for 
+the context of longitudinal sensing (meaning acoustic, pressure and flow sensors) for water-loss detection in a water distribution network in \citep{christodoulou_2013a}.}
+
+{The extension of some of the information theoretic formulations for sampling design presented above (like the one proposed for kriging in the context of a multivariate Gaussian assumption in \citep{abellan_2010a},  %for the model %characterized by two-point statistics, 
+or the maximum entropy principle proposed under the Markov assumptions in \citep{xu_2017a} for geological investigation)  
+to the problem of conditional simulations of categorical random fields using multiple-point statistics to the best of the knowledge of the authors has not been addressed in the literature and constitute the objective of the rest of the exposition.}
+
+%\footnote{During the revision process of this article, the authors were notified of a recent publication \citep{xu_2017a}, with a Markovian model that deals with optimal sampling based on entropy. There are convergent topics, but here the model is used to contextualize the theoretical support associated with the proposed methodology}. MPS may help constraining the model, by using a training image deemed to represent the spatial distribution of the particular geological setting under study. 
+%The joint determination of the location of a large number of samples is computationally complex. Therefore,  
+
+%==========================================================
+%==========================================================
+\section{Preliminaries: Notation and Basic Concepts}
+\label{sec_pre_PI}
+
+%\subsection{Notation}
+{
+A random variable (and a random vector) will be denoted by capital letters, for example $X(w):(\Omega, \mathbb{P}) \longrightarrow \mathcal{A}$ where $\mu_X$ denotes the distribution of $X$ in the alphabet $\mathcal{A}$. Focusing on the finite alphabet case, $\mu_X(x)$ for all $x\in \mathcal{A}$ will be a short-hand for the probability mass function (pmf).
+When considering a joint vector $(X,Y)$ in $\mathcal{A}\times \mathcal{B}$, with $\mu_{X,Y}$ denoting its joint distribution and 
+$\mu_{X|Y}(\cdot|y)$ the conditional distribution of $X$ given $Y=y$ in $\mathcal{A}$. Finally $\mathcal{P}(\mathcal{A})$ denotes 
+the collection of probabilities defined in $\mathcal{A}$.
+}
+
+\subsection{Information Measures}
+Let $X$ be a random variable with values in a finite alphabet $\mathcal{A}$ and probability measure $\mu_{X} \in \mathcal{P}(\mathcal{A})$. The { Shannon entropy} of $X$ \citep{shannon_1948} (or alternatively of $\mu_X$) is a measure of the uncertainty or non-resolvability of $X$ given by
+\begin{equation}\label{eq_sec_pre_PI_1}
+	H(X) \equiv \mathcal{H}(\mu_X) \equiv - \sum_{x\in \mathcal{A}} \mu_X (x) \log_2 \mu_X (x). 
+\end{equation}
+This object has been widely studied on information theory, where the convention from general theoretical formulation is to use the integer $2$ as the base of the logarithm.  The Shannon entropy offers fundamental performance bounds to many coding problems \citep{cover_2006}. Other important concepts are conditional entropy and mutual information \citep{cover_2006}. Consider two random variables $X$ and $Y$ with values on finite alphabets  $\mathcal{A}$ and  $\mathcal{B}$, respectively, and joint distribution $\mu_{X,Y}$ in $\mathcal{P}(\mathcal{A}\times\mathcal{B})$. Then, the entropy of $X$ given $Y=y \in \mathcal{B}$ 
+from (\ref{eq_sec_pre_PI_1}) is given by
+\begin{equation}\label{eq_sec_pre_PI_2}
+	H(X|Y=y) \equiv  \mathcal{H}(\mu_{X|Y} (\cdot|y)) \equiv - \sum_{x\in \mathcal{A}} \mu_{X|Y} (x|y) \log_2 \mu_{X|Y} (x|y).
+\end{equation}
+The average value of $H(X|Y=y)$ \citep{cover_2006} with respect to the statistics of $Y$ is defined as the conditional entropy of $X$ given $Y$
+\begin{equation}\label{eq_sec_pre_PI_3}
+	H(X|Y) \equiv \sum_{y\in \mathcal{B}} \mu_{Y} (y) H(X|Y=y).
+\end{equation}
+From {Jensen's inequality} \citep{cover_2006}, it is well-known that $H(X|Y) \leq H(X)$  
+where the equality  is achieved, if and only if, $X$ and $Y$ are independent.  
+Therefore, the basic principle is that conditioning always reduces the uncertainty. In information theory, the reduction of uncertainty is attributed to information, and consequently, the mutual information 
+of $X$ and $Y$ is defined precisely by
+\begin{equation}\label{eq_sec_pre_PI_4}
+	I(X;Y) \equiv H(X) - H(X|Y) \geq 0. 
+\end{equation}
+Then $I(X; Y)$ is the average reduction of uncertainty of $X$ by the process of sensing (measuring) values of $Y$. {The mutual information is a symmetric measure \citep{cover_2006}, that is $H(Y) - H(Y|X)= H(X) - H(X|Y)$. Thus, the alternative interpretation can be used by changing the role between $X$ and $Y$}.
+
+\subsection{Entropy as an Indicator of Simulation Complexity}
+\label{sub_sec_entropy_for_simulations_PI}
+It is possible to  show with some formality that the entropy $H(X)$ has an operational meaning for the task of simulating $X$ using $n$ i.i.d. realizations (see App. \ref{app_sec_entropy_for_simulations_PI}). This in the sense that the minimum number of $n$-block samples needed to  represent almost all the probability of the phenomenon scales like $\approx 2^{n\cdot H(X)}$, indicating an exponential rate that is fully  determined by $H(X)$. From this angle, the task of simulating $X_1$ is more complex than simulating $X_2$ if  $H(X_1) > H(X_2)$. The derivation of this result comes from a natural connection between the task of i.i.d. simulation and the problem of almost lossless source coding \citep{cover_2006} and, in particular, a connection with the celebrated concept of typical sequences introduced by Shannon \citep{shannon_1948} to prove numerous coding theorems. For completeness,  this material is presented in App. \ref{app_sec_entropy_for_simulations_PI} of this thesis. 
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\subsection{A Basic Sensing Decision Problem}
+\label{sub_sec_basic_sensed_problem_PI}
+Here an illustration of a binary sensing problem is posted for the task of i.i.d. simulation that is helpful to understand the formulation of the sensing problem presented in Sects. \ref{sec_owp_PI} and \ref{sec_adaptive_seq_sensing_PI}. Let $X$ denote a finite alphabet random variable (with values in $\mathcal{A}$) to be characterized through i.i.d. samples. Before performing the simulation, one out of two possible finite alphabet random variables $Y_1$ and $Y_2$ with values in the same alphabet $\mathcal{B}$ can be measured. Both random variables, $Y_1$ and $Y_2$, have a joint distribution with the target random variable $X$, and the problem is to choose optimally one of them before doing the i.i.d. simulations of $X$. {Here the joint distribution $\mu_{X,Y_j}$ was assumed as non-trivial in the sense that $\mu_{X,Y_j}\neq  \mu_{X}\times \mu_{Y_j}$, in other words, that $I(X; Y_j)>0$ from (\ref{eq_sec_pre_PI_4}).}
+
+From the previous section, the complexity of the i.i.d. simulation task is proportional to the entropy of its marginal distribution. Therefore if $Y_j=y\in \mathcal{B}$ is observed, the complexity of creating i.i.d. samples of $X$, is given by
+\begin{equation}
+H(X|Y_j=y)=\mathcal{H}(\mu_{X|Y_j}(\cdot|y))= - \sum_{x\in \mathcal{A}} \mu_{X|Y_j}(x|y) \log_2 \mu_{X|Y_j}(x|y).
+\end{equation}
+As the specific value that $Y_j$ will take is a priori unknown, the average complexity is considered with respect to the probability of $Y_j$, that is,
+\begin{equation}
+H(X|Y_j)=\sum_{y\in \mathcal{B}} \mu_{Y_j}(y)\cdot H(X|Y_j=y).
+\end{equation}
+Then the minimum cost decision for simulating $X$ conditioned on a sensed variable taken from the set $\left\{Y_1,Y_2 \right\}$ is obtained from
+%.........................................................
+\begin{align}\label{eq_sec_pre_PI_9}
+	j^*	&=\arg\min_{j\in \left\{1,2 \right\}} H(X|Y_j)\\
+		\label{eq_sec_pre_PI_9aa}
+		&=\arg\max_{j\in \left\{1,2 \right\}} H(X)-H(X|Y_j)\\
+		\label{eq_sec_pre_PI_9a}
+		&=\arg\max_{j\in \left\{1,2 \right\}} I(X;Y_j).
+\end{align}
+The solution in (\ref{eq_sec_pre_PI_9}) can be interpreted as selecting the sensed variable that minimizes the posterior uncertainty (in average) of $X$ after taking the measurement in (\ref{eq_sec_pre_PI_9}). Alternatively, (\ref{eq_sec_pre_PI_9a}) is equivalent to the problem of selecting the sensed variable that has the highest mutual information with $X$ or the highest reduction between the prior and the posterior uncertainty in (\ref{eq_sec_pre_PI_9aa}). In fact, if comparing the complexity of the task of simulating $X$  with and without the ability of optimally sensing over the set $\left\{ Y_1,Y_2\right\}$, there is a reduction in complexity quantified by $H(X)- H(X|Y_{j^*})$ which is precisely $I(X;Y_{j^*})$,  the highest point-wise mutual information between $X$ and the set $\left\{ Y_1,Y_2\right\}$ stated in (\ref{eq_sec_pre_PI_9a}). 
+
+%==========================================================
+%==========================================================
+\section{{Sampling} Strategies for Uncertainty Reduction}
+\label{sec_owp_PI}
+In this section, the decision principle in Sect. \ref{sub_sec_basic_sensed_problem_PI} is extended to the case of characterizing a random field from a finite collection of  measurements or pixel-based samples. 
+In this work, only the squared two dimensional
+problem is addressed for a sake of simplicity, but no limitations exist to extend it to more complex problems (e.g., three-dimensional rectangular grids). 
+
+%--------------------------------
+\subsection{Problem Setting}
+The object to be characterized is a random field corresponding to a collection of finite alphabet random variables. $\bar{X}= \left\{X_{i,j}: (i,j)\in [M]\times [M] \right\}$ where $[M] \equiv \left\{1,..,M\right\}$. %and $X_{i,j}$ is the rv associated to the position $(i,j)$ in 
+%the array.  
+For every position in the array $(i,j)$, $X_{i,j}$ is a random variable with values in a finite alphabet $\mathcal{A}$ and marginal probability $\mu_{X_{i,j}} \in \mathcal{P}(\mathcal{A})$. The collection $\bar{X}$ %=\left\{X_{i,j}: (i,j) \right\}$ 
+is equipped with its joint probability denoted by $\mu_{\bar{X}}$ in $\mathcal{P}(\mathcal{A}^{M^2})$.
+
+Following the task in Sect. \ref{sub_sec_basic_sensed_problem_PI}, the optimal sampling problem can be posted as a minimum cost decision problem, where the cost is the complexity to characterize a random object in terms of i.i.d. samples. More formally, for a given number $k\leq M^2$ of positions to be sensed in the pixel-domain $[M] \times [M]$, let $\mathbf{F}_k \equiv \left\{ f:\left\{1,..,k\right\} \rightarrow [M] \times [M] \right\}$ be the collection of functions that select $k$-elements from $[M] \times [M]$.  Every $f\in \mathbf{F}_k$ represents  a sampling rule of size $k$ that defines the positions to be sensed in the field, denoted by $\mathcal{I}_f \equiv \left\{ f(1),f(2),...,f(k) \right\}\subset [M] \times [M]$. 
+In particular for $f\in  \mathbf{F}_k$, let
+%%.........................
+\begin{equation}\label{eq_sec_owp_PI_1}
+X_f \equiv ( X_{f(1)},X_{f(2)},..,X_{f(k)}), 
+\end{equation}
+denote the sensed random vector with values in $\mathcal{A}^k$ and let
+\begin{equation}\label{eq_sec_owp_PI_2}
+\hat{X}_f \equiv (X_{i,j}: (i,j)\in [M] \times [M] \setminus \left\{f(1),f(2),..,f(k)\right\} )
+\end{equation}
+denote the non-sensed random vector with values in $\mathcal{A}^{M^2-k}$. In this context, given some specific sensed values $\bar{x}=(x_1,..,x_k)\in \mathcal{A}^k$, the complexity of simulating the non-sensed position $\hat{X}_f$ is given by (see Sect. \ref{sub_sec_entropy_for_simulations_PI})
+%%.........................
+\begin{align}\label{eq_sec_owp_PI_3}
+H(\hat{X}_f| {X}_f=\bar{x}) &= \mathcal{H}(\mu_{\hat{X}_f| {X}_f}(\cdot | \bar{x}) ) \nonumber\\ 
+& = - \sum_{\bar{y}=(y_1,.., y_{M^2-k})\in \mathcal{A}^{M^2-k}}  \mu_{\hat{X}_f| {X}_f} (\bar{y}|\bar{x}) \cdot \log_2 \mu_{\hat{X}_f| {X}_f} (\bar{y}|\bar{x}).
+\end{align}
+In general, there is no access to the specific realization of $X_f$ when evaluating the rule. Consequently, the cost associated to $f$ is the average posterior uncertainty with respect to the statistic of ${X}_f$ given by
+\begin{equation}\label{eq_sec_owp_PI_4}
+H(\hat{X}_f| {X}_f) =  \sum_{\bar{x}=(x_1,..,x_{k})\in \mathcal{A}^k} \mu_{{X}_f} (\bar{x}) \cdot H(\hat{X}_f| {X}_f=\bar{x}).
+\end{equation}
+Then, the minimum cost decision rule  associated to characterize the field with $k$ sensed positions is given by
+\begin{equation}\label{eq_sec_owp_PI_5}
+	f^*_k = \arg \min_{f\in \mathbf{F}_k} H(\hat{X}_f| {X}_f).
+\end{equation}
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+\subsection{The Equivalent Maximum Information Strategy}
+\label{sub_sec_owp_PI_max_info}
+As mentioned in previous sections, uncertainty of the field after measuring translates into information.  Therefore, there is a meaningful interpretation of (\ref{eq_sec_owp_PI_5}) as a problem of maximum information extraction. The amount of information that provides a decision rule $f \in \mathbf{F}_k$ about $\bar{X}$, is defined as the reduction of the uncertainty induced in $\bar{X}$ after taking the measurements in average. Thus, the information of $f$ to resolve $\bar{X}$ is %=\left\{X_{i,j} \right\}$ is
+%%.........................
+\begin{align}\label{eq_sec_owp_PI_6}
+	I(f) \equiv I(\bar{X}; X_f)&=  H(\bar{X}) - H(\bar{X} | {X}_f) \nonumber\\
+	     &= H(\bar{X}) - H(\hat{X}_f| {X}_f), 
+\end{align} 
+where $H(\bar{X})$ is the Shannon entropy of the entire field (before the measurements) or the a priori uncertainty of $\bar{X}$ given by
+%%.........................
+\begin{equation}\label{eq_sec_owp_PI_7}
+	H(\bar{X})  = \mathcal{H}(\mu_{\bar{X}}) = -  \sum_{\bar{x}=(x_{i,j})_{(i,j)\in [M]\times [M]}  \in
+	A^{M^2}} \mu_{\bar{X}} (\bar{x}) \cdot \log_2 \mu_{\bar{X}} (\bar{x}), 
+\end{equation} 
+and the last equality in (\ref{eq_sec_owp_PI_6}) comes from the chain rule of the entropy \citep{cover_2006}  
+and the fact that $\bar{X}=({X}_f,\hat{X}_f)$.
+By definition, $I(f)$ is a particular case of the mutual information \citep{cover_2006}, which implies that $I(f)\geq 0$ and $I(f) \leq H(\bar{X})$. {An interesting case to consider is when $I(f) = H(\bar{X})$. This implies that $H(\hat{X}_f| {X}_f)=0$, which is equivalent to say that $\hat{X}_f$ is a deterministic function of  ${X}_f$ \citep{cover_2006} and, consequently,  the sensing rule $f$ perfectly resolves $\bar{X}$ with no remaining uncertainty.}
+
+Then, the optimal rule stated in Eq.(\ref{eq_sec_owp_PI_5}) can be posted from (\ref{eq_sec_owp_PI_6}) as
+%%.........................
+\begin{equation}\label{eq_sec_owp_PI_8}
+	f^*_k = \arg \max_{f\in \mathbf{F}_k} 	I(f), 
+\end{equation}
+which has the nice interpretation of maximizing the information to resolve $\bar{X}$ with $k$ measurements.
+
+Another interpretation of the decision problem in (\ref{eq_sec_owp_PI_5}) can be provided using the chain rule of the entropy \citep{cover_2006}. From the chain rule, for any $f\in \mathbf{F}_k$ the joint entropy $H(\bar{X})$ can be decomposed as the sum of  the marginal entropy of the sensed pixels $H({X}_f)$ and the conditional entropy $H(\hat{X}_f| {X}_f)$.  Consequently from (\ref{eq_sec_owp_PI_6}),
+%%.........................
+\begin{equation}\label{eq_sec_owp_PI_9}
+	f^*_k = \arg \max_{f\in \mathbf{F}_k} 	H({X}_f), 
+\end{equation}
+which is the problem of choosing the $k$ positions that jointly lead to the highest a priori (before the measurements) entropy.
+
+\begin{remark}
+Summarizing, the  problem of minimizing the posterior Shannon entropy after taking the measurements in Eq. (\ref{eq_sec_owp_PI_5}) is equivalent to the problem of finding the $k$ measurements that maximize the information to resolve $\bar{X}$ in Eq. (\ref{eq_sec_owp_PI_8}),  which is also equivalent to finding the subset of $k$ measurements that maximize the a priori uncertainty before taking the measurements in Eq. (\ref{eq_sec_owp_PI_9}).
+\end{remark}
+
+Finally, after solving the optimal sensing rule of size $k$,  the resulting posterior uncertainty is given by
+\begin{equation}\label{eq_sec_owp_PI_10}
+	H(\hat{X}_{f^*_k}| {X}_{f^*_k}).
+\end{equation}
+
+On the other hand, the reduction on the uncertainty (prior minus posterior entropy), attributed to the information of $f^*_k$ to resolve $\bar{X}$, is given by
+\begin{equation}\label{eq_sec_owp_PI_11}
+	I(f^*_k) = H(\bar{X}) - H(\hat{X}_{f^*_k}| {X}_{f^*_k}) = H({X}_{f^*_k}) \geq 0. 
+\end{equation}
+ 
+%==========================================================
+\subsection{The Iterative Sequential Rule}
+\label{sec_numerical_OWP_PI}
+The optimal sensing rule in its three presentations in (\ref{eq_sec_owp_PI_5}), (\ref{eq_sec_owp_PI_8}) and (\ref{eq_sec_owp_PI_9}) is a combinatorial problem and, consequently, impractical for relatively large fields. In this section, the sequential (non-adaptive) maximum information scheme (SMIS) is proposed as an iterative solution based on the principle of one-step-ahead sensing. The idea is to construct a sub-optimal sensing rule in an incremental fashion to reduce the complexity of the decision task to something polynomial in the size of the problem and, therefore, that can be implemented in practice.
+
+In this context, for $k=1$, the optimal rule reduces to finding one position in the array solution of
+%..........................................................................
+\begin{align}\label{eq_numerical_OWP_1_PI}
+	(i^*_1,j^*_1) 	&= \arg \min_{(i,j)\in [M]\times [M]} H((X_{p,s}: (p,s)\neq (i,j)) | X_{i,j})\\
+				\label{eq_numerical_OWP_1b_PI}
+				&= \arg \max_{(i,j)\in [M]\times [M]} H(\bar{X})- H((X_{p,s}: (p,s)\neq (i,j)) | X_{i,j})\\
+				\label{eq_numerical_OWP_1c_PI}
+				&=\arg \max_{(i,j)\in [M]\times [M]} H(X_{i,j}),
+\end{align}
+where (\ref{eq_numerical_OWP_1_PI}) comes from (\ref{eq_sec_owp_PI_5}), (\ref{eq_numerical_OWP_1b_PI}) from (\ref{eq_sec_owp_PI_8}) and (\ref{eq_numerical_OWP_1c_PI}) from (\ref{eq_sec_owp_PI_9}). 
+
+For $k=2$, the principle of the one-step ahead approach fixes $(i^*_1,j^*_1)$ and finds the next position in 
+the array as the solution of 
+%..........................................................................
+\begin{align}\label{eq_numerical_OWP_2_PI}
+	(i^*_2,j^*_2) 	&= \arg \min_{(i,j)\in [M]\times [M]  \setminus \left\{(i^*_1,j^*_1)\right\}} \left[ \right. \nonumber\\ 
+				& \quad H((X_{p,s}: (p,s)\neq (i,j), (p,s)\neq (i^*_1,j^*_1)) | X_{i,j}, X_{i^*_1,j^*_1}) \left. \right]  \\
+				&= \arg \max_{(i,j)\in [M]\times [M] \setminus \left\{(i^*_1,j^*_1)\right\}}  \left[ \right.  H( (X_{p,s}: (p,s)\neq (i^*_1,j^*_1)) | X_{i^*_1,j^*_1})\nonumber\\
+				& \quad - H((X_{p,s}: (p,s)\neq (i,j), (p,s)\neq (i^*_1,j^*_1)) | X_{i,j}, X_{i^*_1,j^*_1})  \left. \right] \\
+				&=\arg \max_{(i,j)\in [M]\times [M] \setminus \left\{(i^*_1,j^*_1)\right\}} H(X_{i,j}|X_{i^*_1,j^*_1}).
+\end{align}
+Again, the first problem  minimizes the posterior uncertainty after taking the next measurement, the second maximizes the information gain of the next measurement, and the last finds the point that maximizes the a priori uncertainty (conditioning to previous data, in this case $X_{i^*_1,j^*_1}$), which is the simplest principle to implement in practice.
+
+Iterating this inductive rule, the $k$-measurement (after solving $(i^*_1,j^*_1)$, $(i^*_2,j^*_2)$ , $..$ ,  $(i^*_{k-1},j^*_{k-1})$) is the solution of SMIS at stage $k$, that is,
+%..........................................................................
+\begin{align}\label{eq_numerical_OWP_3_PI}
+	(i^*_k,j^*_k) 	&= 
+				\arg \max_{(i,j)\in [M]\times [M] \setminus \left\{(i^*_l,j^*_l): l=1,..,k-1\right\}} H(X_{i,j}|X_{i^*_1,j^*_1},..,X_{i^*_{k-1},j^*_{k-1}}).
+\end{align}
+Therefore, with this sequence of optimal positions $\left\{(i^*_l,j^*_l): \right.$ $\left. l=1,..,k \right\}$, for every $k\in $ $\left\{1,..,M^2 \right\}$, the sequential rule $\tilde{f}^*_k \in \mathbf{F}_k$ can be constructed by
+%..........................................................................
+\begin{equation}\label{eq_numerical_OWP_3b_PI}
+\tilde{f}^*_k(1)=(i^*_1,j^*_1), \tilde{f}^*_k(2)=(i^*_2,j^*_2),..., \text{ and }\tilde{f}^*_k(k)=(i^*_k,j^*_k).
+\end{equation}
+{ Figure \ref{fig:diagSeq_1_PI} illustrates the inputs needed to solve \eqref{eq_numerical_OWP_3_PI}, {that is}, the statistical model and previous positions, and Fig. \ref{fig:diagSeq_2_PI} the sequential set of problems and their interplay to obtain $\tilde{f}^*_k(\cdot)$ in \eqref{eq_numerical_OWP_3b_PI}.
+}
+
+%=====================================================================
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.99\columnwidth]{Figs_PI/Fig01}
+	\caption[Diagram of the inputs and the required statistical model]{\label{fig:diagSeq_1_PI} { Diagram of the inputs and statistical information (model) needed to solve the sequential rule in Eq. (\ref{eq_numerical_OWP_3_PI}) } }
+\end{figure}
+%=====================================================================
+
+%=====================================================================
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.99\columnwidth]{Figs_PI/Fig02}
+	\caption[Flow diagram to determine the sampling rule $\tilde{f}^*_k(\cdot)$]{\label{fig:diagSeq_2_PI} Flow diagram to determine the sampling rule $\tilde{f}^*_k(\cdot)$ in Eq. (\ref{eq_numerical_OWP_3b_PI})}
+\end{figure}
+%=====================================================================
+
+{
+In general, the rule in Eq. (\ref{eq_numerical_OWP_3_PI}) can reach its maximum at multiple locations, giving rise to multiple feasible solutions. In this context, a random selection from feasible locations will be used in practice. This is made in order to exclusively use entropy metrics as the source of preferential sampling.
+}
+
+{
+Concerning the information of this sequential rule, the following can be stated: 
+}
+%proposition 1:---------------------------------------------
+\begin{proposition}\label{pro_iter_information_gain_PI}
+The  information of $\tilde{f}^*_k$ to resolve the field $\left\{X_{i,j} \right\}$ (using the definition in (\ref{eq_sec_owp_PI_6})) is given by 
+\begin{align}\label{eq_numerical_OWP_4_PI}
+	I(\tilde{f}^*_k)&= H(\bar{X}) - H(\bar{X}|{X}_{\tilde{f}^*_k})=H(\bar{X}) - H(\hat{X}_{\tilde{f}^*_k}|{X}_{\tilde{f}^*_k})\nonumber\\
+			     &= H(X_{i^*_1,j^*_1},..,X_{i^*_{k-1},j^*_{k-1}},X_{i^*_k,j^*_k})\nonumber\\
+			     &= H(X_{i^*_1,j^*_1}) + H(X_{i^*_2,j^*_2}|X_{i^*_1,j^*_1}) +\cdots + H(X_{i^*_k,j^*_k}|X_{i^*_1,j^*_1},..,X_{i^*_{k-1},j^*_{k-1}}),
+\end{align}
+and, consequently, the information gain of this %sequential 
+approach is {additive} in the sense that 
+\begin{align}\label{eq_numerical_OWP_5_PI}
+	I(\tilde{f}^*_k)- I(\tilde{f}^*_{k-1})=  H(X_{i^*_k,j^*_k}|X_{i^*_1,j^*_1},..,X_{i^*_{k-1},j^*_{k-1}}) \geq 0. 
+\end{align}
+\end{proposition} (The proof is presented in App. \ref{proof_pro_iter_information_gain_PI})
+
+%-----------------
+\begin{remark}
+Note that the information gain from $k-1$ to $k$ measurements in (\ref{eq_numerical_OWP_5_PI}) is the solution of (\ref{eq_numerical_OWP_3_PI}) in the iteration $k$ of the sequential rule.
+\end{remark}
+
+Finally after obtaining the optimal sequential rule, the remaining uncertainty (or posterior entropy) of the field is given by
+\begin{equation}\label{eq_numerical_OWP_5a_PI}
+	H(\hat{X}_{\tilde{f}^*_k}| {X}_{\tilde{f}^*_k}) = H(\bar{X}) - I(\tilde{f}^*_k), 
+\end{equation}
+where $I(\tilde{f}^*_k)$ is given in Proposition \ref{pro_iter_information_gain_PI}. 
+%-----------------
+\begin{remark}\label{re_seq_vs_combinatorial_PI}
+From the definitions in (\ref{eq_sec_owp_PI_8}) and (\ref{eq_numerical_OWP_3b_PI}), it is simple to show that the combinatorial rule $f_k$ is better than the sequential rule $\tilde{f}^*_k$ in the sense that
+\begin{align}\label{eq_numerical_OWP_6_PI}
+	I(\tilde{f}^*_k) \leq I({f}^*_k). 
+\end{align}
+It is possible to conjecture that the information loss $(I({f}^*_k)- I(\tilde{f}^*_k))_{k=1,..,M^2} $ is proportional to how much spatial dependency is presented in the joint distribution of field $\bar{X}$. To the extreme, it is simple to prove for a field with no inter-pixel dependency, in the senses that $\mu_{\bar{X}}((x_{i,j})_{(i,j) \in [M]\times [M]})=\Pi_{(i,j)\in [M]\times [M]} \mu_{X_{i,j}}(x_{i,j})$, that
+
+\begin{align}\label{eq_numerical_OWP_7_PI}
+	I(\tilde{f}^*_k)= I({f}^*_k),
+\end{align}
+and the sequential solution is an optimal solution of \eqref{eq_sec_owp_PI_8} (see details in App. \ref{optinality_no_iterpixel_PI}).
+\end{remark}
+
+
+
+%==========================================================
+\section{The Adaptive Sensing Problem}
+\label{sec_adaptive_seq_sensing_PI}
+In this section, the adaptive maximum information sampling (AMIS) is introduced as an adaptive sensing variation for the sequential strategy elaborated in Sect. \ref{sec_numerical_OWP_PI}. The adaptive nature of this variation comes from the practical observation that in the sequential step, for instance after deciding the $k-1$ positions, the optimizer of the next sensing decision at stage $k$ can have access to the actual measurements of the field taken on the previous positions. This is a realistic consideration in the context of MPS because it is the way in which the conditional simulations are performed, that is, the non-sensed pixels are simulated based on the conditional probability using the ``{\em specific values of sensed data}". Consequently, it is natural to consider both the previously decided positions and the measurements of the field taken on those positions when selecting the position of the next sample. 
+%redundant:
+%Therefore, the problem of finding the more informative position should be based on this specific conditional probability.
+
+Formally, instead of considering the information gain in average, with respect to  the statistics of the random vector $(X_{i^*_1,j^*_1}, X_{i^*_2,j^*_2},\ldots,$ $X_{i^*_{k-1},j^*_{k-1}})$ in (\ref{eq_numerical_OWP_3_PI}), an adaptive strategy can condition on the specific values previously measured at the $k-1$ positions. Then, assuming access to the ``{\em true data}" $(x_1,..,x_{k-1})\in \mathcal{A}^{k-1}$ of the image at the positions $(i^a_1,j^a_1),..,(i^a_{k-1},j^a_{k-1})$, the next position is the solution of the AMIS approach, given by%..........................................................................
+\begin{align}\label{eq_adaptive_1_PI}
+	&(i^a_k(x_1,..,x_{k-1}),j^a_k(x_1,..,x_{k-1})) =\nonumber\\ 
+	& \argmax_{(i,j)\in [M]\times [M] \setminus \left\{(i^a_l,j^a_l): l=1,..,k-1\right\}} H(X_{i,j}|X_{i^a_1,j^a_1}=x_1,..,X_{i^a_{k-1},j^a_{k-1}}=x_{k-1}).
+\end{align}
+To distinguish this solution from (\ref{eq_numerical_OWP_3_PI}), the difference on the definitions on 
+(\ref{eq_sec_pre_PI_2}) and (\ref{eq_sec_pre_PI_3}) should be noted. In particular, the solution in (\ref{eq_adaptive_1_PI}) is a function of the following set of marginal conditional distributions in $\mathcal{P}(\mathcal{A})$
+%..........................................................................
+\begin{align}\label{eq_adaptive_1b_PI}
+\left\{\mu_{X_{i,j}| X_{i^a_1,j^a_1},..,X_{i^a_{k-1},j^a_{k-1}}}(\cdot | x_1,..,x_{k-1}) : (i,j) \textnormal{ non-sensed at iteration } k-1\right\}
+\end{align}
+%\noindent 
+and, consequently, of the measured data $(x_1,..,x_{k-1})$. In other words, 
+the decision at iteration $k$ is a function of the sensed values of the previous positions, {contrasting with the sequential approach in (\ref{eq_numerical_OWP_3_PI}) that does not depend on the values of the previous samples.}. Therefore this scheme is adaptive in the sense that it uses information of previously sampled data. 
+\begin{remark}
+\label{remark_prediction_inter_seq_PI}
+Another interpretation of this adaptive rule is thinking on the sequential decision in (\ref{eq_adaptive_1_PI})
+as a one step prediction problem \citep{gray_2004}, where the target is to predict the most informative position to resolve the field based on the probability model $\mu_{X_{non-sensed-stage-k} | X_{sensed-stage-k}}$ ($\cdot$ $|$ conditioned on the sensed data at stage $k$) in Eq.(\ref{eq_adaptive_1b_PI}). This means that at any step of the rule, the probability model needs to the updated by incorporating the new data point, and then a one-step-ahead prediction problem is addressed with an adaptive model. Note that this is not the case of the sequential principle in Sect. \ref{sec_numerical_OWP_PI}, where the model of the field is fixed in all the stages and, consequently, this rule addresses a $k$-stage prediction in a sequence of one-steps to find the set of more informative positions to resolve the field in average. \end{remark}
+
+%---------------------------------------------
+%---------------------------------------------
+{
+\subsection{Pseudo code to implement the Adaptive Rule}
+\label{sub_sec_pseudo_actives_sensing_PI}
+The implementation of (\ref{eq_adaptive_1_PI}) for $k>1$ involves the following basic steps:
+}
+
+{
+\begin{enumerate}
+	\item Having the joint distribution of the field $\mu_{\bar{X}}$, the positions $(i^a_1,j^a_1)$ , $..$, $(i^a_{k-1},j^a_{k-1})\in [M]\times [M]$ and previous sensed values $(x_1,..,x_{k-1}) \in \mathcal{A}^k$,
+	\item Computing the conditional distributions $\mu_{X_{i,j}| X_{i^a_1,j^a_1},..,X_{i^a_{k-1},j^a_{k-1}}}(\cdot | x_1,..,$ \\ $x_{k-1}) $ $ \in \mathcal{P}(\mathcal{A})$ for each $(i,j)\in [M]\times [M] \setminus \left\{ (i^a_1,j^a_1),..,(i^a_{k-1},j^a_{k-1}) \right\}$,
+	\item Computing the entropies $h_{i,j}=\mathcal{H}(\mu_{X_{i,j}| X_{i^a_1,j^a_1},..,X_{i^a_{k-1},j^a_{k-1}}}(\cdot | x_1,..,x_{k-1}))$ for all $(i,j) \in [M]\times [M] \setminus \left\{ (i^a_1,j^a_1),..,(i^a_{k-1},j^a_{k-1}) \right\}$,
+	\item Solving the problem $\max_{(i,j)\in [M]\times [M] \setminus \left\{(i^a_l,j^a_l): l=1,..,k-1\right\}} h_{i,j}$.
+\end{enumerate}
+This process determines $(i^a_k(x_1,..,x_{k-1}),j^a_k(x_1,..,x_{k-1}))$. The initial condition $k=1$ is equivalent to solve (\ref{eq_numerical_OWP_1_PI}).
+}
+
+{
+With this procedure,  the adaptive rule of size $k$ that has access to the information of the data  $(x_1,..,x_{k-1})\in \mathcal{A}^{k-1}$, denoted by $\tilde{f}^a_k(\cdot | x_1,..,x_{k-1})\in \mathbf{F}_k$, can be constructed in the following way:
+%..........................................................................
+\begin{align} \label{eq_adaptive_2_PI}
+	\tilde{f}^a_k(1|x_1,..,x_{k-1})&=(i^*_1,j^*_1)   \rightarrow     \text{ (solution of \eqref{eq_numerical_OWP_1_PI} ) }\nonumber\\ %\tilde{f}^*_k(1)\nonumber\\
+	\tilde{f}^a_k(2|x_1,..,x_{k-1})&= (i^a_2(x_1),j^a_2(x_1))\nonumber\\
+	\ldots \nonumber\\
+	\tilde{f}^a_k(k|x_1,..,x_{k-1})&= (i^a_k(x_1,..,x_{k-1}),j^a_k(x_1,..,x_{k-1})). 
+\end{align}
+In addition, it is simple to verify that for all $k>1$
+\begin{align} \label{eq_adaptive_3_PI}
+&\tilde{f}^a_k(1:k | x_1,..,x_{k-1})=\nonumber\\
+&(\tilde{f}^a_{k-1}(1:k-1 | x_1,..,x_{k-2}), (i^a_k(x_1,..,x_{k-1}),j^a_k(x_1,..,x_{k-1}))),
+\end{align}
+where $\tilde{f}^a_{1}(1)=(i^*_1,j^*_1)$. For clarity, Fig. \ref{fig:diagAda_1_PI} illustrates at a higher level the inputs and output relationship obtained when solving (\ref{eq_adaptive_1_PI}) and Fig. \ref{fig:diagAda_2_PI}, the way this basic block is executed and the information flow in the process to obtain the adaptive rule $\tilde{f}^a_k(\cdot)$ in (\ref{eq_adaptive_3_PI}).
+}
+
+%=====================================================================
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.99\columnwidth]{Figs_PI/Fig03}
+	\caption[Diagram to solve the adaptive rule in Eq. (\ref{eq_adaptive_1_PI})]{\label{fig:diagAda_1_PI} { Diagram of the inputs and statistical information (model) needed to solve the adaptive rule in Eq. (\ref{eq_adaptive_1_PI}) } }
+\end{figure}
+%=====================================================================
+
+%=====================================================================
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.99\columnwidth]{Figs_PI/Fig04}
+	\caption{\label{fig:diagAda_2_PI} { Flow diagram to determine the sampling rule in Eq. \ref{eq_adaptive_3_PI} } }  
+\end{figure}
+%=====================================================================
+
+
+
+
+%==========================================================
+\subsection{Analysis of the Information Gain}
+ The reduction of uncertainty or the information gained to resolve the field, attributed to the adaptive decision rule that solves (\ref{eq_adaptive_1_PI}), given the previous positions  $(i^a_1,j^a_1)$ , $..$ , $(i^a_{k-1},j^a_{k-1})$ and their data $(x_1,..,x_{k-1})$,   at the stage $k$ is denoted and expressed by 
+ %..........................................................................
+\begin{align} \label{eq_adaptive_4_PI}
+	\underbrace{I(\tilde{f}^a_k, (x_1,..,x_{k-1}))}_{\text{information gain}} &\equiv    
+ 	\underbrace{H(\hat{X}_{\tilde{f}^a_{k-1}}|{X}_{\tilde{f}^a_{k-1}}=(x_1,..,x_{k-1}))}_{\text{entropy of the prior model at stage $k-1$}} -\nonumber\\
+	&\underbrace{H(\hat{X}_{\tilde{f}^a_{k-1}}|X_{i^a_k,j^a_k},{X}_{\tilde{f}^a_{k-1}}=(x_1,..,x_{k-1})),}_{\text{minimum posterior entropy when selecting $(i^a_k,j^a_k)$ at stage $k-1$}} \nonumber\\
+	&=H(X_{i^a_k,j^a_k}|X_{i^a_1,j^a_1}=x_1,..,X_{i^a_{k-1},j^a_{k-1}}=x_{k-1}) \geq 0,
+\end{align}
+where $(i^a_k,j^a_k)$ is a short-hand for the solution of (\ref{eq_adaptive_1_PI}) that is a function of $(x_1,..,x_{k-1})$.  In fact, by using the information quantities introduced in Sect. \ref{sec_pre_PI}, $I(\tilde{f}^a_k, (x_1,..,x_{k-1}))$ is precisely the mutual information between $\hat{X}_{\tilde{f}^a_{k-1}}$ (the vector of non-sensed positions at the stage $k-1$) and $X_{i^a_k,j^a_k}$ (solution of  (\ref{eq_adaptive_1_PI})) conditioned by $X_{\tilde{f}^a_{k-1}}=(x_1,..,x_{k-1})$. 
+
+%Consequently, the posterior uncertainty after the measurement $k$ is taken (in average with 
+%respect to the statistics of $X_{i^a_k,j^a_k}$ given $X_{i^a_1,j^a_1}=x_1,..,$ $X_{i^a_{k-1},j^a_{k-1}}=x_{k-1}$) from (\ref{eq_adaptive_4_PI}) is given by
+%..........................................................................
+%\begin{align} \label{eq_adaptive_5_PI}
+%	&H(\hat{X}_{\tilde{f}^a_{k-1}}|X_{i^a_k,j^a_k},{X}_{\tilde{f}^a_{k-1}}=(x_1,..,x_{k-1})) = \nonumber\\
+%	&\underbrace{H(\hat{X}_{\tilde{f}^a_{k-1}}|{X}_{\tilde{f}^a_{k-1}}=(x_1,..,x_{k-1}))}_{\text{prior entropy  at stage $k-1$}}   - \underbrace{H(X_{i^a_k,j^a_k}|X_{i^a_1,j^a_1}=x_1,..,X_{i^a_{k-1},j^a_{k-1}}=x_{k-1})}_{I(\tilde{f}^a_k,(x_1,..x_{k-1})) \geq 0}\nonumber\\
+%	&\geq 0.
+%\end{align}
+
+From Remark \ref{remark_prediction_inter_seq_PI} one can anticipate that the adaptive principle should perform better than the sequential principle to resolve the field, because it is using a source of information (the data) that is not considered in the pure sequential approach. To give some evidence on this, the following simple result is stated.
+
+\begin{proposition}
+	\label{pro_gain_from_using_data_PI}
+	Consider the model $\mu_{\bar{X}}\in \mathcal{P}(\mathcal{A}^{M^2})$ of the field $\bar{X}$ and a set of fixed positions $(i_1,j_1)$ , $..$ , $(i_{k-1},j_{k-1})$. To resolve the next position, the sequential rule that solves $(i^*_k,j^*_k)$ from (\ref{eq_numerical_OWP_3_PI}) is contrasted with the adaptive rule  that solves $(i^a_k(x_1,..,x_{k-1}),$ $j^a_k(x_1,..,x_{k-1}))$ using the side information of the values measured at positions $(i_1,j_1),..$ , $(i_{k-1},j_{k-1})$ denoted by $(x_1,..,x_{k-1})$ in (\ref{eq_adaptive_1_PI}). Then, for any sensed sequence $(x_1,..,x_{k-1})\in \mathcal{A}^{k-1}$ having that
+%..........................................................................
+\begin{align} \label{eq_adaptive_6_PI}
+	&\underbrace{H(X_{i^*_k,j^*_k}|X_{i_1,j_1}=x_1,..,X_{i_{k-1},j_{k-1}}=x_{k-1})}_{\text{inf. gain of the sequential rule}} \leq \nonumber\\  
+	&\underbrace{H(X_{i^a_k(x_1,..,x_{k-1}),j^a_k(x_1,..,x_{k-1})}|X_{i_1,j_1}=x_1,..,X_{i_{k-1},j_{k-1}}=x_{k-1})}_{\text{inf. gain of the adaptive rule}}.
+\end{align}
+Consequently, taking the average on both sides  of (\ref{eq_adaptive_6_PI}),  with respect to the realizations of the sensed data $X_{(i_1,j_1)},..,X_{(i_{k-1},j_{k-1})}$ using the model $\mu_{\bar{X}}$, it provides the following identity
+%..........................................................................
+\begin{align} \label{eq_adaptive_7_PI}
+    	&H(X_{i^*_k,j^*_k}|X_{i_1,j_1},..,X_{i_{k-1},j_{k-1}}) \leq\\ %\max_{{(i,j)\neq (i_1,j_1)..(i_{k-1},j_{k-1})}}H(X_{i,j}|X_{i_1,j_1},..,X_{i_{k-1},j_{k-1}}) \nonumber\\ 
+	&\mathbb{E}_{Y_1,..,Y_{k-1}} \left\{ H(X_{i^a_k(Y_1,..,Y_{k-1}),j^a_k(Y_1,..,Y_{k-1})}|X_{i_1,j_1}=Y_1,..,X_{i_{k-1},j_{k-1}}=Y_{k-1}) \right\}\nonumber
+\end{align}
+where $Y_1,..,Y_{k-1}\sim \mu_{X_{i_1,j_1},..,X_{i_{k-1},j_{k-1}}}$. 
+\end{proposition}
+
+Equations (\ref{eq_adaptive_6_PI}) and (\ref{eq_adaptive_7_PI}) show the role of having access to the data in reducing the uncertainty of the field,  as the information gain of the adaptive rule is better point-wise, that is, for any sequence of sensed data, and consequently in average. This result is expected and completely consistent with the fact that the adaptive rule has access to the true model to make a decision (the non-sensed variables conditioned on a specific realization of the sensed ones), while the sequential rule does not have access to the realization and, consequently,  it acts over an average objective function. {This fact can be observed by looking at the objective function of (\ref{eq_numerical_OWP_3_PI}) and (\ref{eq_adaptive_1_PI}) and definition of the conditional entropy (see Sect. \ref{eq_sec_pre_PI_2}).}
+
+\begin{remark}
+It is important to note that Proposition \ref{pro_gain_from_using_data_PI} compares the sequential and adaptive rules assuming that the same path has been followed until stage $k$. This is not the case when inducing the sequential and adaptive rule inductively, as the paths will likely be different. The comparison of the schemes in this general scenario remains an interesting and challenging problem to be solved.
+\end{remark}
+
+%==========================================================
+%==========================================================
+\section{Case Study: A Binary Markov Chain}
+\label{sec_1d_markov_PI}
+This section is devoted to the application of the proposed sequential rules in an emblematic and simple model of spatial dependency: the finite length {Markov} chain. Under this scenario of known statistics, the idea is to provide insights about the information-driven placement solutions as well as their performance.  
+
+A Markov chain is a simple and powerful structure to model random variables with spatial dependencies. In geology and geostatistics, Markov chains have been used to represent discrete regionalized variables such as lithologies or facies \citep{Elfeki2001_a,Ostroumov2005,Zhang2008_a}. Because of their simplicity and wide use, Markov chains offer a fantastic context to analyze the structure (in terms of spatial locations) and the performance of the optimal sampling rules elaborated in Sects. \ref{sec_owp_PI} and \ref{sec_adaptive_seq_sensing_PI}. Specifically, the case of $\bar{X}=(X_1,..,X_N )$ being a finite length binary Markov chain with values in $\mathcal{A}=\left\{0,1 \right\}$ is considered. 
+
+\subsection{The Sequential  Maximum Information Strategy (SMIS)}
+\label{sec_markov_iter_PI}
+Beginning by applying the iterative sequential rule presented in Sect. \ref{sec_numerical_OWP_PI}, the $k$-stage  of this problem (assuming the previous sample locations are known) is
+\begin{align}\label{eq_sec_markov_iter_1_PI}
+	i^*_k &= \arg \max_{i \in [N] \setminus \left\{i^*_l: l=1,..,k-1\right\}} H(X_{i}|X_{i^*_1},..,X_{i^*_{k-1}}).
+\end{align}
+To solve (\ref{eq_sec_markov_iter_1_PI}), { the weak Markov property} \citep{norris_1997} can be used as if  $i \notin {f}_{k-1}=\left\{i^*_1,..,i^*_{k-1} \right\}$  only the closest variables in $X_{\tilde{f}^*_{k-1}}=( X_{i^*_j} : 1 \leq j \leq k-1 )$ determine the conditional entropy in (\ref{eq_sec_markov_iter_1_PI}). More formally,  if $i > \min {f}_{k-1}$, denoting by  $l(i,{k-1}) \equiv \max \left\{ t\in {f}_{k-1}: \right. $ $ \left. t <i \right\}$ the closest index before of $i$ in ${f}_{k-1}$,  and if $i < \max {f}_{k-1}$, denoting by $r(i,k-1)\equiv \max \left\{ t\in {f}_{k-1}: t <i \right\}$ the closest index after of $i$ in ${f}_{k-1}$, then: 
+\begin{proposition}\label{pro_iter_markov_rule_PI}
+	Assuming that $\bar{X}$ is a finite length Markov Chain and $\min {f}_{k-1} $ $ <i < \max {f}_{k-1}$, it follows that 
+	%..............
+	\begin{align} \label{eq_sec_markov_iter_2_PI}
+		H(X_{i}|X_{i^*_1},..,X_{i^*_{k-1}}) = H(X_{i}| X_{l(i,{k-1})}, X_{r(i,{k-1})}).
+	\end{align}
+	Otherwise,  if $i > \max {f}_{k-1}$ then $H(X_{i}|X_{i^*_1},..,X_{i^*_{k-1}}) = H(X_{i}| X_{l(i,{k-1})})$, 
+	and if $i < \min {f}_{k-1}$ then $H(X_{i}|X_{i^*_1},..,X_{i^*_{k-1}}) = H(X_{i}|X_{r(i,{k-1})})$.  
+\end{proposition}
+{The proof is a direct consequence of the weak Markov property and it is detailed in the App. \ref{sec_Meth_Markov1D_APP}. }
+
+Proposition \ref{pro_iter_markov_rule_PI} shows the local nature of conditioning under the Markov assumption. In particular, if considering two consecutive sensed variables, $X_{i^*_j}$ and $X_{i^*_{j+1}}$, the non-sensed variables in this range $(X_{h} : i^*_j  < h < i^*_{j+1})$ only dependent on these two extreme objects from (\ref{eq_sec_markov_iter_2_PI}). In addition, it is simple to verify that the conditional entropy $H(X_{h} | X_{i^*_j} , X_{i^*_{j+1}})$ is proportional to the distances $|h-  i^*_j|$ and $|h- i^*_{j+1}|$. Thus, for a symmetric stochastic matrix, the maximal conditional entropy over $(X_{h} : i^*_j  < h < i^*_{j+1})$ corresponds to the variable located at the center of $(X_{h} : i^*_j  < h < i^*_{j+1})$ (see Fig. \ref{fig:re_iterMarkov_dyadic_1_PI}).  
+
+Extrapolating this behavior implies that the solution of (\ref{eq_sec_markov_iter_1_PI}) has a symmetric structure, where the optimal placement strategy locates samples uniformly over the interval $[N]$ with a specific dyadic structure, see Fig. \ref{fig:re_iterMarkov_dyadic_1_PI}.
+This sampling principle can be summarized as follows: the solution of the stage $k$ in (\ref{eq_sec_markov_iter_1_PI}) is the non-sensed position that divides symmetrically the largest interval of non-sensed position induced by previous samples in ${f}_{k-1}$ as it can be seen in Fig. \ref{fig:re_iterMarkov_dyadic_1_PI}. {Only for clarity, this result is presented for a short Markov chain of $100$ variables.}
+%=====================================================================
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.99\columnwidth]{Figs_PI/Fig05}
+    \includegraphics[width=0.99\columnwidth]{Figs_PI/Fig06}
+	\caption[Conditional entropies for a binary Markov chain.]{\label{fig:re_iterMarkov_dyadic_1_PI} Conditional entropies given the sensed positions for a binary Markov chain. Top: after the first $10$ samples. Bottom: after $18$ samples. $\beta = 0.01$. {Under the curves the actual realizations of the Markov chains are presented}}
+\end{figure}
+%=====================================================================
+\subsection{Empirical Analysis}
+For this analysis, $N=1000$ and a symmetric stochastic matrix $\bf{A}$ with transition probability $\beta = 0.01$ and $X_1$ uniformly distributed in $\left\{0,1 \right\}$ are considered. The SMIS scheme $\left\{\right. \tilde{f}^*_k: k=  $ $\left. 1,..,N \right\}$ in (\ref{eq_sec_markov_iter_1_PI}) is compared with a random sampling strategy $\left\{\right. f^{rand}_k: 1,..,N\left.\right\}$ that selects $N$ positions with a uniform distribution over $[N]$. As a performance indicator, $C(f_k)$ is introduced as the information of $f_k$ to resolve the field in (\ref{eq_sec_owp_PI_6}) normalized by the entropy of the entire field $H(\bar{X})$. In particular,
+\begin{align}\label{eq_sec_markov_iter_3_PI}
+C(f_k) &\equiv \frac{I(f_k)}{H(\bar{X})} = \frac{\sum_{i=2}^{k-1}{H(X_{f(i)} | X_{f(i-1)})} + H(X_{f(1)})}{\sum_{i=2}^{N}{H(X_{i} \ | \ X_{i-1} )}  + H(X_1)}\in [0,1].  
+\end{align}
+
+{To provide insight note that: $C(f_k)=0$ means that the $k$-measurements produce no reduction in uncertainty, and $C(f_k)=1$ means that there is no remaining uncertainty to be resolved after taking the $k$-measurements, that is, $H(\tilde{X}_{f_k}|\bar{X}_{f_k})=0$.}
+
+The second expression in the equation \eqref{eq_sec_markov_iter_3_PI} is obtained by the fact that $I(f_k)=H(X_{f_k})$ in (\ref{eq_sec_owp_PI_11}), the chain rule of the entropy \citep{cover_2006} and the Markov assumption, where for simplicity it is assumed that $f_k(1) <f_k(2)<\ldots< f_k(k)$.
+
+In terms of structure,  Fig. \ref{fig:re_iterMarkov_dyadic_1_PI} shows that SMIS has the expected dyadic structure. Remarkably,  this structure is independent of the value of $\beta$ and the initial distribution of $X_1$, meaning that this rule is somehow universal over symmetric one-dimensional Markov processes. On the other hand, in terms of performance, Fig. \ref{fig:re_iterMarkov_vs_Rand_2_PI} shows that when $k$ is very small, there is no significant difference between the random scheme and SMIS, however the difference is clearer for larger $k$. In addition, the sampling methods show little variability between different realizations (in fact the $20$ individual curves for SMIS seem to be just one apparent curve, only in the middle section of the figure is possible to appreciate a little variance in the SMIS curves). Finally, the benefit of the SMIS rule is more significant for a scenario with more spatial dependencies, that is $\beta=0.01$, where the field can also be resolved with a smaller number of measurements, as expected. Note that the case of $\beta=0.5$ is closer to the i.i.d. case where in theory no difference should be expected between SMIS and a fully random approach. {Note further that the difference between SIMS and random sampling resolvability capacity reaches its maximum at different sampling rates, depending on the probability of transition of the Markov processes.}
+
+In conclusion under the Markov assumption and with symmetric transition matrices, SMIS resembles a quasi-regular sampling, where the principle is to cover, as much as possible, the position space $[N]$ meaning that all positions are equally relevant. It is then remarkable than in the case of a Markov chain that models non-trivial causal dependencies, this non preferential solution is achieved with SMIS.  This can be understood from the fact that the minimization is applied over the remaining uncertainty (or maximizing information of the measurements) in average,  with no specific conditioning on the values of the sensed data. As presented in the next section, conditioning on the data will completely change the optimal sampling in terms of structure. 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.99\columnwidth]{Figs_PI/Fig07}
+    \includegraphics[width=0.99\columnwidth]{Figs_PI/Fig08}		
+	\caption[Uncertainty reduction for $20$ realizations of the Markov chain.]{\label{fig:re_iterMarkov_vs_Rand_2_PI} Uncertainty reduction for $20$ realizations of the Markov chain. Continuous curves: SMIS; boxplots: random sampling. Top: $\beta = 0.01$, Bottom: $\beta = 0.8$}
+\end{figure}
+
+\subsection{The Adaptive Strategy AMIS}
+\label{sec_markov_adapt_PI}
+For the adaptive sequential rule in Sect. \ref{sec_adaptive_seq_sensing_PI}, the Markov assumption simplifies the conditional entropy used to solve the iterative step in  \eqref{eq_adaptive_1_PI}. In particular, if ${f}^a_{k-1}=\left\{i^a_1,..,i^a_{k-1} \right\}$ denotes the set of previous samples at stage $k$ with known measurements $\left\{x_1,..,x_{k-1} \right\}$, it follows that:
+
+\begin{proposition}\label{pro_iter_markov_rule_adapt_PI}
+	Assuming that $\bar{X}$ is a finite length Markov Chain and $\min {f}^a_{k-1} $ $ <i < \max {f}^a_{k-1}$, then
+	\begin{align} \label{eq_sec_markov_adapt_1_PI}
+		&H(X_{i}|(X_{i^a_1},..,X_{i^a_{k-1}})=(x_1,..,x_{k-1})) \nonumber\\
+		&= H(X_{i}| X_{l(i,{k-1})}=x_{l(i,{k-1})}, X_{r(i,{k-1})}= x_{r(i,{k-1})}).
+	\end{align}
+	Otherwise, if $ i > \max {f}^a_{k-1}$ then $H(X_{i}|(X_{i^a_1},..,X_{i^a_{k-1}}) =(x_1,..,x_{k-1})) =$
+	 
+\noindent $H(X_{i}| X_{l(i,{k-1})}= x_{l(i,{k-1})})$, 
+	and if $i < \min {f}^a_{k-1}$ then $H(X_{i}|(X_{i^a_1},..,X_{i^a_{k-1}}) =$ $H(X_{i}|X_{r(i,{k-1})}=x_{r(i,{k-1})})$.
+\end{proposition}
+{The proof is a direct consequence of the weak Markov property \citep{norris_1997}, and it is omitted for sake of space.}
+
+As the solution in \eqref{eq_adaptive_1_PI} relies on both the Markov model and the sensed data, a deviation from the dyadic structure presented in Sect. \ref{sec_markov_iter_PI} can be observed. Figure \ref{fig:re_adapMarkov_BreakDyadic_1_PI} shows the remaining conditional entropy $H(X_i|X_{i^a_1}=x_1,..,X_{i^a_{k-1}}=x_{k-1})$ and the sample distributions of  ${f}^a_{k-1}=\left\{i^a_1, i^a_2,..,i^a_{k-1} \right\}$ where it is clear the non-regularity of the solution attributed to the spatial distribution of the data. From the performed analysis, using numerous simulations of the field, adaptation happens in the sense that the samples tend to be located around the transition zones between zero-one values. The reason is that zones around sensed positions that show transitions have more conditional uncertainty under the Markov assumption and, consequently, are more informative.
+This observation is very relevant because it shows that the adaptive scheme is able to put more samples on the areas
+close to the transitions. Importantly, this adaptive scheme provides better resolvability of the field and better recovery of non-sensed data than the sequential approach. The details are presented in App. \ref{sec:ap_markov_anal_PI}.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.99\columnwidth]{Figs_PI/Fig09}
+	\caption[Distribution of the conditional entropy of non-sensed locations.]{ \label{fig:re_adapMarkov_BreakDyadic_1_PI}
+	 Distribution of the conditional entropy of non-sensed locations given the sensed pixels at $k=18$, using AMIS. $\beta = 0.01$. {Under the curve, the actual realization of the binary Markov chain is presented}}
+\end{figure}
+
+%==========================================================
+\section{Application to Multiple-Point Simulations}
+\label{sec_appl_mps_PI}
+
+In this section, the AMIS strategy in Sect. \ref{sec_adaptive_seq_sensing_PI} is adopted as the main framework for preferential sampling  in the context of MPS \citep{Mariethoz_2014_a}. In particular,  the target is to study the applicability and effects of this sampling scheme for the problem of multiple-point conditional simulation of a binary field.
+
+The main difficulty to execute this decision rule in MPS is the fact the joint distribution of the field  $\mu_{\bar{X}}\in \mathcal{P}(\mathcal{A}^{M^2})$ is unknown (see Sect. \ref{sub_sec_pseudo_actives_sensing_PI}). Instead, only a training image and a non-parametric approach (computing the frequency of occurrence of multiple-point patterns in the training image) are available to estimate a set of conditional probabilities of the form $\hat{\mu}_{X_{i,j}| X_S}(x_{i,j}|x_S )$  where ${i,j}\in [M]\times [M]$ is a position to be simulated,  $S\subset [M]\times [M]$ denotes the conditioning positions (attributed to sensed data or previously simulated data),  and $x_{i,j}\in \mathcal{A}$ and $ x_S =(x_{i,j}:(i,j)\in S)\in \mathcal{A}^{\left|S \right|}$.
+
+{
+Therefore,  the estimated probabilities of the form $\hat{\mu}_{X_{i,j}| X_S}(x_{i,j}|x_S)$ allow to address the basic sensing problem in (\ref{eq_adaptive_1_PI}).{For clarity, it is important to note that MPS uses $\hat{\mu}_{X_{i,j}|X_S}(x_{i,j}|x_S)$ to simulate $X_{i,j}$ conditioned on $X_S=x_S$. Here the same model is used to select the most informative position in the sensing stage that is previous to the simulation stage.}
+Revisiting the pseudo code presented in Sect. \ref{sub_sec_pseudo_actives_sensing_PI} and adopting the same notation, given a set of previous position $(i^a_1,j^a_1),..,(i^a_{k-1},j^a_{k-1})$ and their respective sensed values $(x_1,..,x_{k-1})$,
+the conditional probabilities in (\ref{eq_adaptive_1b_PI}) are estimated from the training image (the practical details of this process are relegated to Sect. \ref{sec_appl_mps_PI_experiments}) obtaining
+%..........................................................................
+\begin{equation*}
+\left\{\hat{\mu}_{X_{i,j}| X_{i^a_1,j^a_1},..,X_{i^a_{k-1},j^a_{k-1}}}(\cdot | x_1,..,x_{k-1}) : (i,j) \textnormal{ non-sensed at iteration } k-1\right\}
+\end{equation*}
+for step 2 of this process. Then, the steps 3 and 4 follow directly to obtain $(i^a_k(x_1,..,x_{k-1}),$ $j^a_k(x_1,..,x_{k-1}))$
+in (\ref{eq_adaptive_1_PI}).
+}
+
+{
+In addition, the sequential rule in Sect. \ref{sec_numerical_OWP_PI} is implemented as an alternative to the adaptive rule. The problem is that this rule requires the joint distribution (see the definition in \eqref{eq_sec_pre_PI_3} and \eqref{eq_numerical_OWP_1c_PI}), which is not directly available in MPS. A way to circumvent this issue is to use the analysis of the one-dimensional Markov model, where its non-adaptive maximum information rule can be extended to the two-dimensional case. In particular, under a generalized Markov assumption (with an isotropic conditional structure), the SMIS rule in (\ref{eq_sec_markov_iter_1_PI}) distributes the measurements in a structured way covering the sampling space uniformly, see Fig. \ref{fig:re_iterMarkov_dyadic_1_PI}. This approximation will be considered because it precisely captures one of the standard non-preferential sampling strategies used in MPS.
+}
+
+%-------------------------------------------------------------------------
+%-------------------------------------------------------------------------
+
+\subsection{Proposed Preferential Sampling Strategy for MPS}
+\label{subsec_RAMIS_PI}
+Finally, the preferential sampling solution proposed in this work for MPS is a combination between the pure \emph{adaptive maximum information sampling strategy} (\emph{AMIS})  in  \eqref{eq_adaptive_1_PI} and a non-adaptive rule reminiscing of the \emph{SMIS} strategy in (\ref{eq_numerical_OWP_3_PI}) under a Markov assumption presented in Sect. \ref{sec_markov_iter_PI}. 
+
+Let  $S_{k-1} = \left\{(i^a_l,j^a_l): l=1,..,k-1\right\}$ denote the collection of the sampled locations obtained by the proposed adaptive sampling strategy at the stage $k-1$ of the algorithm. Here, $X_{S_{k-1}} = (X_{i^a_1,j^a_1},.., X_{i^a_{k-1},j^a_{k-1}})$ corresponds to the sensed random vector indexed by $S_{k-1}$, and $x_{S_{k-1}} = ( x_1,.., x_{k-1})$ denotes the measurements taken at $S_{k-1}$ in $\mathcal{A}^{k-1}$. Thus, the \emph{regularized AMIS} rule (\emph{RAMIS}) for stage $k$ is
+the solution of
+%..........................................................................
+\begin{align}\label{eq_subsec_ObjectiveFunction_1_PI}
+	(\hat{i}^a_k(\alpha, x_{S_{k-1}}), \hat{j}^a_k(\alpha, x_{S_{k-1}})) &= \argmax_{(i,j)\in [M]\times [M] \setminus S_{k-1}} \alpha \cdot H(X_{i,j}| X_{S_{k-1}} = x_{S_{k-1}} ) \nonumber\\   
+	&+ (1 - \alpha) \cdot D(({i,j}),{S_{k-1}}). 
+\end{align}
+The first term $H(X_{i,j}| X_{S_{k-1}} = x_{S_{k-1}} )$ in the RHS of (\ref{eq_subsec_ObjectiveFunction_1_PI}) is the same information term in (\ref{eq_adaptive_1_PI}), while the second term is a
+regularization term to promote uniform sampling by using a distance criterion from $(i,j)$ to  the set $S_{k-1}$ by
+\begin{align}\label{eq_subsec_ObjectiveFunction_2_PI}
+	D(({i,j}),{S_{k-1}}) = \min_{({\tilde{i},\tilde{j}}) \in S_{k-1}}  d(({i,j}), ({\tilde{i},\tilde{j}})),
+\end{align}
+where $d(({i,j}), ({\tilde{i},\tilde{j}})) \equiv \sqrt{(\tilde{i}-i)^2+ (\tilde{j}-j)^2}$.
+{In this work \eqref{eq_subsec_ObjectiveFunction_2_PI} is used as a regularization term, however a mean distance from $X_{i,j}$ to  the set $S_{k-1}$,  or others group distance metrics could be used as well \citep{Scheidt2009_a}.}
+
+The motivation of using this mixed solution in (\ref{eq_subsec_ObjectiveFunction_1_PI}) instead of the pure adaptive solution ($\alpha=1$) comes from the analysis of the Markov chain presented in App. \ref{sec:ap_markov_anal_PI}. In that context, when the number of samples is very small, structured sampling is better than adaptive sampling, but this changes as the number of samples increases, as measured by the field resolvability (conditional entropy of non-sensed position given sensed data) and the recovery of non-sensed values from sensed data. This is presented in  Fig.\ref{fig:perfADA_2_PI} at the App. \ref{sec:ap_markov_anal_PI} and  Fig. \ref{fig:perfADA_3_PI} at the App. \ref{appd_anal_partial_mi_upgrade_PI}.  This suggests that there is an optimal mixture between structured and adaptive sampling which is what is proposed in (\ref{eq_subsec_ObjectiveFunction_1_PI}).
+
+
+%------------------------------------------------------------------------
+\subsection{Practical Considerations for the Estimation of \texorpdfstring{\\ $H(X_{i,j}| X_{S_{k-1}} = x_{S_{k-1}} )$}{H(X | X\_S = x\_S)} }
+\label{sec_appl_mps_PI_experiments}
+Two practical aspects about the implementation of the \emph{RAMIS} rule in (\ref{eq_subsec_ObjectiveFunction_1_PI}) require attention. The first comes from the effect of estimating $H(X_{i,j}| X_{S_{k-1}} = x_{S_{k-1}} )$ in (\ref{eq_subsec_ObjectiveFunction_1_PI}) for which the SNESIM algorithm \citep{Strebelle_2004a} is used.  
+The second comes from  the computational cost of this scheme as in every stage of (\ref{eq_subsec_ObjectiveFunction_1_PI}) the full vector $(H(X_{i,j}| X_{S_{k-1}} = x_{S_{k-1}} ))_{(i,j) \in [M]\times [M] \setminus S_{k-1}}$ has to be updated. 
+
+Regarding the first point, it is well-known that the larger the pattern the fewer the occurrences within the dimension of a training image \citep{Remy_2009_a}. Hence  large scale patterns will be poorly represented in general. To circumvent this issue {SNESIM} defines a searching ellipsoid characterizing the maximum pattern sizes to be considered \citep{huang_2013_a,Remy_2009_a}. Here, for all models an ellipsoid with size $\frac{1}{3}$ of the image size will be used. Outside this covering zone around sensed positions, the maximum entropy value (equal to $1$ for this binary problem) is adopted, corresponding to areas statistically poorly represented. Consequently at very low sampling regimes, large non-sensed areas far from sensed positions will have maximum entropy values  and, consequently, the regularization term in (\ref{eq_subsec_ObjectiveFunction_1_PI}) within these areas will dominate the \emph{RAMIS} decision, that is, there is a structured sampling regime for the case of very small sampling rate, as expected.
+
+On the second point, the estimation of $H(X_{i,j}| X_{S_{k-1}} = x_{S_{k-1}})$ for each $(i,j) \in $ $ [M]\times [M] \setminus S_{k-1}$ in every iteration of (\ref{eq_subsec_ObjectiveFunction_1_PI}) ended up being extremely computationally expensive and impractical, in particular for large fields  and small sampling regimes. To address this issue, the estimation of the conditional entropies is made, by computing it using {SNESIM}, only every K iterations at the stages $k=1,K,2K,...$. This estimation is denoted by $(\hat{H}^k_{}(X_{i,j}| X_{S_{k-1}}=x_{S_{k-1}}))_{(i,j) \in [M]\times [M] \setminus S_{k-1}}$.
+
+For intermediate stages, for example for $k\in  \left\{2,..,K-1\right\}$, the values of $H(X_{i,j}| X_{S_{k-1}} = x_{S_{k-1}} )$ in (\ref{eq_subsec_ObjectiveFunction_1_PI}) are approximated,  based on a neighborhood of influence obtained (a priori) from the training image and the  value of this entropy estimated at stage $k-1$. 
+%($(H^{k-1}(X_{i,j}| X_{S_{k-1}} = x_{S_{k-1}} ))_{(i,j) \in [M]\times [M] \setminus S_{k-1}}$) in (\ref{eq_subsec_ObjectiveFunction_4_PI}). This avoids having to recalculate the entropy in $(i,j)\in [M]\times [M] \setminus S_{k-1}$. 
+In particular, for each $k=2,..,K-1$ a local update of the conditional entropy is performed by the rule
+\begin{align}\label{eq_subsec_ObjectiveFunction_4_PI}
+	\hat{H}^{k}(X_{i,j}| X_{S_{k-1}} = x_{S_{k-1}} )  &= \underbrace{\hat{H}^{k-1}(X_{i,j}| X_{S_{k-2}} = x_{S_{k-2}} )}_{\text{conditional entropy of the previous stage $k-1$}}\nonumber\\ 
+	&- I(X_{i,j}; X_{\hat{i}^a_{k-1}, \hat{j}^a_{k-1}}),
+\end{align}
+where $I(X_{i_{1},j_{1}};X_{i_{2},j_{2}}) = I_{Stationary}(i_{2} - i_{1}, j_{2} - j_{1})$ and $I_{Stationary}(dI,dJ)$ represents the mutual information between two positions in the field assuming stationarity and estimated from thousands of unconditional realizations generated with {SNESIM}. {For completeness, a formal  justification for the adoption of this approximation is presented in App. \ref{appd_anal_partial_mi_upgrade_PI}.}
+
+To illustrate these mutual information maps, Fig. \ref{fig:DB_TIs_PI} shows the link between the spatial complexity of the training image and dependence of the obtained mutual information maps for the three models considered in the further analysis (a single channelized model $SC_1$, and two multichannel models, $MC_1$ and $MC_2$, with different spatial complexity). From this result,  {training images with a higher complexity have more concentrated local mutual information dependencies than less complex training images. Thus, for models with greater spatial complexity, the effect of knowing an isolated measurement has a much more local effect in reducing global uncertainty}. 
+
+%==========================================================
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig10}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig11}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig12}
+		\\
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig13}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig14}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig15}		
+	\caption[Proposed training images.]{\label{fig:DB_TIs_PI} Proposed training images. Top: example of {TI}s, Bottom: mean MI maps estimated from $200$ realizations. From left to right: Models $SC_1$, $MC_1$, $MC_2$. Color maps, Top: Red is channel presence; Bottom: Linear from blue (low MI) to bright yellow (max. MI)}
+\end{figure}
+%==========================================================
+%This process is iterated for $k=3,..,K-1$ obtaining approximated versions of the conditional probabilities denoted by $\hat{H}^{k}(X_{i,j}| X_{S_{k-1}} = x_{S_{k-1}})$. 
+
+In summary, the RAMIS based decision at stage $k$ %when $k\in  \left\{2,..,K-1 \right\}$ 
+goes as follows
+%.................
+\begin{align}\label{eq_subsec_ObjectiveFunction_6_PI}
+	(\hat{i}^a_k(\alpha, x_{S_{k-1}}), \hat{j}^a_k(\alpha, x_{S_{k-1}})) &= \argmax_{(i,j)\in [M]\times [M] \setminus S_{k-1}} \alpha \cdot \hat{H}^{k}(X_{i,j}| X_{S_{k-1}} ) \nonumber\\ 
+	&+ (1- \alpha) \cdot D(({i,j}),{S_{k-1}}). 
+\end{align}
+%When arriving at the stage $K$ the conditional entropies are estimated directly from the simulations provided by SNESIM,  and the decision process continues in that way. 
+%
+
+\subsection{Pseudo-code of the RAMIS solution}
+\label{app_HeuAdSEMES_PI}
+
+The pseudo-code that summarizes the proposed framework is shown here in order to clarify the workflow in the MPS application.\\
+
+\small{
+\begin{algorithm}[H]
+\label{HeuAdSEMES_PI}
+	\textbf{Initialization} \\
+	Choose training image $TI$, reference image $\bar{X}$, the regularization term $\alpha$, the batch size $r$,  and number of samples to take $K$\\
+		\tcc{Output: set of sampled positions}
+		$f_{K} = \emptyset $ \\
+		\tcc{Inputs and internal variables. $\mathcal{H}^k$ Estimated Remaining entropy considering $k-1$ samples}
+		$\mathcal{H}^k = ones(size(\bar{X}))$, $\mathcal{D} = inf(size(\bar{X}))$, $distMean = inf$\\
+	\textbf{Computation} \\
+	\For{$k \leftarrow 1$ \KwTo $K$}{
+		$f_{k-1} \leftarrow f_{K}$ \\
+		\tcc{Update {MPS} simulations from previous available samples}
+		\eIf{ $Criterion\_To\_Update\_MPS\_Realizations(k,r)$}{
+			$\mathcal{H}^{k} = Estimated\_Entropy\_from\_MPS\_\&\_Samples(TI,{X}_{f_{k-1}},size(\bar{X}),f_{k-1})$ \\
+			$\mathcal{D} = Estimated\_Distances\_From\_Sampled\_Locations(size(\bar{X}),f_{k-1})$\\
+			$distMean = Mean(\mathcal{D})$\\
+		}{
+			$\mathcal{H}^{k} = \mathcal{H}^{k}  - Local\_Mutual\_Information_{empirical}(f_{k-1}(k-1))$ \\
+			$\mathcal{D} = \mathcal{D} .\cdot Radial\_Attenuation\_Centred\_At\_Location(size(\bar{X}),distMean,k-1)$\\
+		}
+		\tcc{Set of current available position to sample. The complement set of the previously sampled locations}
+		$\hat{f}_{k-1} = Complement\_Set\_Of\_F(f_{k-1})$ \\
+		\tcc{Regularized Criterion by Mixing of Entropy and Distance }
+		$\mathcal{M} = \alpha \cdot \mathcal{H}^{k} + (1.0 - \alpha) \cdot  \mathcal{D}$\\
+		\tcc{Choose a location randomly from the set of non sampled locations with maximal value for the objective function}
+		$ f_{K}(k) = Select\_Random\_Location\_From\_Maximum\_Criterion(\mathcal{M}_{\hat{f}_{k-1} } ) $
+	}
+\caption{Pseudo code that implements the adaptive framework from rules in (\ref{eq_subsec_ObjectiveFunction_1_PI}). 
+%and (\ref{eq_subsec_ObjectiveFunction_6_PI}).
+} 
+\end{algorithm}
+}
+
+\normalsize{}
+
+\subsection{Experimental Setting and Validation}
+\label{sub_sec_experiments_PI}
+
+The remaining sections evaluate the performance of the RAMIS sampling framework in (\ref{eq_subsec_ObjectiveFunction_6_PI}) in terms of resolvability of the field, by the conditional entropy of non-sensed position given the sensed values, and also in terms of the average error between the true field and the simulations obtained with MPS across different sampling rates and facies models. 
+
+For that, $3$ channelized {2-D} binary facies models are studied with different levels of spatial complexity: one single channel and two multi-channel structures with predominantly horizontal orientation. These channelized structures were obtained by unconditional simulations using the geostatistical software {SGeMS} by the {SNESIM} algorithm \citep{huang_2013_a,Remy_2009_a} providing a synthetic scenario of study. The database was built from channelized {2-D} images of size $200\times 200$. For the analysis, from the synthetic realizations, some images are considered as ground truth for testing while thousands of others are used as training images for statistical estimation of the fields.
+
+For the proposed adaptive approach that solves (\ref{eq_subsec_ObjectiveFunction_6_PI}), the entropies of non-sensed values were estimated by using the empirical distribution from a set of $600$ {MPS} conditional simulations. 
+
+For performance evaluation two metrics were considered: resolvability and simulation error. Thus, considering a rule $f$ of size $k$ that has sensed the positions $S_k\subset [M]\times [M] $ with values  $x_{S_k}\in \left\{ 0,1 \right\} ^k$, the resolvability of $f$ is the average conditional entropy over the non-sensed positions, given by
+\begin{align}\label{eq_Metric_MeanEntropy_PI}
+	\mathcal{R}(f, x_{S_{k}}) &\equiv    average(H(X_{i,j}| X_{S_{k}} = x_{S_{k}} )_{(i,j) \in [M]\times [M] \setminus S_{k}} )\nonumber\\
+	&=\frac{1}{M^2-|S_{k}|}\sum_{(i,j) \in [M]\times [M] \setminus S_{k}} H(X_{i,j}| X_{S_{k}} = x_{S_{k}} )
+\end{align}
+
+If $(x_{i,j})_{i,j}$ is the true image, then the simulation error induced from $f$ is the average error over the non-sensed positions of the simulations given by
+\begin{align}\label{eq_Metric_MeanError_PI}
+	& \ \ \mathcal{E}(f, (x_{i,j})_{i,j}) \equiv \nonumber\\ 
+	&\frac{1}{M^2-|S_{k-1}|}\sum_{(i,j) \in [M]\times [M] \setminus S_{k}}  \mathbb{E}_{X_{i,j}} \left\{  \left( x_{i,j}-  X_{i,j} \right)^2 | X_{S_{k}} = x_{S_{k}}  \right\} \nonumber\\ 
+	&=\frac{1}{M^2-|S_{k-1}|}\sum_{(i,j) \in [M]\times [M] \setminus S_{k}} \mathbb{E}_{X_{i,j}} \left\{ \mathbf{1}_{X_{i,j} \neq x_{i,j}}  | X_{S_{k}} = x_{S_{k}}  \right\} \nonumber\\ 
+	&=\frac{1}{M^2-|S_{k-1}|}\sum_{(i,j) \in [M]\times [M] \setminus S_{k}} \underbrace{\mathbb{P} \left\{{X_{i,j} \neq x_{i,j}}  | X_{S_{k}} = x_{S_{k}}  \right\}}_{\text{Conditional Error Probability}}.
+\end{align}
+From (\ref{eq_Metric_MeanError_PI}), $\mathcal{E}(f, (x_{i,j})_{i,j})$ corresponds to the average frequency of error in detecting the true non-sensed value (oracle) with the values simulated with MPS,  over the non-sensed locations.
+
+
+
+
+
+
+\subsection{Selecting the Regularization Parameter \texorpdfstring{$\alpha$}{alpha}}
+\label{sub_sec_alpha_selection_PI}
+
+The regularization parameter $\alpha\in (0,1)$ in \eqref{eq_subsec_ObjectiveFunction_6_PI} offers a way of controlling the tradeoff between adaptive and non-adaptive sequential sampling. Fig. \ref{fig:Extremes_ObjFunction_PI} depicts two maps that show the information and regularization terms (see the right hand side of (\ref{eq_subsec_ObjectiveFunction_6_PI})). Remarkably as expected, the information term shows preferential locations around the transitions and, consequently, through (\ref{eq_subsec_ObjectiveFunction_6_PI}) adaptation to the underlying field when $\alpha>0$. Furthermore,  the regularization term offers a non-adaptive type of regular pattern covering uniformly the space $[M]\times [M]$. Therefore, the solution $\alpha=0$ reduces to the structured sampling (see Fig. \ref{fig:Extremes_ObjFunction_PI}, right).
+
+\begin{figure}[!ht]
+    \centering
+		\includegraphics[width=0.49\columnwidth]{Figs_PI/Fig16a}
+    \includegraphics[width=0.49\columnwidth]{Figs_PI/Fig17a}
+    \includegraphics[width=0.49\columnwidth]{Figs_PI/Fig16}
+    \includegraphics[width=0.49\columnwidth]{Figs_PI/Fig17}
+	\caption[Estimated maps for the model $SC_1$ at $k = 100 $.]{\label{fig:Extremes_ObjFunction_PI} Estimated maps for the model $SC_1$ at $k = 100 $. Upper Row, Left: Reference Image, Right: Sampled Locations. Lower Row, Left: Entropy Map ($\alpha = 1$), Right: Distance Map ($\alpha = 0$). Color maps, linear from blue to bright yellow (from low to high entropy or distances)}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.99\columnwidth]{Figs_PI/Fig18}
+    \includegraphics[width=0.99\columnwidth]{Figs_PI/Fig19}
+	\caption[Performance of non-sensed positions under RAMIS as a function of $\alpha$]{\label{fig:Performance_Alpha_PI} Performance of non-sensed positions under RAMIS as a function of $\alpha$, after $500$ samples. Top: Resolvability, Bottom: Mean error. Average curves for $50$ independent train-test sets}
+\end{figure}
+
+Figure \ref{fig:Performance_Alpha_PI} illustrates the resolvability in (\ref{eq_Metric_MeanEntropy_PI}) and average frequency of error on detecting non-sensed positions in (\ref{eq_Metric_MeanError_PI}) for the RAMIS solutions as a function of $\alpha$ for the case of $500$ samples ($1.25\%$ of the image size). For the three models, a consistent improvement can be observed for a mixed solution  with $\alpha$ in the range $[0.7-0.8]$. More generally, as seen in Fig. \ref{fig:AlphaAnalysis_PI}, the performance improves by the use of a mixed approach as it was expected from the Markov analysis. While in the regime of very few samples the gain attributed to the mixed solutions is not that significant, it increases as the sample number grows (from $0.5\%$ to $2\%$ samples). Finally, the improvement continues but is less noticeable as the sampling rate increases (see the curves in Fig. \ref{fig:AlphaAnalysis_PI} close to the  $10\%$ ), which is justified since the missing information of non-sensed locations for both schemes is extremely low. 
+
+Looking more carefully at the role of the model complexity in this analysis, a positive correlation between the performance gain of the best proposed scheme with respect to the pure structured sampling ($\alpha=0$) and the field spatial complexity is observed. 
+
+For example, as summarized in Table \ref{TableAlphaPerformance_PI}, considering a sampling rate of $1.25 \%$ ($500$ samples), for the three models under analysis the optimal mixing parameter is around $\alpha \approx 0.7$. Comparing the mixed solution with respect to the pure regular sampling (reference performance for $\alpha = 0.0$), the proposed solution achieved an overall performance improvement in terms of both absolute gain in resolvability reduction and mean pixel error. Finally, Fig.\ref{fig:AlphaAnalysis_PI} presents those gains in performance for the three models and for an extended sampling regime but considering images of size $50$ by $50$ pixels. Here, in terms of resolvability, $\alpha \approx 0.7$ is consistently  a good solution for every model and for a large range of sampling rates.
+
+\begin{table}[]
+\centering
+\caption[Global Performance Improvement after sampling level $=1.25\%$]{Global Performance Improvement after sampling $1.25\%$ of positions ($500$ Samples in images of size $200$ by $200$ pixels). Here, the outcome for $\alpha$ providing the best performance for each model is presented.}
+\label{TableAlphaPerformance_PI}
+\scriptsize
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\multicolumn{1}{|c|}{Model}                                                                               & \multicolumn{1}{c|}{Mean Metric} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Reference\\ Performance \\ (\%)\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}} Optimal \\ Performance \\ (\%)\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Absolute \\ Improvement \\ (\%)\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Relative \\ Improvement \\ (\%)\end{tabular}} \\ \hline
+\multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}Model SC1\\ ($\alpha: 0.75$)\end{tabular}}  & Entropy & 14.0 & 8.7 & 5.3 & 37.85 \\ 
+\cline{2-6} & Pixel Error & 6.4 & 3.8 & 2.6 & 40.63 \\ 
+\hline \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}Model MC1\\ 
+($\alpha: 0.70$)\end{tabular}} & Entropy & 37.8 & 33.7 & 4.1 & 10.85 \\ 
+\cline{2-6} & Pixel Error & 16.8 & 11.8 & 5.0  & 29.76  \\ 
+\hline \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}Model MC2\\ 
+($\alpha: 0.65$)\end{tabular}} & Entropy & 55.1 & 51.0  & 4.1 & 7.44  \\ 
+\cline{2-6} & Pixel Error & 28.0 & 23.7  & 4.3 & 15.3 \\ \hline
+\end{tabular}
+\normalsize
+\end{table}
+
+%=================================
+\begin{figure}[!ht]
+    \centering
+    {
+        \centering
+        \includegraphics[width=0.48\columnwidth]{Figs_PI/Fig20}
+    }
+		{
+        \centering
+        \includegraphics[width=0.48\columnwidth]{Figs_PI/Fig21}
+    }
+    {
+        \centering
+        \includegraphics[width=0.48\columnwidth]{Figs_PI/Fig22}
+    }
+	\caption[Resolvability of non-sensed positions using RAMIS approach.]{\label{fig:AlphaAnalysis_PI} Resolvability of non-sensed positions using RAMIS approach as a function of sampling rate for different values of $\alpha$. (Top left) $SC_1$, (Top right) $MC_1$, (Bottom) $MC_2$}
+\end{figure}
+
+\subsection{Comparison with non preferential sampling methods}
+\label{sub_sec_final_comparison_PI}
+
+Finally, the proposed framework is compared (using the regularization parameter $\alpha = 0.7$) with two non-preferential sampling schemes provided by a uniform sampling of the space and the regular grid sampling, which is achieved with the implemented algorithm when $\alpha = 0$. For this analysis, a sampling rate in the realistic range of $0\%$ - $2\%$ of the field is evaluated. For the performance analysis, the resolvability is considered, that is, the pixel average conditional entropy of non-sensed positions given the sensed position values in \eqref{eq_Metric_MeanEntropy_PI}, and the frequency error of the simulation of non-sensed positions given in \eqref{eq_Metric_MeanError_PI}. For the computation (estimation) of these two indicators,  $600$ conditional MPS simulations are used to estimate conditional entropies and the frequency of errors. Finally,  in order to obtain representative results for the three models used, the average performance across $50$ scenarios is studied, where in each scenario a different training and a test image are selected from a collection of unconditional simulations.
+
+Equipped with these two indicators, a global and a local analysis of the results are conducted. For the global analysis, the average indicator (conditional entropies and simulation error) for the complete set of non-sensed positions is computed, and for the local analysis, the focus is on the transition zones between low and high values of the true image. This local analysis seems more relevant from the point of view of resolving the categorical nature of channelized fields,  because transition zones define the problem. In fact any adaptive sampling method needs to address a compromise between resolving locally or resolving globally the field and, consequently,  it is insightful to consider these two regimes of analysis. For the local indicator,  the true image is used to define zones around the transitions to compute the average indicator. In particular, all pixels at a distance no higher than $5$ pixels from the line of transitions are considered to define the local zones, as can be seen in Fig. \ref{fig:ExampleMasks_PI}.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.32\columnwidth]{Figs_PI/Fig23}
+    \includegraphics[width=0.32\columnwidth]{Figs_PI/Fig24}
+    \includegraphics[width=0.32\columnwidth]{Figs_PI/Fig25}
+	\caption[Example of the masks used to define transitions in channelized images.]{\label{fig:ExampleMasks_PI} Example of the masks used to define transitions in channelized images. $5$ pixels around the transitions are considered. From left to right: models $SC_1$, $MC_1$, and $MC_2$. Color maps, solid yellow is the mask}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.49\columnwidth]{Figs_PI/Fig26}
+    \includegraphics[width=0.49\columnwidth]{Figs_PI/Fig27}
+    
+    \includegraphics[width=0.49\columnwidth]{Figs_PI/Fig28}
+    \includegraphics[width=0.49\columnwidth]{Figs_PI/Fig29}
+	\caption[Experimental performance for model $SC_1$ ]{\label{fig:PerfModel1_PI} Experimental performance for model $SC_1$ in terms of (left) Remaining Entropy reduction and (right) Estimation error. Top: global performance. Bottom: local performance. Sampling rates from $[0\% - 1.25\%]$ with $\alpha = 0.7$. Mean behavior over $50$ realizations}
+\end{figure}
+%---------------------
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig30}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig31}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig32}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig33}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig34}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig35}
+	\caption[Remaining Entropy maps for model $SC_1$]{\label{fig:PerfModel1_3_PI} Remaining Entropy maps for model $SC_1$ using $600$ realizations of the sampling process. Top: maps using the first $100$ samples.  Bottom: maps using the first $500$ samples. Left to right: RAMIS, quasi-regular, and random sampling. Color maps, linear from blue (low remaining entropy) to bright yellow (high remaining entropy)}
+\end{figure}
+
+\subsubsection{Analysis of the Single-channel Model}
+Starting with the single-channel model, Fig. \ref{fig:PerfModel1_PI} shows the trend of the average performance (globally and locally) of the studied sampling approaches with the adopted metrics as a function of the sampling rate from $0	\%$ to $1.25 \%$. 
+ 
+Remarkably for all the sampling regimes, the improvements obtained by the mixed adaptive approach in terms of resolvability and frequency of error both globally and locally are significant and systematic.  It is important to highlight that the local gain is substantial, meaning that the information driven adaptive strategy helps to better characterize transition zones than a pure random or a structural sampling. The local gain is very significant in the regime of $0\%-1.25\%$  sampling rate for both metrics.  This important gain in local characterization does not imply detrimental performance at the global level, which is relevant because this implies that the price of putting samples locally around transitions does not degrade the resolvability and estimation of zones far from the transitions. In conclusion, for the single channel model, a significant gain is observed in the ability to recover the true image from the adoption of the proposed adaptive scheme.
+
+To illustrate these improvements at the global level, it can be observed that the non preferential sampling schemes require a sampling rate of $0.875 \%$ ($350$ samples) to obtain a  conditional entropy of $0.2$ (see Fig. \ref{fig:PerfModel1_PI}), while the proposed approach only requires a sampling rate of $0.45 \%$ ($180$ samples) to achieve the same objective. A similar trend is observed for the simulation error, where the proposed method requires a sampling rate of $0.375 \%$ ($150$ samples) to achieve a simulation error of $0.1$ while the classical approaches require a rate in the order of $0.75 \%$  ($300$ samples). Therefore, the adaptive strategy offers a reduction of $50\%$ on the number of samples to achieve similar results than with non preferential sampling. If considering the local performance, the reduction in sampling rate is even more dramatic.
+
+Finally, Fig. \ref{fig:PerfModel1_3_PI} shows a map of the conditional entropies for the three sampling methods at the sampling rates of $0.25 \%$ and $1.25 \%$, respectively, showing the effectiveness of the proposed scheme as it presents better resolvability (smaller conditional entropies) on the transition zones.
+
+\subsubsection{Analysis of the Multi-channel Models}
+For the case of multi-channel models, the results are reported in Figs. \ref{fig:PerfModel2_PI} and \ref{fig:PerfModel3_PI}.  First, it is important to comment on the dependency of these results on the model complexity. As expected the number of samples required to achieve the same reconstruction error and resolvability increases with the complexity of the model. For example,  for the single channel model the proposed method can achieve a resolvability of $0.2$ with a sampling rate of only $0.45 \%$ ($180$ samples). On the multi channel models, the proposed method requires sampling rates over $2 \%$ ($800$ samples) (see  Figs. \ref{fig:PerfModel2_3_PI} and \ref{fig:PerfModel3_3_PI}). For this reason, in all these experiments a higher number of samples, from $1-800$, is considered. 
+
+In general, the RAMIS approach shows consistently better performances in resolvability and simulation errors than the conventional non-adaptive scheme globally and locally.  As it was shown before for the single-channel model, this performance improvement  is more important locally near transition zones, where the inference task is known to be more challenging, than far from the transition zones.  However the regime of gains and their magnitude are reduced compared with the results obtained for the single-channel model. The reason could be that for higher complexity models a much higher sampling rate is needed to move the problem to a regime where adaptive samples make a significant contribution in the characterization of the field. In particular,  there is a range from $0-100$ samples for the first multi-channel model where no major differences in performances are observed globally between the implemented method and the non-adaptive schemes (see Fig. (\ref{fig:PerfModel2_PI})). This regime increases to $0-200$ samples for the second multi-channel model in Fig.\ref{fig:PerfModel3_PI}. Despite this observation,  the local gains are relevant and significant and there is a regime of higher sampling rate where the RAMIS method shows a gain in resolvability and in the rate of detecting non-sensed positions from the simulations.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig36}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig37}
+
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig38}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig39}
+	\caption[Experimental performance for model $MC_1$.]{\label{fig:PerfModel2_PI} Experimental performance for model $MC_1$. Left: Remaining Entropy reduction, Right: Estimation error. Top: global performance. Bottom: local performance. Sampling rates from $[0\% - 2\%]$ with $\alpha = 0.7$}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig40}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig41}
+
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig42}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig43}
+	\caption[Experimental performance for the model $MC_2$.]{\label{fig:PerfModel3_PI} Experimental performance for the model $MC_2$. Left: Remaining Entropy reduction, Right: Estimation error. Top: global performance. Bottom: local performance. Sampling rates from $[0\% - 2\%]$ with $\alpha = 0.7$}
+\end{figure}
+ 	
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig44}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig45}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig46}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig47}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig48}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig49}
+	\caption[Remaining Entropy maps from $600$ realizations for model $MC_1$.]{\label{fig:PerfModel2_3_PI} Remaining Entropy maps from $600$ realizations for model $MC_1$. Top: using only the first $100$ samples. Bottom: for the first $800$ samples. Left to right: RAMIS, quasi-regular, and random sampling. Colormap: same as fig \ref{fig:PerfModel1_3_PI}}
+\end{figure}
+
+\clearpage
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig50}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig51}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig52}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig53}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig54}
+    \includegraphics[width=0.3\columnwidth]{Figs_PI/Fig55}
+	\caption[Remaining Entropy maps from $600$ realizations for model $MC_2$.]{\label{fig:PerfModel3_3_PI} Remaining Entropy maps from $600$ realizations for model $MC_2$. Top: using only the first $100$ samples. Bottom: using the first $800$ samples. Left to right: RAMIS, quasi-regular, and random sampling. Colormap: same as fig \ref{fig:PerfModel1_3_PI}}
+\end{figure}
+
+%\section{Acknowledgements}
+%The material presented in this chapter is based on work supported by grants of Conicyt-Chile, Fondecyt grants $1170854$, $1151029$ and $1181823$, the Biomedical Neuroscience Institute of the University of Chile, and the Advanced Center for Electrical and Electronic Engineering (AC3E), Basal Project FB0008. 
+
+
+\section{Discussion and Final Remarks}
+\label{sec_con_PI}
+In this chapter, the role of preferential sampling is explored for the task of multiple-point simulation (MPS). For this, the problem of optimal sampling is formalized and addressed from a maximum information extraction perspective. This sampling principle has the ability to locate the samples adaptively on the positions that extract maximum information for the task of characterizing the underlying field. A formal justification is provided for adopting this information-driven sampling criterion and show its practical benefits for MPS in the context of simulating channelized facies models. Interestingly, this preferential sampling locates samples adaptively on the transition between facies and this improves the performance of conventional MPS algorithms and, consequently, it can be integrated into the framework of MPS. 
+In conclusion, preferential sampling can contribute in MPS even at very small sampling regimes, and as a corollary, the training image can be used constructively not only to simulate non-sensed positions, but also to decide where to measure next.
+
+The Appendix \ref{appendix_GOBLAL_PI} provides details of the implementation and formalization of the proposed methods presented in this chapter.

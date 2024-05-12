@@ -1,0 +1,244 @@
+\clearpage
+\chapter{Complementary Material for Chapter \ref{chapter_PI}}
+\label{appendix_GOBLAL_PI}
+
+
+The following sections provide details of the implementation and formalization of the proposed methods presented in the chapter \ref{chapter_PI}.
+
+\section{App. I: Entropy as an Indicator of Simulation Complexity}
+\label{app_sec_entropy_for_simulations_PI}
+Here, a formal interpretation of the {\em Shannon entropy} as an indicator of complexity is elaborated when the task is to simulate or create a collection of independent and identically distributed (i.i.d.) realizations of a finite alphabet random variable. 
+%Because of that the idea of connecting the simulation problem with the source coding problem is found insightful, where the entropy is the fundamental performance bound \citep{shannon_1948,cover_2006}.
+For that, a connection between simulation and the task of almost lossless source coding \citep[Chaps. 3.2 \& 3.3]{cover_2006} will be presented, from which the entropy is a fundamental performance indicator \citep{shannon_1948,cover_2006}.
+
+\subsection{The Operational Complexity Indicator for Simulation}
+Considering a finite alphabet random variable $X$ taking values in $\mathcal{A}$ with probability $\mu_X\in \mathcal{P}(\mathcal{A})$, the simulation problem of length $n\geq 1$ corresponds to the generation of $n$-samples in $\mathcal{A}^n$ from the product (or $n$-fold) distribution $\mu_X^n \equiv \mu_X\times\mu_X\times\cdots \mu_X\in \mathcal{P}(\mathcal{A}^n)$. 
+
+A covering argument is considered to stipulate the complexity of simulating i.i.d. realizations of $\mu_X^n$
+in the product space $\mathcal{A}^n$. More precisely, {\em the cardinality of the smallest subset} 
+of sequences in $\mathcal{A}^n$ that captures almost all the probability with respect to $\mu_X^n$, is proposed as a natural indicator 
+of the complexity of  simulating $\mu_X^n$ in $\mathcal{A}^n$. This notion can be captured with the following 
+set of definitions: 
+%definition 1: ---- 
+\begin{definition}
+	For $\epsilon>0$, $B\subset \mathcal{A}^n$ is $\epsilon$-typical for $\mu^n_X$,  if $\mu^n_X(B) \geq 1 - \epsilon$.  
+\end{definition}
+%defintioin 2:---- 
+\begin{definition}
+	For $\epsilon>0$, the size $k$ is said to be $\epsilon$-feasible for $\mu^n_X$, if there is $B\subset \mathcal{A}^n$ that is $\epsilon$-typical for $\mu^n_X$ and $\left| B\right| \leq k$.
+\end{definition}
+%definition 3:---- 
+\begin{definition} \label{operational_comple_simulation1_PI}
+Finally, considering $n$ i.i.d. samples, an indicator of the complexity of $\mu_x$ is given by
+\begin{equation}\label{eq_sec_pre_5_PI}
+	k(\epsilon, \mu^n_x)  \equiv \min  \left\{k: \text{$k$ is $\epsilon$-feasible for $\mu^n_X$}  \right\}.
+\end{equation}
+\end{definition}
+
+Adopting these concepts, in particular $k(\epsilon, \mu^n_x)$, a scenario where a higher number of sequences is needed to capture almost all the probability is more complex (from the point of view of creating i.i.d. simulations), than a case where fewer sequences are needed for the same covering objective. {This idea matches the notion of {typical set} proposed by Shannon to prove source coding theorems \citep{shannon_1948}.}
+%
+%Exponential growth of  $k(\epsilon, \mu^n_x)$
+In this context, an interesting aspect to pay attention is the exponential growth of $k(\epsilon, \mu^n_x)$ in the process of making $n$ arbitrarily large. %More formally:
+It is simple to note that $k(\epsilon, \mu_x)$ grows with $n$ and it is upper bounded by $\left|\mathcal{A}\right|^n$, therefore $\log_2 k(\epsilon, \mu^n_x) \leq n \log_2 \left|\mathcal{A}\right|$ and, consequently,  taking the limits on the number of simulations the basic upper bound is
+%----------------------------
+\begin{equation}\label{eq_sec_pre_5b_PI}
+\lim\sup_{n \longrightarrow \infty} \frac{1}{n} \log_2 k(\epsilon, \mu^n_x) \leq \log_2 \left|\mathcal{A}\right|.
+\end{equation}
+This means that $k(\epsilon, \mu^n_x)$ grows (with $n$) at most exponentially with an exponential rate given by $log_2 \left|\mathcal{A}\right|$. The next result in (\ref{eq_sec_pre_6_PI}) stipulates that the precise exponential rate of $k(\epsilon, \mu^n_x)$  (as $n$ goes to infinity) approaches $\mathcal{H}(\mu_x)$, when making $\epsilon$ arbitrary small, in the sense that
+%----------------------------
+\begin{equation}\label{eq_sec_pre_6_PI}
+	\lim_{\epsilon \longrightarrow 0}\lim_{n \longrightarrow \infty} \frac{1}{n} \log_2 k(\epsilon, \mu^n_x) = \mathcal{H}(\mu_X).
+\end{equation}
+
+\subsection{Derivation of The Representation Result in (\ref{eq_sec_pre_6_PI})}
+To show the identity in (\ref{eq_sec_pre_6_PI}), it is useful to introduce a stronger notion of {\em achievable rate} for the entire i.i.d. process $\left\{\mu_X^n: n\geq 1\right\}$ that is commonly used in the context of almost lossless fixed-rate source coding \citep[Chap.3]{cover_2006} and \citep[Chap.4]{yeung_2002}. 
+
+\begin{definition}
+	\label{def_minimum_ach_rate_PI}
+	For the i.i.d. simulation of $\mu_X$, the rate $r>0$ is said to be achievable for $\left\{\mu_X^n: n\geq 1\right\}$, if there is a sequence of sets $\left\{ B_n\subset \mathcal{A}^n: n\geq 1 \right\}$ that captures all the probability %of the i.i.d. simulations 
+	in the stronger sense that
+	%----------------------------
+	\begin{equation*}%\label{eq_sec_pre_5_PI}
+		\lim_{n \rightarrow \infty} \mu_X^n(B_n)=1,
+	\end{equation*}
+	and 
+	%----------------------------
+	\begin{equation*}
+		\lim\sup_{n \rightarrow \infty} \frac{1}{n}\log_2  \left| B_n \right| \leq r.
+	\end{equation*}
+\end{definition}
+\begin{definition} \label{operational_comple_simulation2_PI}
+	In this context, the minimum achievable  rate for $\left\{\mu_X^n: n\geq 1\right\}$ is 
+	%----------------------------
+	\begin{equation*}
+		R^*(\mu_X) \equiv \min \left\{r: \text{$r>0$ is achievable for  $\left\{\mu_X^n: n\geq 1\right\}$}\right\}.
+	\end{equation*}
+\end{definition}
+From the Definitions,  it is direct to show that  $ \lim\sup_{n \longrightarrow \infty} \frac{1}{n} \log_2 k(\epsilon, \mu^n_x)  \leq  R^*(\mu_X)$ for all $\epsilon>0$ and consequently, 
+%----------------------------
+\begin{equation}\label{eq_sec_pre_6b_PI}
+	\lim\sup_{\epsilon \longrightarrow 0}\lim\sup_{n \longrightarrow \infty} \frac{1}{n} \log_2 k(\epsilon, \mu^n_x) \leq  R^*(\mu_X).
+ \end{equation}
+Remarkably for the i.i.d. context,  it is well-known that the limit in the left-hand side of (\ref{eq_sec_pre_6b_PI}) is well-defined and matches  $R^*(\mu_X)$. Furthermore, this expression reduces to the entropy of $\mu_x$. This result was proved in the original paper of Shannon \citep{shannon_1948} and it is highlighted in the following result:
+%MAIN Shannon Theorem.............
+\begin{theorem} \citep{shannon_1948}
+\label{th_entropy_simulations_PI}
+		$\lim_{\epsilon \longrightarrow 0}\lim_{n \longrightarrow \infty} \frac{1}{n} \log_2 k(\epsilon, \mu^n_x) =R^*(\mu)= \mathcal{H}(\mu_X).$
+\end{theorem}
+Therefore, the main conclusion of this analysis is that the Shannon entropy determines the complexity of simulating a finite alphabet 
+probability in the precise operational sense defined in Definitions \ref{operational_comple_simulation1_PI}  and \ref{operational_comple_simulation2_PI}.
+
+The proof of Theorem \ref{th_entropy_simulations_PI} is a direct consequence of the celebrated  (weak) {\em asymptotic equipartition property} (AEP),  first stated by Shannon and proved for the i.i.d. case in % his 1948 paper
+ \citep{shannon_1948}.  A systematic and clear exposition of this property and the proof of Theorem \ref{th_entropy_simulations_PI} can be found in \citep[Chap.3]{cover_2006} and \citep[Chap.4]{yeung_2002} in the context of what is known in information theory as the {\em Shannon source coding theorem}.  To conclude this part, it is important to elaborate some observations and implications about Theorem \ref{th_entropy_simulations_PI}:
+\begin{enumerate}
+%1..
+\item This result shows that there is a collection of sequences $\left\{ B_n\subset \mathcal{A}^n: n\geq 1\right\}$ that captures asymptotically all the probability, that is,  the collection is typical in the sense that $\lim_{n \rightarrow \infty} \mu_X^n(B_n)=1$,  and its cardinality grows exponentially at a rate that is precisely the entropy of $\mu_X$, that is,  as $n$ goes to infinity $\left| B_n \right| \approx 2^{n\cdot \mathcal{H}(\mu_x)}$.
+%2..
+\item  If $\mathcal{H}(\mu_X) < \log_2 \left|\mathcal{A}\right|$, then the collection of typical sequences,  mentioned in the previous point, is an arbitrary small fraction of all the possible sequences, in the sense that
+\begin{equation}\label{eq_sec_pre_7_PI}
+	\frac{\left| B_n \right|}{\left| \mathcal{A}^n \right|} \approx \frac{2^{n\cdot \mathcal{H}(\mu_x)}}{2^{n\cdot log_2 \left|\mathcal{A}\right|}}= 2^{-n\cdot (\log_2 \left|\mathcal{A}\right|-\mathcal{H}(\mu_x) )} \longrightarrow 0. 
+\end{equation}
+Note that the cardinality ratio in (\ref{eq_sec_pre_7_PI}) goes to zero exponentially with $n$ at a rate given by $\log_2 \left|\mathcal{A}\right|-\mathcal{H}(\mu_x)>0$. Then for a i.i.d process $\left\{\mu_X^n: n\geq 1\right\}$  with entropy strictly smaller than $\log_2 \left|\mathcal{A}\right|$ there is a tiny fraction of sequences that characterize the  i.i.d. process induced by $\mu_X$. Here, { $\log_2 \left|\mathcal{A}\right|$ is the maximum entropy only achieved  by the uniform distribution on $\mathcal{A}$ \citep{cover_2006}.}
+%3..  
+\item For the achievability part of this result, Shannon proposes a specific collection of typical sequences given by
+\begin{equation}\label{eq_sec_pre_8_PI}
+	B_n(\epsilon)=\left\{ (x_1,..,x_n)\in \mathcal{A}^n: \left| -\frac{1}{n} \log_2 \mu^n_X(x_1,..,x_n) - \mathcal{H}(\mu_X) \right| \leq \epsilon \right\}.
+\end{equation}
+that as $n$ goes to infinity has the following properties \citep{cover_2006}:
+\begin{enumerate}
+	\item it is a typical set:  $\lim_{n \rightarrow \infty} \mu_X^n(B_n(\epsilon))=1$. 
+	\item if $(x_1,..,x_n) \in B_n(\epsilon)$ then 
+	$$2^{-n\cdot (\mathcal{H}(\mu_X)+\epsilon)} \leq \mu^n_X(x_1,..,x_n) \leq 2^{-n\cdot (\mathcal{H}(\mu_X)-\epsilon)}.$$
+	\item $(1-\epsilon) 2^{n\cdot (\mathcal{H}(\mu_X) -\epsilon)} \leq \left| B_n(\epsilon) \right| \leq 2^{n\cdot (\mathcal{H}(\mu_X) +\epsilon)}$.
+\end{enumerate}
+{Here, Achievability refers to the construction of a sequence that is typical and achieves a rate smaller or equal to the entropy \citep{cover_2006}.}
+Thus, the relevant aspect of this construction is the fact that as $n$ progresses to infinity the elements of this typical set become uniformly distributed. Considering $\epsilon$ sufficiently small, for all $(x_1,..,x_n)\in B_n(\epsilon)$, then: $$\mu^n_X(x_1,..,x_n)\approx 2^{-n\cdot \mathcal{H}(\mu_X)}  \approx \frac{1}{ \left| B_n(\epsilon) \right|}.$$ 
+Then within this  set $B_n(\epsilon)$,  which is typical, all its elements have the same probability. This means that when making i.i.d. samples of the model $\mu^n_X$ and $n$ is sufficiently large, a single sample of this typical set (that happens with very high probability), %this sequence
+has the same probability than any other element of the set. Consequently from this fact, it is clear that the size of this typical set plays a major role from the point of view of specifying the complexity of the simulation task, which is formalized on the concept of minimum achievable rate in Definition \ref{operational_comple_simulation2_PI}, and that is precisely given by $\mathcal{H}(\mu_X)$.
+\end{enumerate}
+
+
+
+
+
+
+
+
+\section{App. II: Proof of Proposition \ref{pro_iter_information_gain_PI}}
+\label{proof_pro_iter_information_gain_PI}
+\begin{proof}
+
+After obtaining the sequential  rule $\tilde{f}^*_k \in \mathbf{F}_k$ to solve the adaptive sensing rule of size $k$, the remaining posterior uncertainty is given by
+\begin{equation}\label{eq_proofA_1_PI}
+	H(\hat{X}_{f^*_k}| {X}_{f^*_k}).
+\end{equation}
+and, the reduction on the uncertainty, concerning to the information of $\tilde{f}^*_k$ to resolve $\bar{X}$ is given by
+\begin{equation}\label{eq_proofA_2_PI}
+	I(\tilde{f}^*_k) = H(\overline{X}) - H(\hat{X}_{\tilde{f}^*_k}| {X}_{\tilde{f}^*_k}) = H({X}_{\tilde{f}^*_k}) \geq 0. 
+\end{equation}
+As the sets $\hat{X}_{\tilde{f}^*_k} $ and $ {X}_{\tilde{f}^*_k} $ conform a partition of $\overline{X}$,
+\begin{equation}\label{eq_proofA_3_PI}
+	H(\overline{X}) = H(\hat{X}_{\tilde{f}^*_k} , {X}_{\tilde{f}^*_k}).
+\end{equation}
+In addition, by the chain rule of entropy
+\begin{equation}\label{eq_proofA_4_PI}
+	H(\overline{X}) =  H( {X}_{\tilde{f}^*_k}) + H(\hat{X}_{\tilde{f}^*_k} , {X}_{\tilde{f}^*_k}).
+\end{equation}
+Applying \eqref{eq_proofA_3_PI} and \eqref{eq_proofA_4_PI}, the information gain of the rule $\tilde{f}^*_k$ can be rewritten by
+\begin{align}\label{eq_proofA_5_PI}
+	I(\tilde{f}^*_k) &= H( {X}_{\tilde{f}^*_k}) + H(\hat{X}_{\tilde{f}^*_k} , {X}_{\tilde{f}^*_k})  - H(\hat{X}_{\tilde{f}^*_k}| {X}_{\tilde{f}^*_k}) \nonumber \\
+		&= H( {X}_{\tilde{f}^*_k}) \nonumber \\
+ 		&= H( {X}_{\tilde{f}^*_k(1)}, {X}_{\tilde{f}^*_k(2)}, .. , {X}_{\tilde{f}^*_k(k)}) \nonumber \\
+		&= H( {X}_{(i_{1}^{*},j_{1}^{*})} ,  {X}_{(i_{2}^{*},j_{2}^{*})} , .. ,  {X}_{(i_{k}^{*},j_{k}^{*})}   ) 
+\end{align}
+The expression \eqref{eq_proofA_5_PI} can be rearranged by using the chain rule as:
+\begin{align}\label{eq_proofA_6_PI}
+	I(\tilde{f}^*_k) &= H( {X}_{(i_{1}^{*},j_{1}^{*})} ) + \sum_{h = 2}^{k} H(  {X}_{(i_{h}^{*},j_{h}^{*})} |  {X}_{(i_{1}^{*},j_{1}^{*})} , .. ,  {X}_{(i_{h -1}^{*},j_{h -1}^{*})}   ). 
+\end{align}
+Finally, using \eqref{eq_proofA_6_PI}, the information gain difference between the sampling steps $k$ and $k-1$ is given by
+\begin{align}\label{eq_proofA_7_PI}
+	I(\tilde{f}^*_k) - I(\tilde{f}^*_{k-1}) &= H( {X}_{(i_{1}^{*},j_{1}^{*})} ) + \sum_{h = 2}^{k} H(  {X}_{(i_{h}^{*},j_{h}^{*})} |  {X}_{(i_{1}^{*},j_{1}^{*})} , .. ,  {X}_{(i_{h -1}^{*},j_{h -1}^{*})}   )  \nonumber \\ & \qquad - H( {X}_{(i_{1}^{*},j_{1}^{*})} ) - \sum_{h = 2}^{k-1} H(  {X}_{(i_{h}^{*},j_{h}^{*})} |  {X}_{(i_{1}^{*},j_{1}^{*})} , .. ,  {X}_{(i_{h -1}^{*},j_{h -1}^{*})}   ) \nonumber \\
+	&= H(  {X}_{(i_{k}^{*},j_{k}^{*})} |  {X}_{(i_{1}^{*},j_{1}^{*})}, .., {X}_{(i_{k-1}^{*},j_{k-1}^{*})} ).
+\end{align}
+
+\end{proof}
+
+
+\section{App. III: Optimality of the Sequential Rule  for Fields with no Inter-Pixel Dependency}
+\label{optinality_no_iterpixel_PI}
+\begin{proof}
+For a field $\bar{X}$ with no inter-pixel dependency, every random variable $X_{i,j}$ is statistically independent of others variables in the sense that $H(X_{i_{1},j_{1}} | X_{i_{2},j_{2}}) = H(X_{i_{1},j_{1}}) $, for all $(i_{2},j_{2})\in [M]\times [M]  \setminus \left\{(i_{1},j_{1})\right\} $. Then, by the independence bound on entropy (theorem $2.6.6$ in \citep{cover_2006}), the posterior field entropy associated with the application of the optimal rule $f^{*}_{k}$ posted in \eqref{eq_sec_owp_PI_9} is given by,
+\begin{align}\label{eq_proofB_1_PI}
+	H({X}_f) &= \sum_{(i,j) \in {f^{*}_{k}} } H(X_{i,j})
+\end{align}
+Thus, for a field with no inter-pixel dependency (nipd), the optimal sampling rule of size $k$ can be state as
+\begin{equation}\label{eq_proofB_2_PI}
+	f^{*,nipd}_k = \arg \max_{f\in \mathbf{F}_k} 	 \sum_{(i,j) \in {f} } H(X_{i,j}), 
+\end{equation}
+which, by the non negativity of the entropy, is the problem of choosing the $k$ positions with the highest a priori entropy.  
+
+In the case of the iterative sequential rule, %by the no inter-pixel dependency, 
+the $k$-measurement is now given by,
+\begin{align}\label{eq_proofB_3_PI}
+	(i^{*,nipd}_k,j^{*,nipd}_k) 	&= \arg \max_{(i,j)\in [M]\times [M] \setminus \left\{(i^{*,nipd}_l,j^{*,nipd}_l): l=1,..,k-1\right\}} H(X_{i,j}),
+\end{align}
+which correspond to choose the location with the $k$-th highest a priori entropy. Therefore, %with this sequence of sequential optimal positions $\left\{\right. $ $ \left. (i^{*,nipd}_l,j^{*,nipd}_l): \right. $ $ l=1,.., $ $ M^2\left.\right\}$, for every $k\in \left\{1,..,M^2 \right\}$ 
+the sequential rule $\tilde{f}^{*,nipd}_k \in \mathbf{F}_k$ can be obtained by%reconstructed by 
+\begin{align}\label{eq_proofB_4_PI}
+\tilde{f}^{*,nipd}_k(1) &=(i^{*,nipd}_1,j^{*,nipd}_1), \\ \nonumber 
+\tilde{f}^{*,nipd}_k(2) &=(i^{*,nipd}_2,j^{*,nipd}_2), \\ \nonumber 
+                                       ...,  \\ \nonumber
+\tilde{f}^{*,nipd}_k(k) &=(i^{*,nipd}_k,j^{*,nipd}_k).
+\end{align}
+Finally, by construction, the optimal combinatorial rule is equal to the sequential approach under the assumption of statistical independence,
+\begin{equation}\label{eq_proofB_5_PI}
+	\tilde{f}^{*,nipd}_k  = f^{*,nipd}_{k}.
+\end{equation}
+meaning that in this scenario the optimal sampling can be achieve by the sequential approach. This simple case summarizes the nature of the optimal sampling approach that tries to resolve the locations with highest uncertainty in order to increase the average knowledge of the global field. As the inter-pixel dependency increases and the multiple-point statistics of the field becomes more complex, to take into account the high order conditional entropies becomes essential to avoid locations with redundant information.
+
+\end{proof}
+
+
+
+%------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------
+\section{App. IV: Analysis of the Adaptive Sampling Scheme for the Markov Chain Case}
+\label{sec:ap_markov_anal_PI}
+
+Here, the \emph{AMIS} $\left\{\right.\tilde{f}^a_k(\cdot | \cdot): k \in [N] \left.\right\}$ in  (\ref{eq_adaptive_2_PI}) is compared with the SMIS approach $\left\{\right. \tilde{f}^*_k(\cdot):k \in [N] \left.\right\}$ in (\ref{eq_numerical_OWP_3b_PI}). This comparison is performed in  the context of a finite length one-dimensional Markov source presented in Sect. \ref{sec_1d_markov_PI} in terms of field resolvability (resolution of uncertainty) and  the estimation of non-sensed positions.
+To evaluate the quality on resolving non-sensed position from the information of sensed position, the conditional entropy conditioning on the data is used, given a sensed rule $f_k$ and its sensed data $x_f=(x_1,..,x_{k-1})\in \mathcal{A}^{k-1}$,
+\begin{align}\label{eq_sec_markov_adapt_2_PI}
+H( \hat{X}_{f_k} | X_{f} = x_{f}). 
+\end{align}
+By extending the result in Proposition \ref{pro_iter_markov_rule_adapt_PI}, there is a simple algorithm to compute (\ref{eq_sec_markov_adapt_2_PI}) by the Markov assumption not reported here for the space constraint. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.77\columnwidth]{Figs_PI/Fig56}
+	\caption[Remaining conditional entropy for symmetric transition matrix ($\beta = 0.2$)]{\label{fig:perfADA_2_PI} Remaining conditional entropy by considering the previous sampled locations and its measurements. Symmetric transition matrix ($\beta = 0.2$) }
+\end{figure}
+
+Also the problem of estimating non-sensed position from the sensed data is considered for which the minimum mean square error estimator (MMSE) is applied given by the conditional mean \citep{gray_2004}. Given $f_k$ and its sensed data $x_f=(x_1,..,x_{k-1})\in \mathcal{A}^{k-1}$, the MMSE estimator of $\hat{X}_{f_k}$ from $X_f=x_f$ is given in closed form by $\mathbb{E} ({\hat{X}_f| X_f=x_f})\in \mathcal{A}^{N-k}$, which is a function of $x_f$. {This problem reduces to compute point-wise the expectation for every non-sensed position given $X_f=x_f$, which is a simple task under the Markov assumption.} 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.89\columnwidth]{Figs_PI/Fig57}
+    \includegraphics[width=0.89\columnwidth]{Figs_PI/Fig58}
+	\caption[Estimation error for symmetric transition matrix with $\beta = 0.1$]{\label{fig:perfADA_3_PI} Estimation error considering the previous sampled locations and its measurements. Symmetric transition matrix with $\beta = 0.1$. Top: Random Sampling vs AMIS Method, Bottom: SMIS vs AMIS}
+\end{figure}
+
+\section{App. V: Analysis of the Partial Update of Conditional Entropies}
+\label{appd_anal_partial_mi_upgrade_PI}
+
+It can been argued that the use of the partial update of the conditional probabilities proposed in Sect. \ref{sec_appl_mps_PI} can be justified in the context of SMIS in  \eqref{eq_numerical_OWP_3_PI}. Considering the stage $k-1$ and $k$ of this algorithm, for an arbitrary unmeasured location, the focus is to evaluate the conditional entropy $H(X_{i,j}|X_{i^*_1,j^*_1},..,X_{i^*_{k-2},j^*_{k-2}})$ for the stage $k-1$, and $H(X_{i,j}|X_{i^*_1,j^*_1},..,$ $X_{i^*_{k-2},j^*_{k-2}},$ $X_{i^*_{k-1}, j^*_{k-1}})$ for the stage $k$. Thus, the point-wise reduction of conditional entropy for the location $(i,j)$ from the stage $k-1$ to the state $k$ is given by
+\begin{align}\label{eq_appd_1_PI}
+	\Delta H^{(k-1) \rightharpoonup k}(X_{i,j}) &= H(X_{i,j}|X_{i^*_1,j^*_1},..,X_{i^*_{k-2},j^*_{k-2}}) \nonumber\\
+						& \quad - H(X_{i,j}|X_{i^*_1,j^*_1},..,X_{i^*_{k-2},j^*_{k-2}},X_{i^*_{k-1},j^*_{k-1}}) \nonumber\\
+						&= I(X_{i,j} | X_{i^*_1,j^*_1},..,X_{i^*_{k-2},j^*_{k-2}};X_{i^*_{k-1},j^*_{k-1}})
+\end{align}
+where, for $k = 2$ it is clear that the reduction in entropy corresponds exactly to mutual information% regarding the first sampled position 
+\begin{align}\label{eq_appd_2_PI}
+	\Delta H^{(1) \rightharpoonup 2}(X_{i,j}) &= H(X_{i,j}) - H(X_{i,j}|X_{i^*_1,j^*_1}) \nonumber\\
+												&= I(X_{i,j} ; X_{i^*_1,j^*_1}).
+\end{align}
+As the algorithm works in the search for new measurements, the mutual information is conditioned on previous measurements and, consequently, the approach used in the entropy map update deteriorates. However, recalculating the entropy maps every $20$ samples has provided satisfactory results.
