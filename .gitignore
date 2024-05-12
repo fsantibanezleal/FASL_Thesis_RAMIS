@@ -14,10 +14,10 @@ creds**
 data/**
 logs/**
 download**/**
-Figs_PI
-Figs_PII
-Figs_QE
-Figs_Slides
+Thesis_RAMIS/Figs_PI/**
+Thesis_RAMIS/Figs_PII/**
+Thesis_RAMIS/Figs_QE/**
+Thesis_RAMIS/Figs_Slides/**
 
 output.html
 
