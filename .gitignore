@@ -14,18 +14,10 @@ creds**
 data/**
 logs/**
 download**/**
-Thesis_RAMIS/Figs_PI/**
-Thesis_RAMIS/Figs_PII/**
-Thesis_RAMIS/Figs_QE/**
-Thesis_RAMIS/Figs_Slides/**
 
 output.html
 
 # except their sub-folders
-!data/**/
-!data/crusher/**
-!data/dictionaries/**
-!logs/**/
 
 
 # also keep all .gitkeep files
@@ -173,5 +165,4 @@ venv.bak/
 *.fdb_latexmk
 *.synctex.*
 *.out
-*.pdf 
 
